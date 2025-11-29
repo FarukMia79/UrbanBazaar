@@ -7,4 +7,14 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('/login', [AdminAuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    
+});
+
+Route::middleware('is_admin')->group(function() {
+
+});
+
 
