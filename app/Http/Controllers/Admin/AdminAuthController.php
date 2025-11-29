@@ -4,18 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AdminAuthController extends Controller
 {
-    public function login(Request $requesr){
+    public function login(Request $request){
         $validatedata = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        $user = User::where('email', Request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-        if( ! $user || ! Hash::check($rquest->password, $user->password)){
+        if( ! $user || ! Hash::check($request->password, $user->password)){
             throw ValidationException::withMessages([
                 'message' => ['Invalid credentials'],
             ]);
@@ -27,17 +30,17 @@ class AdminAuthController extends Controller
             ]);
         }
 
-        $token = $user->createToken('admin_auth_token')->PlainTextToken;
+        $token = $user->createToken('admin_auth_token')->plainTextToken;
 
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'brearer',
+            'token_type' => 'Bearer',
             'user' => $user
         ]);
     }
 
     public function logout(Request $request){
-        $request->user()->token()->delete();
+        $request->user()->tokens()->delete();
         return response()->json([
             'message' => 'Logout Successfully!'
         ]);
