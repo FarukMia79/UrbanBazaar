@@ -1,12 +1,11 @@
-import { createRouter, createWebHistory} from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import adminRouter from "./admin";
 import userRouter from "./user";
-import publicRouter from "./public";
 
-const routes = [...adminRouter, ...userRouter, ...publicRouter];
+const routes = [...adminRouter, ...userRouter];
 
 const router = createRouter({
-    history : createWebHistory(),
+    history: createWebHistory(),
     routes,
 });
 

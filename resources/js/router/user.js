@@ -1,12 +1,12 @@
-import Userlayout from '../layouts/UserLayout.vue';
-
+import UserLayout from '../layouts/UserLayout.vue';
+import Home from '../frontend/page/Home.vue';
 
 export default [
     {
-        path: '/user',
-        component: Userlayout,
+        path: '/',
+        component: UserLayout,
         children: [
-
+            { path: '', name: 'Home', component: Home },
         ],
-    },
-];
+    }
+]
