@@ -1,6 +1,6 @@
 body {
-    font-family: "Roboto", sans-serif;
-    font-size: 14px;
+    font-family: "Roboto", sans-serif !important;
+    font-size: 14px !important;
     color: #000;
     overflow-x: hidden;
     line-height: 1.5;
@@ -18,27 +18,27 @@ p {
 }
 
 .alinur {
-    font-family: "Alinur Banglaborno", sans-serif;
+    font-family: "Alinur Banglaborno", sans-serif !important;
 }
 
 button,
 button:focus,
 button:active {
-    outline: none !important;
+    outline: none;
     box-shadow: 0 0 !important;
 }
 
 form input::placeholder {
     font-size: 15px;
     color: #888;
-    text-align: left !important;
-    float: left !important;
+    text-align: left;
+    float: left;
 }
 
 ul,
 ol {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 li {
@@ -52,7 +52,7 @@ a,
 a:hover,
 a:focus {
     color: #000;
-    text-decoration: none;
+    text-decoration: none !important;
     outline-offset: 0;
     outline: 0;
 }
@@ -71,7 +71,7 @@ input,
 input:focus {
     outline: 0;
     border: 0;
-    box-shadow: 0 0 !important;
+    box-shadow: 0 0;
 }
 
 .parsley-errors-list {
@@ -79,7 +79,7 @@ input:focus {
 }
 
 .parsley-error {
-    border: 1px solid #004aad !important;
+    border: 1px solid #004aad;
 }
 
 img {
@@ -98,8 +98,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
+    font-family: "Poppins", sans-serif !important;
+    margin: 0 !important;
 }
 
 .potro_font {
@@ -1562,37 +1562,37 @@ section.slider-section {
 
 .order_now_btn {
     /* বেস স্টাইল */
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 16px !important;
+    font-weight: 600 !important;
     /* টেক্সট: #fff */
-    color: #fff;
+    color: #fff !important;
     /* ডিফল্ট BG: ডিপ কালার #3F0051 */
-    background-color: #3F0051;
+    background-color: #3F0051 !important;
     /* বর্ডার: ডিপ কালার #3F0051 */
-    border: 1px solid #3F0051;
-    width: 50%;
-    height: 48px;
-    margin-top: 10px;
-    margin-left: 5px;
+    border: 1px solid #3F0051 !important;
+    width: 50% !important;
+    height: 48px !important;
+    margin-top: 10px !important;
+    margin-left: 5px !important;
 
     /* লেআউট */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 
     /* আধুনিক ডিজাইন */
-    border-radius: 8px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    border-radius: 8px !important;
+    letter-spacing: 0.5px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
 
     /* বাংলা ফন্ট */
-    font-family: "Potro Sans Bangla", sans-serif;
+    font-family: "Potro Sans Bangla", sans-serif !important;
     /* ডিফল্ট কালার শ্যাডো */
-    box-shadow: 0 4px 12px rgba(63, 0, 81, 0.4);
+    box-shadow: 0 4px 12px rgba(63, 0, 81, 0.4) !important;
 
     /* ক্রমাগত পালস অ্যানিমেশন */
-    animation: pulseZoom 2s infinite ease-in-out;
+    animation: pulseZoom 2s infinite ease-in-out !important;
 }
 
 /* Hover Effect: Deep to Accent with Enhanced Scale */
@@ -1622,46 +1622,29 @@ section.slider-section {
 ** ----------------------------------------------------
 */
 .add_cart_btn {
-    /* বেস স্টাইল */
-    font-size: 16px;
-    font-weight: 600;
-    /* টেক্সট কালার: #ffffff (সাদা) */
-    color: #ffffff;
-    /* ডিফল্ট BG: সেকেন্ডারি অ্যাকসেন্ট #750377 */
-    background-color: #750377;
-    /* বর্ডার: সেকেন্ডারি অ্যাকসেন্ট #750377 */
-    border: 1px solid #750377;
-    width: 50%;
-    height: 48px;
-    margin-top: 10px;
-
-    /* লেআউট */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    /* আধুনিক ডিজাইন */
-    border-radius: 8px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    /* শ্যাডো: অ্যাকসেন্ট কালার থেকে */
-    box-shadow: 0 4px 12px rgba(117, 3, 119, 0.3);
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    background-color: #750377 !important;
+    border: 1px solid #750377 !important;
+    width: 50% !important;
+    height: 48px !important;
+    margin-top: 10px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 8px !important;
+    letter-spacing: 0.5px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(117, 3, 119, 0.3) !important;
 }
 
-/* Hover Effect: Accent to Deep Color */
-.add_cart_btn:hover,
-.add_cart_btn:active {
-    /* হোভারে টেক্সট: #ffffff (সাদা) */
-    color: #ffffff !important;
-    /* হোভার BG: ডিপ কালার #3F0051 */
+.add_cart_btn:hover {
     background-color: #3F0051 !important;
-    /* হোভার বর্ডার: ডিপ কালার #3F0051 */
     border-color: #3F0051 !important;
-    outline: none;
-    /* হোভারে ডিপ কালার শ্যাডো */
-    box-shadow: 0 6px 15px rgba(63, 0, 81, 0.5);
-    transform: translateY(-2px);
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
 }
 
 /*
@@ -1672,32 +1655,32 @@ section.slider-section {
 */
 .call_now_btn {
     /* বেস স্টাইল */
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 600;
+    height: 48px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
 
     /* New Deep Background & White Text */
-    background-color: #3F0051;
+    background-color: #3F0051 !important;
     color: #ffffff;
-    border: 1px solid #3F0051;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    border: 1px solid #3F0051 !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
 
-    margin-top: 10px;
+    margin-top: 10px !important;
     /* শ্যাডো: ডিপ কালার থেকে */
-    box-shadow: 0 4px 12px rgba(63, 0, 81, 0.3);
+    box-shadow: 0 4px 12px rgba(63, 0, 81, 0.3) !important;
 }
 
 .call_now_btn i {
-    margin-right: 10px;
-    font-size: 18px;
+    margin-right: 10px !important;
+    font-size: 18px !important;
     /* আইকন কালার সাদা */
-    color: #ffffff;
-    transition: all 0.3s ease;
+    color: #ffffff !important;
+    transition: all 0.3s ease !important;
 }
 
 /* Hover Effect: Deep to Accent Color */
@@ -1709,10 +1692,10 @@ section.slider-section {
     background-color: #750377 !important;
     /* হোভার বর্ডার: সেকেন্ডারি অ্যাকসেন্ট #750377 */
     border-color: #750377 !important;
-    outline: none;
+    outline: none !important;
     /* হোভারে অ্যাকসেন্ট শ্যাডো */
-    box-shadow: 0 6px 15px rgba(117, 3, 119, 0.5);
-    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(117, 3, 119, 0.5) !important;
+    transform: translateY(-2px) !important;
 }
 
 .call_now_btn:hover i {
@@ -1722,49 +1705,49 @@ section.slider-section {
 
 .features {
     /* ক্লিনার বর্ডার এবং শ্যাডো */
-    border: 1px solid #eee;
+    border: 1px solid #eee !important;
     /* হালকা বর্ডার */
-    border-radius: 8px;
+    border-radius: 8px !important;
     /* সামান্য গোলাকার কোণ */
     /* টপ বর্ডার হাইলাইট: সেকেন্ডারি অ্যাকসেন্ট #750377 */
-    border-top: 5px solid #750377;
+    border-top: 5px solid #750377 !important;
     padding: 20px 15px;
     /* প্যাডিং বাড়ানো হলো */
-    background-color: #ffffff;
-    transition: box-shadow 0.3s ease;
+    background-color: #ffffff !important;
+    transition: box-shadow 0.3s ease !important;
 }
 
 .features:hover {
     /* হোভারে হালকা শ্যাডো */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08) !important;
     /* চাইলে হোভারে ডিপ পার্পল শ্যাডো যোগ করতে পারেন: box-shadow: 0 5px 15px rgba(63, 0, 81, 0.2); */
 }
 
 .features .icon {
-    width: 40px;
-    font-size: 28px;
-    height: 40px;
-    line-height: 40px;
+    width: 40px !important;
+    font-size: 28px !important;
+    height: 40px !important;
+    line-height: 40px !important;
     /* আইকন কালার: সেকেন্ডারি অ্যাকসেন্ট #750377 */
-    color: #750377;
-    text-align: center;
-    margin-right: 10px;
+    color: #750377 !important;
+    text-align: center !important;
+    margin-right: 10px !important;
 }
 
 .features .text {
-    font-size: 16px;
+    font-size: 16px !important;
     /* টেক্সট কালার: #333 (সাদা ব্যাকগ্রাউন্ডে ভালো কনট্রাস্টের জন্য) */
-    color: #333;
-    font-weight: 500;
+    color: #333 !important;
+    font-weight: 500 !important;
 }
 
 /* --- ২. ফিচার প্রোডাক্টস লিস্ট স্টাইল (.feature-products) --- */
 .feature-products {
     /* সাইডবারের জন্য ক্লিন স্টাইল */
-    border-right: none;
-    border-left: 1px solid #eee;
-    height: 100%;
-    padding-top: 15px;
+    border-right: none !important;
+    border-left: 1px solid #eee !important;
+    height: 100% !important;
+    padding-top: 15px !important;
 }
 
 .feature-products-wrapper {
@@ -1946,57 +1929,57 @@ section.slider-section {
 /* বাটন হোভার এফেক্ট */
 .details-action-box .section-head .action .details-action-btn:hover {
     /* হোভারে সামান্য গাঢ় রং: ডিপ কালার #3F0051 */
-    background-color: #3F0051;
-    border-color: #3F0051;
-    transform: translateY(-1px);
+    background-color: #3F0051 !important;
+    border-color: #3F0051 !important;
+    transform: translateY(-1px) !important;
     /* হোভারে ডিপ কালার শ্যাডো */
-    box-shadow: 0 6px 15px rgba(63, 0, 81, 0.4);
+    box-shadow: 0 6px 15px rgba(63, 0, 81, 0.4) !important;
 }
 
 /* --- রিভিউ কার্ড স্টাইল --- */
 .review-card {
-    background: #fcfcfc;
-    padding: 20px;
-    border-radius: 10px;
-    position: relative;
-    margin: 15px 0;
+    background: #fcfcfc !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    position: relative !important;
+    margin: 15px 0 !important;
     /* হাইলাইট বর্ডার: সেকেন্ডারি অ্যাকসেন্ট #750377 */
-    border-left: 5px solid #750377;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #750377 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* রিভিউ স্টার স্টাইল */
 .review_star {
     /* স্টার কালার: অ্যাকসেন্ট কালার #750377 */
-    color: #750377;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
+    color: #750377 !important;
+    margin-bottom: 10px !important;
+    font-size: 1.2rem !important;
 }
 
 /* --- ২. খালি কন্টেন্ট স্টাইল (Empty Content Style) --- */
 .details-action-box .empty-content {
-    padding: 50px 20px;
-    text-align: center;
+    padding: 50px 20px !important;
+    text-align: center !important;
     /* ড্যাশড বর্ডার: নিউট্রাল রং */
-    border: 2px dashed #a0a0a0;
-    border-radius: 10px;
-    background-color: #f2f2f2;
-    margin-top: 20px;
+    border: 2px dashed #a0a0a0 !important;
+    border-radius: 10px !important;
+    background-color: #f2f2f2 !important;
+    margin-top: 20px !important;
 }
 
 /* খালি কন্টেন্ট আইকন */
 .details-action-box .empty-content i {
-    font-size: 3.5rem;
-    height: 90px;
-    width: 90px;
-    text-align: center;
-    line-height: 90px;
+    font-size: 3.5rem !important;
+    height: 90px !important;
+    width: 90px !important;
+    text-align: center !important;
+    line-height: 90px !important;
     /* হালকা অ্যাকসেন্ট ব্যাকগ্রাউন্ড */
-    background-color: rgba(117, 3, 119, 0.1);
-    border-radius: 50%;
+    background-color: rgba(117, 3, 119, 0.1) !important;
+    border-radius: 50% !important;
     /* আইকন কালার: সেকেন্ডারি অ্যাকসেন্ট #750377 */
-    color: #750377;
-    margin-bottom: 15px;
+    color: #750377 !important;
+    margin-bottom: 15px !important;
 }
 
 p.empty-text {
@@ -2035,13 +2018,13 @@ p.empty-text {
 
 /* রেটিং কন্টেইনার */
 .rating>label {
-    display: inline-block;
-    position: relative;
-    width: 30px;
-    font-weight: 600;
-    color: #ccc;
+    display: inline-block !important;
+    position: relative !important;
+    width: 30px !important;
+    font-weight: 600 !important;
+    color: #ccc !important;
     /* ডিফল্ট স্টার রং */
-    transition: color 0.2s;
+    transition: color 0.2s !important;
 }
 
 /* টেক্সট এরিয়া */
@@ -2069,10 +2052,10 @@ textarea#message-text:focus {
 .rating>label.active~label:before,
 .rating>label:hover:before,
 .rating>label:hover~label:before {
-    content: "\2605";
-    position: absolute;
+    content: "\2605" !important;
+    position: absolute !important;
     /* নির্বাচিত স্টারের রং: অ্যাকসেন্ট কালার #750377 */
-    color: #750377;
+    color: #750377 !important;
 }
 
 /* রিভিউ সাবমিট বাটন */
@@ -3624,10 +3607,10 @@ section.product-inner {
 }
 
 .product_item_inner span.sale-badge-text {
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: 600;
-    font-family: "Lato", sans-serif;
+    color: #ffffff !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    font-family: "Lato", sans-serif !important;
 }
 
 .wist_item {
@@ -4451,8 +4434,8 @@ section.related-product-section {
 }
 
 .description h2 {
-    font-size: 18px;
-    color: #000;
+    font-size: 18px !important;
+    color: #000 !important;
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
     margin-bottom: 15px;
@@ -4805,12 +4788,9 @@ ul.social_link {
 
 /* --- বিবরণ কন্টেন্ট এরিয়া --- */
 .description {
-    margin-top: 30px;
-    /* মার্জিন বাড়ানো হলো */
-    background: #fff;
-    /* সাদা ব্যাকগ্রাউন্ড */
-    padding: 30px;
-    /* প্যাডিং বাড়ানো হলো */
+    margin-top: 30px !important;
+    background: #fff !important;
+    padding: 30px !important;
     border-radius: 8px;
     border: 1px solid #eee;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -4863,8 +4843,9 @@ a.forget-link {
 }
 
 span.sale-badge-text p {
-    font-size: 11px;
-    color: #fff;
+    margin: 0% !important;
+    font-size: 11px !important;
+    color: #fff !important;
     /* সেলের ব্যাজের টেক্সট সাদা রাখা হলো */
 }
 
@@ -5229,12 +5210,13 @@ td.tfoot_bg {
 }
 
 .all-reviews-button {
-    text-decoration: underline;
-    margin-left: 20px;
+    text-decoration: underline !important;
+    margin-left: 20px !important;
+    color: #000000 !important;
 }
 
 .customer-sidebar {
-    background-color: #f5f7f9;
+    background-color: #f5f7f9 !important;
     padding: 10px;
     height: 100%;
 }

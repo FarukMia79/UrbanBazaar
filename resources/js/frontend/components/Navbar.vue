@@ -310,7 +310,7 @@
                                         <li><router-link :to="{ name: 'index' }">Home</router-link></li>
                                     </div>
                                     <div>
-                                        <li><a href="hot-deals.html">Offers</a></li>
+                                        <li><router-link :to="{ name: 'offer'}">Offers</router-link></li>
                                     </div>
 
 

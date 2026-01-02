@@ -10,8 +10,8 @@
                                     <img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`" alt="" />
                                 </a>
                                 <p>8050 Goshairhat , Shariatpur , Dhaka</p>
-                                <a href="tel:+8809638365975" class="footer-hotlint btn-call"> <i
-                                        class="fas fa-phone-alt"></i> +8809638365975 </a>
+                                <a href="tel:+8801790647979" class="footer-hotlint btn-call"> <i
+                                        class="fas fa-phone-alt"></i> +8801790647979 </a>
                             </div>
                         </div>
                         <!-- col end -->

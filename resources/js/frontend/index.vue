@@ -113,6 +113,8 @@
                                 <div class="slider-item">
                                     <img :src="`/uploads/banner/1761398976jewellery-app-wide-banners.webp`" alt=""
                                         class="main-slider-style" />
+                                    <img :src="`/uploads/banner/1761398991trimmer-gif`" alt=""
+                                        class="main-slider-style" />
                                 </div>
                                 <!-- slider item -->
                             </div>
@@ -471,17 +473,12 @@
                                         </div>
                                     </div>
                                     <div class="pro_img">
-                                        <a
-                                            href="product/elegant-design-premium-quality-georgette-fabric-tops-pant-cord-set-for-women-western-dresses-for-women-49.html">
-                                            <img :src="`/uploads/product/1752694416-f387e425a57f82ea9ef96c6264269b2c.jpg`"
-                                                alt="Elegant design premium quality georgette fabric tops pant cord set for women //western dresses for women" />
-                                        </a>
+                                        <router-link :to="{ name: 'SingleProduct'}"><img :src="`/uploads/product/1752694416-f387e425a57f82ea9ef96c6264269b2c.jpg`"
+                                                alt="Elegant design premium quality georgette fabric tops pant cord set for women //western dresses for women" /></router-link>
                                     </div>
                                     <div class="pro_des">
                                         <div class="pro_name">
-                                            <a
-                                                href="product/elegant-design-premium-quality-georgette-fabric-tops-pant-cord-set-for-women-western-dresses-for-women-49.html">Elegant
-                                                design premium quality geor...</a>
+                                            <router-link :to="{ name: 'SingleProduct'}">Elegant design premium quality geor...</router-link>
                                         </div>
                                     </div>
                                 </div>
