@@ -296,7 +296,7 @@
                                                                     <i
                                                                         class="fa fa-phone-square"
                                                                     ></i>
-                                                                    +8801746100989
+                                                                    +8801790647979
                                                                 </a>
                                                             </h4>
                                                         </div>
@@ -861,7 +861,7 @@
                                         fashionable Stylish and beautiful
 
                                         appearance SIZE: L-32CM, H-20CM, W-16CM.
-                                        
+
                                         Available Colors: Pink,
                                     </p>
                                 </article>

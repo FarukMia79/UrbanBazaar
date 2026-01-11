@@ -102,6 +102,7 @@
                                     </div>
                                     <div class="pro_des">
                                         <div class="pro_name">
+                                            <router-link :to="{ name: 'CheckOut'}">প্রিমিয়াম ভেলভেট কুশন কভার</router-link>
                                             <a
                                                 href="product/%e0%a6%aa%e0%a7%8d%e0%a6%b0%e0%a6%bf%e0%a6%ae%e0%a6%bf%e0%a7%9f%e0%a6%be%e0%a6%ae-%e0%a6%ad%e0%a7%87%e0%a6%b2%e0%a6%ad%e0%a7%87%e0%a6%9f-%e0%a6%95%e0%a7%81%e0%a6%b6%e0%a6%a8-%e0%a6%95%e0%a6%ad%e0%a6%be%e0%a6%b0-_-plw-620-63.html"
                                                 >প্রিমিয়াম ভেলভেট কুশন কভার |
