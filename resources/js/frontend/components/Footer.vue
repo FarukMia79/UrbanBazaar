@@ -20,12 +20,17 @@
                                 <ul>
                                     <li class="title"><a>Useful Link</a></li>
                                     <li>
-                                        <a href="site/contact-us.html"> <a href="site/contact-us.html">Contact
-                                                Us</a></a>
+                                        <router-link :to="{ name: 'Contact'}">Contact Us</router-link>
                                     </li>
-                                    <li><a href="page/order-procedure.html">Order procedure</a></li>
-                                    <li><a href="page/delivery-rules.html">Delivery Rules</a></li>
-                                    <li><a href="page/return-policy.html">Return Policy</a></li>
+                                    <li>
+                                        <router-link :to="{ name: ''}">Order procedure</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link :to="{ name: ''}">Delivery Rules</router-link>
+                                    </li>
+                                    <li>
+                                        <router-link :to="{ name: 'ReturnPolicy'}">Return Policy</router-link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -62,15 +67,15 @@
                                 <ul class="social_link">
                                     <li class="social_list">
                                         <a class="mobile-social-link"
-                                            href="https://www.facebook.com/Khaleditsolution"><i
+                                            href="https://www.facebook.com/faruk.hossain.75259"><i
                                                 class="fab fa-facebook-f"></i></a>
                                     </li>
                                     <li class="social_list">
-                                        <a class="mobile-social-link" href="https://blue.khaleditsolution.xyz/"><i
+                                        <a class="mobile-social-link" href="#"><i
                                                 class="fab fa-google"></i></a>
                                     </li>
                                     <li class="social_list">
-                                        <a class="mobile-social-link" href="https://blue.khaleditsolution.xyz/"><i
+                                        <a class="mobile-social-link" href="#"><i
                                                 class="fab fa-Youtube-f"></i></a>
                                     </li>
                                 </ul>
@@ -91,7 +96,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="copyright">
-                                <p>Copyright © 2025 phpx.shop. All rights reserved. Design & Developed By <router-link
+                                <p>Copyright © 2026 phpx.shop. All rights reserved. Design & Developed By <router-link
                                         class="developer-badge">Faruk</router-link></p>
                             </div>
                         </div>
@@ -172,4 +177,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped></style>

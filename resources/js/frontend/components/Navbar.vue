@@ -109,7 +109,7 @@
                     </a>
                 </div>
                 <div class="menu-logo">
-                    <a href="index.html"><img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`" alt="" /></a>
+                    <router-link :to="{ name: 'index'}"><img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`" alt="" /></router-link>
                 </div>
                 <div class="menu-bag">
                     <p class="margin-shopping">
@@ -137,8 +137,8 @@
                         <div class="col-sm-12">
                             <div class="logo-header">
                                 <div class="main-logo">
-                                    <a href="index.html"><img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`"
-                                            alt="" /></a>
+                                    <router-link :to="{ name: 'index'}"><img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`"
+                                            alt="" /></router-link>
                                 </div>
                                 <div class="main-search">
                                     <form action="https://ecom.shariatpur.shop/search">
@@ -153,9 +153,8 @@
                                 <div class="header-list-items">
                                     <ul class="mb-0">
                                         <li class="track_btn">
-                                            <a class="text-black text-decoration-none" href="customer/order-track.html">
-                                                <i class="fa fa-truck"></i>Track
-                                                Order</a>
+                                            <router-link :to="{ name: 'OrderTrack'}" class="text-black text-decoration-none"><i class="fa fa-truck"></i>Track
+                                                Order</router-link>
                                         </li>
 
 
@@ -170,8 +169,7 @@
                                                 <ul>
                                                 </ul>
                                                 <p><strong>Total : ৳0.00</strong></p>
-                                                <a href="customer/checkout.html" class="go_cart text-decoration-none">
-                                                    Buy Now </a>
+                                                <router-link :to="{ name: 'CheckOut'}" class="go_cart text-decoration-none">Buy Now</router-link>
                                             </div>
                                         </li>
                                     </ul>
@@ -195,12 +193,8 @@
                                             <div class="sidebar-menu side__bar">
                                                 <ul class="hideshow">
                                                     <li>
-                                                        <a href="category/women-bags.html">
-                                                            <img :src="`/uploads/category/1761399037-woman-bag.webp`"
-                                                                alt="" />
-                                                            Women Bags
-                                                            <i class="fa-solid fa-chevron-right"></i>
-                                                        </a>
+                                                        <router-link :to="{ name: 'CategoryPage'}"><img :src="`/uploads/category/1761399037-woman-bag.webp`"
+                                                                alt="" />Women Bags<i class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu">
                                                             <li>
                                                                 <a href="subcategory/demo.html">
@@ -314,7 +308,7 @@
                                     </div>
 
                                     <div class="contact__menu">
-                                        <li><a href="site/contact-us.html">Contact</a></li>
+                                        <li><router-link :to="{ name: 'Contact'}">Contact</router-link></li>
                                     </div>
                                     <div class="right__menu__top">
                                         <li class="for_order">
@@ -342,6 +336,8 @@
 </template>
 
 <script>
+import CheckOut from '../page/CheckOut.vue';
+
 export default {
 
 }
