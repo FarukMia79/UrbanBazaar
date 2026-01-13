@@ -1,96 +1,62 @@
 <template lang="">
-    <!-- Topbar -->
-    <nav class="navbar topbar px-4">
-        <span class="fw-bold">Admin Panel</span>
-
-        <div class="ms-auto dropdown">
-            <a
-                class="text-white dropdown-toggle"
-                data-bs-toggle="dropdown"
-                href="#"
-            >
-                <i class="bi bi-person-circle"></i> Admin
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">Dashboard</a></li>
-                <li><a class="dropdown-item" href="#">Change Password</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                    <a class="dropdown-item text-danger" href="#">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Sidebar -->
-    <div class="position-fixed sidebar p-3">
-        <h5 class="text-white mb-4">Menu</h5>
-
-        <ul class="nav flex-column gap-2">
-            <li>
-                <a href="#" class="d-flex align-items-center gap-2">
-                    <i class="bi bi-speedometer2"></i> Dashboard
-                </a>
-            </li>
-
-            <li>
-                <a data-bs-toggle="collapse" href="#ordersMenu">
-                    <i class="bi bi-cart"></i> Orders
-                </a>
-                <div class="collapse ps-4" id="ordersMenu">
-                    <a href="#" class="d-block mt-2">All Orders</a>
-                    <a href="#" class="d-block">Pending</a>
-                    <a href="#" class="d-block">Delivered</a>
-                </div>
-            </li>
-
-            <li>
-                <a data-bs-toggle="collapse" href="#productMenu">
-                    <i class="bi bi-box"></i> Products
-                </a>
-                <div class="collapse ps-4" id="productMenu">
-                    <a href="#" class="d-block mt-2">Manage Products</a>
-                    <a href="#" class="d-block">Categories</a>
-                    <a href="#" class="d-block">Brands</a>
-                </div>
-            </li>
-
-            <li>
-                <a href="#"> <i class="bi bi-people"></i> Customers </a>
-            </li>
-
-            <li>
-                <a href="#"> <i class="bi bi-gear"></i> Settings </a>
+    <nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color: #760478 !important;">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <!-- Sidebar Toggle-->
+        <button
+            class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+            id="sidebarToggle"
+            href="#!"
+        >
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Navbar Search-->
+        <form
+            class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+        >
+            <div class="input-group">
+                <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Search for..."
+                    aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch"
+                />
+                <button
+                    class="btn btn-primary"
+                    id="btnNavbarSearch"
+                    type="button"
+                >
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a
+                    class="nav-link dropdown-toggle"
+                    id="navbarDropdown"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    ><i class="fas fa-user fa-fw"></i
+                ></a>
+                <ul
+                    class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="navbarDropdown"
+                >
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
             </li>
         </ul>
-    </div>
+    </nav>
 </template>
 <script>
 export default {};
 </script>
-<style lang="css">
-body {
-    background: #f5f6fa;
-}
-.sidebar {
-    width: 260px;
-    min-height: 100vh;
-    background: #212529;
-}
-.sidebar a {
-    color: #adb5bd;
-    text-decoration: none;
-}
-.sidebar a:hover {
-    color: #fff;
-}
-.content {
-    margin-left: 260px;
-    padding: 20px;
-}
-.topbar {
-    height: 60px;
-    background: #212529;
-    color: #fff;
-}
-</style>
+<style lang="css"></style>
