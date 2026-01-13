@@ -26,6 +26,9 @@
     <!-- 3. Flatpickr CSS moved to HEAD -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <!-- FrontEnd CSS -->
     <link rel="stylesheet" href="{{ asset('frontEnd/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('frontEnd/css/all.min.css') }}">
@@ -63,6 +66,7 @@
     <script src="{{ asset('frontEnd/js/mobile-menu-init.js') }}"></script>
     <script src="{{ asset('frontEnd/js/wow.min.js') }}"></script>
     <script src="{{ asset('frontEnd/js/jquery.syotimer.min.js') }}"></script>
+
 
     <script>
         new WOW().init();
