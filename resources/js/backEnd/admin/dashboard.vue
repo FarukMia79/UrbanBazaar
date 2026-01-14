@@ -16,7 +16,7 @@
                             class="card-body d-flex justify-content-between align-items-center"
                         >
                             <div class="icon-circle bg-primary text-white">
-                                🛒
+                                <i class="fa-solid fa-cart-shopping"></i>
                             </div>
                             <div class="text-end">
                                 <h4 class="mb-0">120</h4>
@@ -32,7 +32,7 @@
                             class="card-body d-flex justify-content-between align-items-center"
                         >
                             <div class="icon-circle bg-success text-white">
-                                📦
+                                <i class="fa-solid fa-bag-shopping"></i>
                             </div>
                             <div class="text-end">
                                 <h4 class="mb-0">15</h4>
@@ -47,7 +47,9 @@
                         <div
                             class="card-body d-flex justify-content-between align-items-center"
                         >
-                            <div class="icon-circle bg-info text-white">🗄️</div>
+                            <div class="icon-circle bg-info text-white">
+                                <i class="fa-solid fa-database"></i>
+                            </div>
                             <div class="text-end">
                                 <h4 class="mb-0">85</h4>
                                 <small class="text-muted">Products</small>
@@ -62,7 +64,7 @@
                             class="card-body d-flex justify-content-between align-items-center"
                         >
                             <div class="icon-circle bg-warning text-dark">
-                                👤
+                                <i class="fa-solid fa-user"></i>
                             </div>
                             <div class="text-end">
                                 <h4 class="mb-0">60</h4>

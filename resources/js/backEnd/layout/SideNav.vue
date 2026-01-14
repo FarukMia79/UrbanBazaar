@@ -4,15 +4,15 @@
             <div class="sb-sidenav-menu">
                 <div class="nav">
                     <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="index.html">
+                    <router-link class="nav-link NavHover" :to="{ name: 'dashboard'}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-tachometer-alt"></i>
                         </div>
                         Dashboard
-                    </a>
+                    </router-link>
                     <div class="sb-sidenav-menu-heading">Interface</div>
                     <a
-                        class="nav-link collapsed"
+                        class="nav-link collapsed NavHover"
                         href="#"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseLayouts"
@@ -20,9 +20,9 @@
                         aria-controls="collapseLayouts"
                     >
                         <div class="sb-nav-link-icon">
-                            <i class="fas fa-columns"></i>
+                            <i class="fa-solid fa-cart-shopping"></i>
                         </div>
-                        Layouts
+                        Orders
                         <div class="sb-sidenav-collapse-arrow">
                             <i class="fas fa-angle-down"></i>
                         </div>
@@ -34,16 +34,14 @@
                         data-bs-parent="#sidenavAccordion"
                     >
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="layout-static.html"
-                                >Static Navigation</a
-                            >
-                            <a class="nav-link" href="layout-sidenav-light.html"
-                                >Light Sidenav</a
-                            >
+                            <router-link class="nav-link NavHover" :to="{ name: 'AllOrder'}"><i class="fa-solid fa-file-medical me-1"></i>All Order</router-link>
+                            <router-link class="nav-link  NavHover" :to="{ name: 'PendingOrder'}"><i class="fa-solid fa-file-medical me-1"></i>Pending</router-link>
+                            <router-link class="nav-link  NavHover" :to="{ name: 'CompletedOrder'}"><i class="fa-solid fa-file-medical me-1"></i>Completed Order</router-link>
+                            <router-link class="nav-link  NavHover" :to="{ name: 'CancelledOrder'}"><i class="fa-solid fa-file-medical me-1"></i>Cancelled Order</router-link>
                         </nav>
                     </div>
                     <a
-                        class="nav-link collapsed"
+                        class="nav-link collapsed NavHover"
                         href="#"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapsePages"
@@ -157,4 +155,9 @@
 <script>
 export default {};
 </script>
-<style lang="css"></style>
+<style lang="css">
+.NavHover:hover {
+    background-color: #00897b !important; /* আগের চেয়ে একটু গাঢ় সবুজ */
+    color: #ffffff !important;
+}
+</style>

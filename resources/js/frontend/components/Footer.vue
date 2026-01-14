@@ -168,17 +168,16 @@
 </template>
 
 <script>
-
 export default {
-methods: {
-    scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // এটি দিলে পেজটি স্মুথভাবে উপরে যাবে
-        });
-    }
-}
-}
+    methods: {
+        scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth", // এটি দিলে পেজটি স্মুথভাবে উপরে যাবে
+            });
+        },
+    },
+};
 </script>
 
 <style lang="css" scoped></style>
