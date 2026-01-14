@@ -189,9 +189,6 @@
 export default {};
 </script>
 <style lang="css">
-body {
-    background: #f5f6fa;
-}
 .icon-circle {
     width: 60px;
     height: 60px;

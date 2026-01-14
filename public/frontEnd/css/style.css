@@ -861,7 +861,6 @@ li.Newsletter i {
 /*==== CATEGORY SECTION CSS START ====  */
 section.slider-section {
     margin-bottom: 10px;
-    margin-top: 10px;
 }
 
 .home-slider-container {
@@ -1264,6 +1263,9 @@ section.slider-section {
 
 .footer_nav ul li a span {
     display: block;
+}
+.footer_nav .col {
+    color: #000 !important;
 }
 
 .footer_nav ul li {
@@ -4369,7 +4371,7 @@ form.sort-form .form-select:focus {
 
 #content {
     width: 100%;
-    padding-top: 62px;
+    padding-top: 65px;
 }
 
 .main-header {
@@ -5091,6 +5093,10 @@ ul.child-category {
     right: -100%;
 }
 
+.sidebar-menu, .all__category__list, .sidebar-menu ul {
+    overflow: visible !important;
+}
+
 .col-sm-3.hidetosm {
     padding-right: 0;
 }
@@ -5262,8 +5268,12 @@ li.all__category__list:hover .side__bar {
 
 .side__bar ul li:hover>a {
     /* হোভার BG: ডিপ কালার #3F0051 */
-    background-color: #3F0051;
-    color: #ffffff;
+    background-color: #f7e0f8;
+    color: #3F0051;
+}
+
+.side__bar ul li a {
+    color: #3F0051;
 }
 
 .side__barsub {
@@ -5890,7 +5900,7 @@ li.all__category__list i {
     padding: 8px 25px;
     /* ইনডেন্টেশন (ডানদিকে সরানোর জন্য) */
     display: block;
-    color: #222;
+    color: #3F0051;
     /* কালো বা ডিপ গ্রে টেক্সট */
     font-size: 0.95rem;
     text-decoration: none;
@@ -6106,8 +6116,8 @@ li.all__category__list i {
     position: fixed;
     width: 60px;
     height: 60px;
-    bottom: 40px;
-    right: 40px;
+    bottom: 90px;
+    right: 30px;
     background-color: #25d366;
     /* WhatsApp Green */
     color: #FFF;
@@ -6125,7 +6135,7 @@ li.all__category__list i {
 }
 
 /* Ensure the Font Awesome icon inside is centered correctly */
-.float .fa {
+.float i {
     /* Reset any default margin/padding if needed to ensure perfect center */
     margin: 0;
     line-height: 1;
