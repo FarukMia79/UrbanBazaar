@@ -40,14 +40,14 @@
     <link rel="stylesheet" href="{{ asset('frontEnd/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontEnd/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('frontEnd/css/main.css') }}">
-    
+
 
     <!-- BackEnd CSS -->
     <link rel="stylesheet" href="{{ asset('backEnd/assets/css/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backEnd/assets/css/styles.css') }}">
 
     <!-- ভুল লিঙ্কটি বাদ দিয়ে এটি বসান -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

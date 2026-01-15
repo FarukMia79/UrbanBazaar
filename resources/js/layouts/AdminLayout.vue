@@ -1,10 +1,12 @@
 <template>
-    <navbar />
-    <div id="layoutSidenav">
-        <SideNav />
-        <div id="layoutSidenav_content">
-            <router-view />
-            <Footer />
+    <div class="posi">
+        <navbar />
+        <div id="layoutSidenav" class="bd-color">
+            <SideNav />
+            <div id="layoutSidenav_content">
+                <router-view />
+                <Footer />
+            </div>
         </div>
     </div>
 </template>
@@ -22,4 +24,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.posi{
+    margin-top: -65px;
+}
+.bd-color {
+    background-color: #eff1f4;
+}
+</style>

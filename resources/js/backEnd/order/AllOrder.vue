@@ -1,12 +1,12 @@
 <template lang="">
-<div class="container-fluid mt-4">
-    <div class="card border-0 shadow-sm">
-        <!-- Header -->
-        <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+    
+<div class="container-fluid mt-4 px-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-bold">All Order (16)</h5>
             <button class="btn btn-add rounded-pill px-3 text-white"><i class="fa fa-cart-shopping me-1"></i> Add New</button>
         </div>
 
+    <div class="card border-0 shadow-custom rounded-4 p-4">
         <div class="card-body">
             <!-- Buttons & Search -->
             <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
