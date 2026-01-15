@@ -19,7 +19,7 @@
                 <button class="btn btn-green btn-sm text-white"><i class="fa fa-truck"></i> Safe Delivery</button>
                 
                 <div class="ms-auto d-flex">
-                    <input type="text" class="form-control form-control-sm rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
+                    <input type="text" class="search-input rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
                     <button class="btn btn-search btn-sm rounded-0 text-white px-3">Search</button>
                 </div>
             </div>
@@ -94,7 +94,7 @@
 <script>
 export default {};
 </script>
-<style lang="css">
+<style lang="css" scoped>
 /* Font Size & General */
 .order-table { font-size: 14px; }
 .order-table p { margin-bottom: 2px; display: flex; align-items: flex-start; }
@@ -143,4 +143,18 @@ export default {};
 /* Layout Fix */
 .invoice-box .border-end { border-color: #f0f0f0 !important; }
 .table-bordered > :not(caption) > * > * { border-color: #eee; }
+
+.search-input:focus {
+    border-color: #00cae3 !important;
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
+    outline: none !important; 
+    background-color: #fff; 
+}
+
+.search-input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 12px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
 </style>

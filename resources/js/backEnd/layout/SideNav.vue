@@ -49,7 +49,7 @@
                         aria-controls="collapseLayouts"
                     >
                         <div class="sb-nav-link-icon">
-                            <i class="fa-solid fa-cart-shopping"></i>
+                            <i class="fa-solid fa-database"></i>
                         </div>
                         Products
                         <div class="sb-sidenav-collapse-arrow">
@@ -64,6 +64,12 @@
                     >
                         <nav class="sb-sidenav-menu-nested nav">
                             <router-link class="nav-link NavHover" :to="{ name: 'ProductManage'}"><i class="fa-solid fa-file-medical me-1"></i>Product Manage</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'CategoryIndex'}"><i class="fa-solid fa-file-medical me-1"></i>Categories</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'SubCategoryIndex'}"><i class="fa-solid fa-file-medical me-1"></i>Subcategories</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'ChildcategoryManage'}"><i class="fa-solid fa-file-medical me-1"></i>Childcategories</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'SizeIndex'}"><i class="fa-solid fa-file-medical me-1"></i>Sizes</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'ProductPriceManage'}"><i class="fa-solid fa-file-medical me-1"></i>Price Edit</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'CouponManagement'}"><i class="fa-solid fa-file-medical me-1"></i>Coupon</router-link>
                         </nav>
                     </div>
                     
@@ -92,9 +98,9 @@
 <script>
 export default {};
 </script>
-<style lang="css">
+<style lang="css" scoped>
 .NavHover:hover {
-    background-color: #00897b !important; /* আগের চেয়ে একটু গাঢ় সবুজ */
+    background-color: #00897b !important;
     color: #ffffff !important;
 }
 </style>

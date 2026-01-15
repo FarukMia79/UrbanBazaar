@@ -36,7 +36,7 @@
                     <div class="ms-auto d-flex">
                         <input
                             type="text"
-                            class="form-control form-control-sm rounded-0 border-end-0"
+                            class="search-input rounded-0 border-end-0"
                             placeholder="Search"
                             style="width: 200px"
                         />
@@ -163,4 +163,165 @@
 <script>
 export default {};
 </script>
-<style lang="css"></style>
+<style lang="css" scoped>
+/* Font Size & General */
+.order-table {
+    font-size: 14px;
+}
+.order-table p {
+    margin-bottom: 2px;
+    display: flex;
+    align-items: flex-start;
+}
+.order-table p label {
+    width: 75px;
+    flex-shrink: 0;
+    font-weight: 500;
+    color: #555;
+}
+.order-table i {
+    cursor: pointer;
+}
+
+/* Action Icons & Badges */
+.badge-fraud {
+    background: #ffc107;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* Custom Button Colors */
+.btn-add {
+    background-color: #f06292;
+    border: none;
+}
+.btn-teal {
+    background-color: #00bfa5;
+    border: none;
+}
+.btn-purple-dark {
+    background-color: #6a1b9a;
+    border: none;
+}
+.btn-coral {
+    background-color: #ef5350;
+    border: none;
+}
+.btn-sky {
+    background-color: #4fc3f7;
+    border: none;
+}
+.btn-cyan {
+    background-color: #00bcd4;
+    border: none;
+}
+.btn-gray {
+    background-color: #78909c;
+    border: none;
+}
+.btn-green {
+    background-color: #00c853;
+    border: none;
+}
+.btn-search {
+    background-color: #00cae3;
+    border: none;
+}
+.btn-pending {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+}
+
+/* --- Custom Button Hover Fix --- */
+.btn-teal:hover,
+.btn-teal:active {
+    background-color: #00897b !important;
+    color: #fff !important;
+}
+.btn-add:hover,
+.btn-add:active {
+    background-color: #d81b60 !important;
+    color: #fff !important;
+}
+.btn-purple-dark:hover,
+.btn-purple-dark:active {
+    background-color: #4a148c !important;
+    color: #fff !important;
+}
+.btn-coral:hover,
+.btn-coral:active {
+    background-color: #e53935 !important;
+    color: #fff !important;
+}
+.btn-sky:hover,
+.btn-sky:active {
+    background-color: #039be5 !important;
+    color: #fff !important;
+}
+.btn-cyan:hover,
+.btn-cyan:active {
+    background-color: #0097a7 !important;
+    color: #fff !important;
+}
+.btn-gray:hover,
+.btn-gray:active {
+    background-color: #546e7a !important;
+    color: #fff !important;
+}
+.btn-green:hover,
+.btn-green:active {
+    background-color: #00a041 !important;
+    color: #fff !important;
+}
+.btn-search:hover,
+.btn-search:active {
+    background-color: #00acc1 !important;
+    color: #fff !important;
+}
+.btn-pending:hover,
+.btn-pending:active {
+    background-color: #59359a !important;
+    color: #fff !important;
+}
+
+.btn-sm.text-white:hover {
+    color: #ffffff !important;
+}
+
+.gray-color {
+    color: #78909c;
+}
+.btn-color {
+    color: #6f42c1;
+}
+.card-header h5 {
+    color: #333 !important;
+    font-size: 18px;
+}
+
+/* Layout Fix */
+.invoice-box .border-end {
+    border-color: #f0f0f0 !important;
+}
+.table-bordered > :not(caption) > * > * {
+    border-color: #eee;
+}
+
+.search-input:focus {
+    border-color: #00cae3 !important;
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important;
+    outline: none !important;
+    background-color: #fff;
+}
+
+.search-input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 12px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+</style>

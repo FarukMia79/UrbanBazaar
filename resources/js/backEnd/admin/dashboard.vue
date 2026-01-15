@@ -3,7 +3,7 @@
         <div class="container-fluid bg-light min-vh-100 p-4">
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold text-dark">Live Dashboard</h3>
+                <h3 class="fw-bold text-dark">Dashboard</h3>
                 <div class="d-flex gap-2">
                     <button
                         class="btn btn-primary btn-sm rounded-3 px-3 shadow-sm"

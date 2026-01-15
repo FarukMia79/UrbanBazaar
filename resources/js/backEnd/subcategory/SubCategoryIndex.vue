@@ -1,9 +1,9 @@
 <template lang="">
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Product Manage</h4>
+            <h4 class="fw-bold text-dark mb-0">Subcategories Manage</h4>
             <button class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
-                <i class="fa-solid fa-database me-1"></i> Add Product
+                <i class="fa-solid fa-layer-group me-1"></i> Add Subcategory
             </button>
         </div>
 
@@ -11,25 +11,20 @@
             <div class="row g-3 mb-4 align-items-center">
                 <div class="col-md-6 d-flex gap-2">
                     <button class="btn btn-teal-solid btn-sm px-3">
-                        <i class="fa-solid fa-thumbs-up me-1"></i> Deal
+                        <i class="fa-solid fa-copy me-1"></i> Copy
                     </button>
                     <button class="btn btn-red-solid btn-sm px-3">
-                        <i class="fa-solid fa-thumbs-down me-1"></i> Deal
+                        <i class="fa-solid fa-print me-1"></i> Print
                     </button>
                     <button
                         class="btn btn-purple-solid btn-sm px-3"
                     >
-                        <i class="fa-solid fa-thumbs-up me-1"></i> Active
-                    </button>
-                    <button
-                        class="btn btn-orange-solid btn-sm px-3"
-                    >
-                        <i class="fa-solid fa-thumbs-down me-1"></i> Inactive
+                        <i class="fa-solid fa-file-pdf me-1"></i> PDF
                     </button>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
-                    <input type="text" class=" rounded-0 border-end-0 search-input" placeholder="Search" style="width: 200px;">
+                    <input type="text" class="search-input rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
                     <button class="btn btn-search btn-sm rounded-0 text-white px-3">Search</button>
                 </div>
                 </div>
@@ -47,13 +42,10 @@
                                 />
                             </th>
                             <th width="50">SL</th>
-                            <th width="120">Action</th>
-                            <th>Name</th>
-                            <th>Category</th>
+                            <th width="150">Action</th>
+                            <th>Category Name</th>
+                            <th>Subcategory Name</th>
                             <th>Image</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Deal & Feature</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -69,10 +61,10 @@
                             <td>
                                 <div class="d-flex gap-2 fs-5">
                                     <i
-                                        class="fa-regular fa-thumbs-down text-muted cursor-pointer action-edit"
+                                        class="fa-regular fa-thumbs-down text-muted cursor-pointer me-2 action-edit"
                                     ></i>
                                     <i
-                                        class="fa-regular fa-edit text-muted cursor-pointer action-edit"
+                                        class="fa-regular fa-edit text-muted cursor-pointer me-2 action-edit"
                                     ></i>
                                     <i
                                         class="fa-solid fa-trash text-muted cursor-pointer action-trash"
@@ -93,20 +85,13 @@
                                     "
                                 />
                             </td>
-                            <td>2500</td>
-                            <td>100</td>
-                            <td class="small">
-                                Hot Deals : No <br />
-                                Top Feature : No
-                            </td>
                             <td>
                                 <span class="badge badge-active">Active</span>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div
+                <div
                 class="d-flex justify-content-between align-items-center mt-1 flex-wrap gap-2 text-muted small"
             >
                 <div>Showing 1 to 6 of 6 entries</div>
@@ -133,6 +118,7 @@
                         </li>
                     </ul>
                 </nav>
+            </div>
             </div>
         </div>
     </div>
@@ -216,4 +202,12 @@ export default {};
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
+.active-page {
+    background-color: #5e72e4 !important;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 </style>

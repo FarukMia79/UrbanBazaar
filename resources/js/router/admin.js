@@ -5,6 +5,12 @@ import PendingOrder from '../backEnd/order/PendingOrder.vue';
 import CompletedOrder from '../backEnd/order/CompletedOrder.vue';
 import CancelledOrder from '../backEnd/order/CancelledOrder.vue';
 import ProductManage from '../backEnd/product/ProductManage.vue';
+import ProductPriceManage from '../backEnd/product/ProductPriceManage.vue';
+import CategoryIndex from '../backEnd/category/CategoryIndex.vue';
+import SubCategoryIndex from '../backEnd/subcategory/SubCategoryIndex.vue';
+import ChildcategoryManage from '../backEnd/childcategory/ChildcategoryManage.vue';
+import SizeIndex from '../backEnd/size/SizeIndex.vue';
+import CouponManagement from '../backEnd/coupon/CouponManagement.vue';
 
 export default [
     {
@@ -17,6 +23,12 @@ export default [
             { path: 'order/completed', name: 'CompletedOrder', component: CompletedOrder},
             { path: 'order/cancelled', name: 'CancelledOrder', component: CancelledOrder},
             { path: 'products/manage', name: 'ProductManage', component: ProductManage},
+            { path: 'products/price-edit', name: 'ProductPriceManage', component: ProductPriceManage},
+            { path: 'categories/manage', name: 'CategoryIndex', component: CategoryIndex},
+            { path: 'subcategories/manage', name: 'SubCategoryIndex', component: SubCategoryIndex},
+            { path: 'chilcategories/manage', name: 'ChildcategoryManage', component: ChildcategoryManage},
+            { path: 'sizes/manage', name: 'SizeIndex', component: SizeIndex},
+            { path: 'coupon', name: 'CouponManagement', component: CouponManagement},
         ],
     },
 ];

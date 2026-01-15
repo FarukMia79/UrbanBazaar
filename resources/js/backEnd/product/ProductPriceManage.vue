@@ -1,9 +1,9 @@
 <template lang="">
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Product Manage</h4>
+            <h4 class="fw-bold text-dark mb-0">Price Manage</h4>
             <button class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
-                <i class="fa-solid fa-database me-1"></i> Add Product
+                <i class="fa-solid fa-database me-1"></i> Add Products
             </button>
         </div>
 
@@ -11,100 +11,108 @@
             <div class="row g-3 mb-4 align-items-center">
                 <div class="col-md-6 d-flex gap-2">
                     <button class="btn btn-teal-solid btn-sm px-3">
-                        <i class="fa-solid fa-thumbs-up me-1"></i> Deal
+                        <i class="fa-solid fa-copy me-1"></i> Copy
                     </button>
                     <button class="btn btn-red-solid btn-sm px-3">
-                        <i class="fa-solid fa-thumbs-down me-1"></i> Deal
+                        <i class="fa-solid fa-print me-1"></i> Print
                     </button>
-                    <button
-                        class="btn btn-purple-solid btn-sm px-3"
-                    >
-                        <i class="fa-solid fa-thumbs-up me-1"></i> Active
-                    </button>
-                    <button
-                        class="btn btn-orange-solid btn-sm px-3"
-                    >
-                        <i class="fa-solid fa-thumbs-down me-1"></i> Inactive
+                    <button class="btn btn-purple-solid btn-sm px-3">
+                        <i class="fa-solid fa-file-pdf me-1"></i> PDF
                     </button>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
-                    <input type="text" class=" rounded-0 border-end-0 search-input" placeholder="Search" style="width: 200px;">
-                    <button class="btn btn-search btn-sm rounded-0 text-white px-3">Search</button>
-                </div>
+                        <input
+                            type="text"
+                            class="search-input rounded-0 border-end-0"
+                            placeholder="Search"
+                            style="width: 200px"
+                        />
+                        <button
+                            class="btn btn-search btn-sm rounded-0 text-white px-3"
+                        >
+                            Search
+                        </button>
+                    </div>
                 </div>
             </div>
 
-
             <div class="table-responsive">
-                <table class="table table-hover align-middle product-table">
+                <table class="table align-middle table-hover price-table">
                     <thead class="table-light">
                         <tr>
-                            <th width="40">
-                                <input
-                                    type="checkbox"
-                                    class="form-check-input"
-                                />
-                            </th>
-                            <th width="50">SL</th>
-                            <th width="120">Action</th>
+                            <th width="60">SL</th>
                             <th>Name</th>
-                            <th>Category</th>
-                            <th>Image</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Deal & Feature</th>
-                            <th>Status</th>
+                            <th width="180">Old Price</th>
+                            <th width="180">New Price</th>
+                            <th width="180">Stock</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Row 1 -->
                         <tr>
+                            <td>1</td>
+                            <td class="text-secondary">
+                                প্রিমিয়াম ভেলভেট কুশন কভার | PLW-620
+                            </td>
                             <td>
                                 <input
-                                    type="checkbox"
-                                    class="form-check-input"
+                                    type="text"
+                                    class="form-control price-input"
+                                    value="3000"
                                 />
                             </td>
-                            <td>1</td>
                             <td>
-                                <div class="d-flex gap-2 fs-5">
-                                    <i
-                                        class="fa-regular fa-thumbs-down text-muted cursor-pointer action-edit"
-                                    ></i>
-                                    <i
-                                        class="fa-regular fa-edit text-muted cursor-pointer action-edit"
-                                    ></i>
-                                    <i
-                                        class="fa-solid fa-trash text-muted cursor-pointer action-trash"
-                                    ></i>
-                                </div>
-                            </td>
-                            <td>sneakers</td>
-                            <td>Sneakers</td>
-                            <td>
-                                <img
-                                    src="https://via.placeholder.com/40"
-                                    class="rounded-circle border"
-                                    alt="prod"
-                                    style="
-                                        width: 45px;
-                                        height: 45px;
-                                        object-fit: cover;
-                                    "
+                                <input
+                                    type="text"
+                                    class="form-control price-input"
+                                    value="250"
                                 />
                             </td>
-                            <td>2500</td>
-                            <td>100</td>
-                            <td class="small">
-                                Hot Deals : No <br />
-                                Top Feature : No
-                            </td>
                             <td>
-                                <span class="badge badge-active">Active</span>
+                                <input
+                                    type="text"
+                                    class="form-control price-input"
+                                    value="100"
+                                />
                             </td>
                         </tr>
+                        <!-- Row 2 -->
+                        <tr>
+                            <td>2</td>
+                            <td class="text-secondary">
+                                প্রিমিয়াম ভেলভেট কুশন কভার | PLW-512
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    class="form-control price-input"
+                                    value="30006"
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    class="form-control price-input"
+                                    value="250"
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    class="form-control price-input"
+                                    value="100"
+                                />
+                            </td>
+                        </tr>
+                        <!-- আপনার বাকি ডেটাগুলো এভাবে লুপে আসবে... -->
                     </tbody>
                 </table>
+            </div>
+            <div class="d-flex justify-content-end mt-2 mb-4">
+                <button class="btn btn-teal px-4 text-white">
+                    Update Price
+                </button>
             </div>
             <div
                 class="d-flex justify-content-between align-items-center mt-1 flex-wrap gap-2 text-muted small"
@@ -141,20 +149,6 @@
 export default {};
 </script>
 <style lang="css" scoped>
-.product-table {
-    color: #212529 !important;
-}
-
-.action-trash:hover {
-    color: #ef5350 !important;
-    cursor: pointer;
-}
-
-.action-edit:hover{
-    color: #00bfa5 !important;
-    cursor: pointer;
-}
-
 .shadow-custom {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
 }
@@ -202,6 +196,40 @@ export default {};
     justify-content: center;
 }
 
+.btn-pink { background-color: #f06292; border: none; }
+.btn-pink:hover { background-color: #d81b60; color: #fff; }
+
+.btn-teal { background-color: #1abc9c; border: none; border-radius: 4px; }
+.btn-teal:hover { background-color: #16a085; color: #fff; }
+
+
+.price-table thead th {
+    background-color: #f8faff;
+    color: #333;
+    font-weight: 600;
+    padding: 15px 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.price-table tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.price-input:focus {
+    border-color: #1abc9c !important;
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
+    outline: none !important; 
+    background-color: #fff; 
+}
+
+.price-input {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px 12px;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
 .search-input:focus {
     border-color: #00cae3 !important;
     box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
@@ -215,5 +243,6 @@ export default {};
     padding: 6px 12px;
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
+
 
 </style>
