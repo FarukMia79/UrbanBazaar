@@ -66,7 +66,7 @@
                             <td>1</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <router-link :to="{ name: 'ProductEdit'}" class="text-muted cursor-pointer action-edit me-2">
+                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-edit me-2">
                                         <i class="fa-regular fa-thumbs-down"></i>
                                     </router-link>
                                     <router-link :to="{ name: 'ProductEdit'}" class="text-muted cursor-pointer action-edit me-2">

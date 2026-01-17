@@ -2,9 +2,12 @@
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-dark mb-0">Childcategories Manage</h4>
-            <button class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
-                <i class="fa-solid fa-layer-group me-1"></i> Add Childcategory
-            </button>
+            <router-link
+                class="btn btn-pink rounded-pill px-3 shadow-sm text-white"
+                :to="{ name: 'ChildCategoryCreate' }"
+                ><i class="fa-solid fa-layer-group me-1"></i>Add
+                Childcategory</router-link
+            >
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
@@ -43,8 +46,8 @@
                             </th>
                             <th width="50">SL</th>
                             <th width="150">Action</th>
-                            <th>Category Name</th>
-                            <th>Subcategory Name</th>
+                            <th>SubCategory Name</th>
+                            <th>ChildCategory Name</th>
                             <th>Image</th>
                             <th>Status</th>
                         </tr>

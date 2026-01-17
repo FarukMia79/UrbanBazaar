@@ -12,7 +12,10 @@ import CategoryIndex from '../backEnd/category/CategoryIndex.vue';
 import CategoryCreate from '../backEnd/category/CategoryCreate.vue';
 import CategoryEdit from '../backEnd/category/CategoryEdit.vue';
 import SubCategoryIndex from '../backEnd/subcategory/SubCategoryIndex.vue';
+import SubCategoryCreate from '../backEnd/subcategory/SubCategoryCreate.vue';
+import SubcategoryEdit from '../backEnd/subcategory/SubcategoryEdit.vue';
 import ChildcategoryManage from '../backEnd/childcategory/ChildcategoryManage.vue';
+import ChildCategoryCreate from '../backEnd/childcategory/ChildCategoryCreate.vue';
 import SizeIndex from '../backEnd/size/SizeIndex.vue';
 import CouponManagement from '../backEnd/coupon/CouponManagement.vue';
 import AllReviews from '../backEnd/review/AllReviews.vue';
@@ -40,7 +43,10 @@ export default [
             { path: 'categories/create', name: 'CategoryCreate', component: CategoryCreate},
             { path: 'categories/edit', name: 'CategoryEdit', component: CategoryEdit},
             { path: 'subcategories/manage', name: 'SubCategoryIndex', component: SubCategoryIndex},
+            { path: 'subcategories/create', name: 'SubCategoryCreate', component: SubCategoryCreate},
+            { path: 'subcategories/edit', name: 'SubcategoryEdit', component: SubcategoryEdit},
             { path: 'chilcategories/manage', name: 'ChildcategoryManage', component: ChildcategoryManage},
+            { path: 'chilcategories/create', name: 'ChildCategoryCreate', component: ChildCategoryCreate},
             { path: 'sizes/manage', name: 'SizeIndex', component: SizeIndex},
             { path: 'coupon', name: 'CouponManagement', component: CouponManagement},
             { path: 'reviews', name: 'AllReviews', component: AllReviews},

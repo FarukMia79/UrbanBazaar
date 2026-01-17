@@ -1,11 +1,11 @@
 <template>
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Category Update</h4>
+            <h4 class="fw-bold text-dark mb-0">Subcategory Create</h4>
             <router-link
-                :to="{ name: 'CategoryIndex' }"
+                :to="{ name: 'SubCategoryIndex' }"
                 class="btn btn-pink rounded-pill px-3 shadow-sm text-white"
-                ><i class="fa-solid fa-database me-1"></i>Category
+                ><i class="fa-solid fa-database me-1"></i>Subcategory
                 Manage</router-link
             >
         </div>
@@ -14,15 +14,24 @@
             <form>
                 <div class="row g-4">
                     <!-- Name Field -->
-                    <div class="col-12">
+                    <div class="col-6">
                         <label class="form-label fw-semibold text-muted"
-                            >Name *</label
+                            >Subcategory Name *</label
                         >
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                         />
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label fw-semibold text-muted"
+                            >Category Name *</label
+                        >
+                        
+                        <select class="form-select text-muted">
+                            <option selected>Select..</option>
+                        </select>
                     </div>
 
                     <!-- Image Field -->

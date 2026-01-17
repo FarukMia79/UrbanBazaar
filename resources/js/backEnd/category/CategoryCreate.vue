@@ -3,9 +3,9 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-dark mb-0">Category Create</h4>
             <router-link
-                :to="{ name: 'ProductManage' }"
+                :to="{ name: 'CategoryIndex' }"
                 class="btn btn-pink rounded-pill px-3 shadow-sm text-white"
-                ><i class="fa-solid fa-database me-1"></i>Product
+                ><i class="fa-solid fa-database me-1"></i>Category
                 Manage</router-link
             >
         </div>

@@ -85,7 +85,7 @@
                             <td class="text-muted">1</td>
                             <td class="text-muted">Faruk</td>
                             <td class="text-muted">01856385285</td>
-                            <td class="text-muted"></td>
+                            <td class="text-muted">faruk@gmail.com</td>
                             <td><span class="badge-active">Active</span></td>
                             <td class="text-center">
                                 <div
@@ -121,7 +121,7 @@
                             <td class="text-muted">2</td>
                             <td class="text-muted">Asif</td>
                             <td class="text-muted">01918285928</td>
-                            <td class="text-muted"></td>
+                            <td class="text-muted">asif@gmail.com</td>
                             <td><span class="badge-active">Active</span></td>
                             <td class="text-center">
                                 <div
