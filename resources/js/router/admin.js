@@ -11,6 +11,9 @@ import SubCategoryIndex from '../backEnd/subcategory/SubCategoryIndex.vue';
 import ChildcategoryManage from '../backEnd/childcategory/ChildcategoryManage.vue';
 import SizeIndex from '../backEnd/size/SizeIndex.vue';
 import CouponManagement from '../backEnd/coupon/CouponManagement.vue';
+import AllReviews from '../backEnd/review/AllReviews.vue';
+import UsersManage from '../backEnd/users/UsersManage.vue';
+import CustomerManage from '../backEnd/users/CustomerManage.vue';
 
 export default [
     {
@@ -29,6 +32,9 @@ export default [
             { path: 'chilcategories/manage', name: 'ChildcategoryManage', component: ChildcategoryManage},
             { path: 'sizes/manage', name: 'SizeIndex', component: SizeIndex},
             { path: 'coupon', name: 'CouponManagement', component: CouponManagement},
+            { path: 'reviews', name: 'AllReviews', component: AllReviews},
+            { path: 'users/manage', name: 'UsersManage', component: UsersManage},
+            { path: 'customer/manage', name: 'CustomerManage', component: CustomerManage},
         ],
     },
 ];

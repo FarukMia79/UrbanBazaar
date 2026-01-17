@@ -72,19 +72,126 @@
                             <router-link class="nav-link NavHover" :to="{ name: 'CouponManagement'}"><i class="fa-solid fa-file-medical me-1"></i>Coupon</router-link>
                         </nav>
                     </div>
-                    
-                    <div class="sb-sidenav-menu-heading">Addons</div>
-                    <a class="nav-link" href="charts.html">
+                    <!--Reviews Side Manue-->
+                    <a
+                        class="nav-link collapsed NavHover"
+                        href="#"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts3"
+                        aria-expanded="false"
+                        aria-controls="collapseLayouts"
+                    >
                         <div class="sb-nav-link-icon">
-                            <i class="fas fa-chart-area"></i>
+                            <i class="fa-solid fa-star"></i>
                         </div>
-                        Charts
+                        Reviews
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
                     </a>
+                    <div
+                        class="collapse"
+                        id="collapseLayouts3"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion"
+                    >
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>Pending Reviews</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>Create Reviews</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'AllReviews'}"><i class="fa-solid fa-file-medical me-1"></i>All Reviews</router-link>
+                        </nav>
+                    </div>
+                    <!--Landing Page Side Manue-->
+                    <a
+                        class="nav-link collapsed NavHover"
+                        href="#"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts4"
+                        aria-expanded="false"
+                        aria-controls="collapseLayouts"
+                    >
+                        <div class="sb-nav-link-icon">
+                            <i class="fa-solid fa-window-maximize"></i>
+                        </div>
+                        Landing Page
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+                    <div
+                        class="collapse"
+                        id="collapseLayouts4"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion"
+                    >
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>Create</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>Campaign</router-link>
+                        </nav>
+                    </div>
+                    <!--Users Side Manue-->
+                    <a
+                        class="nav-link collapsed NavHover"
+                        href="#"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts5"
+                        aria-expanded="false"
+                        aria-controls="collapseLayouts"
+                    >
+                        <div class="sb-nav-link-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        Users
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+                    <div
+                        class="collapse"
+                        id="collapseLayouts5"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion"
+                    >
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <router-link class="nav-link NavHover" :to="{ name: 'UsersManage'}"><i class="fa-solid fa-file-medical me-1"></i>User</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'CustomerManage'}"><i class="fa-solid fa-file-medical me-1"></i>Customers</router-link>
+                        </nav>
+                    </div>
+                    
+                    <div class="sb-sidenav-menu-heading">Setting</div>
+                    <!--Setting Side Manue-->
+                    <a
+                        class="nav-link collapsed NavHover"
+                        href="#"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts6"
+                        aria-expanded="false"
+                        aria-controls="collapseLayouts"
+                    >
+                        <div class="sb-nav-link-icon">
+                            <i class="fa-solid fa-gear"></i>
+                        </div>
+                        Site Setting
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+                    <div
+                        class="collapse"
+                        id="collapseLayouts6"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion"
+                    >
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>General Setting</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>Pixels Setting</router-link>
+                        </nav>
+                    </div>
                     <a class="nav-link" href="tables.html">
                         <div class="sb-nav-link-icon">
-                            <i class="fas fa-table"></i>
+                            <i class="fas fa-images"></i>
                         </div>
-                        Tables
+                        Banner & Adds
                     </a>
                 </div>
             </div>
