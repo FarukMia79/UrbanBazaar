@@ -1,13 +1,10 @@
-<template lang="">
+<template>
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Category Manage</h4>
-            <router-link
-                :to="{ name: 'CategoryCreate' }"
-                class="btn btn-pink rounded-pill px-3 shadow-sm text-white"
-                ><i class="fa-solid fa-layer-group me-1"></i> Add
-                Category</router-link
-            >
+            <h4 class="fw-bold text-dark mb-0">Banner Category</h4>
+            <button class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
+                Create Banner
+            </button>
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
@@ -41,63 +38,30 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-hover align-middle product-table">
-                    <thead class="table-light">
-                        <tr>
-                            <th width="40">
-                                <input
-                                    type="checkbox"
-                                    class="form-check-input"
-                                />
-                            </th>
-                            <th width="50">SL</th>
-                            <th width="150">Action</th>
-                            <th>Category Name</th>
-                            <th>Image</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <input
-                                    type="checkbox"
-                                    class="form-check-input"
-                                />
-                            </td>
-                            <td>1</td>
-                            <td>
-                                <div class="d-flex gap-2 fs-5">
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
-                                        <i class="fa-regular fa-thumbs-down"></i>
-                                    </router-link>
-                                    <router-link :to="{ name: 'CategoryEdit'}" class="text-muted cursor-pointer me-2 action-edit">
-                                        <i class="fa-regular fa-edit"></i>
-                                    </router-link>
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-trash">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </router-link>
-                                </div>
-                            </td>
-                            <td>Sneakers</td>
-                            <td>
-                                <img
-                                    src="https://via.placeholder.com/40"
-                                    class="rounded-circle border"
-                                    alt="prod"
-                                    style="
-                                        width: 45px;
-                                        height: 45px;
-                                        object-fit: cover;
-                                    "
-                                />
-                            </td>
-                            <td>
-                                <span class="badge badge-active">Active</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <table class="table table-hover align-middle pixels-table">
+                <thead>
+                    <tr class="table-light text-muted">
+                        <th width="250">SL <i class="fa-solid fa-sort ms-1 small opacity-50"></i></th>
+                        <th>Name <i class="fa-solid fa-sort ms-1 small opacity-50"></i></th>
+                        <th width="250">Status <i class="fa-solid fa-sort ms-1 small opacity-50"></i></th>
+                        <th width="250" class="text-center">Action <i class="fa-solid fa-sort ms-1 small opacity-50"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-muted">1</td>
+                        <td class="text-muted">Slider (1060x395)</td>
+                        <td><span class="badge-active">Active</span></td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-1">
+                                <button class="btn btn-gray-icon btn-sm me-2"><i class="fa-solid fa-thumbs-down"></i></button>
+                                <button class="btn btn-purple-icon btn-sm me-2"><i class="fa-solid fa-edit"></i></button>
+                                <button class="btn btn-coral-icon btn-sm"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             </div>
             <div
                 class="d-flex justify-content-between align-items-center mt-1 flex-wrap gap-2 text-muted small"
@@ -133,21 +97,7 @@
 <script>
 export default {};
 </script>
-<style lang="css" scoped>
-.product-table {
-    color: #212529 !important;
-}
-
-.action-trash:hover {
-    color: #ef5350 !important;
-    cursor: pointer;
-}
-
-.action-edit:hover {
-    color: #00bfa5 !important;
-    cursor: pointer;
-}
-
+<style scoped>
 .shadow-custom {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
 }
@@ -212,34 +162,6 @@ export default {};
     color: white !important;
 }
 
-.product-table thead th {
-    background-color: #f8faff;
-    color: #333;
-    font-weight: 600;
-    padding: 15px 10px;
-}
-
-.badge-active {
-    background-color: #e0f2f1;
-    color: #00bfa5;
-    padding: 5px 10px;
-    border-radius: 4px;
-}
-
-.product-table {
-    border-collapse: separate;
-    border-spacing: 0 5px;
-}
-
-.active-page {
-    background-color: #5e72e4 !important;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .search-input:focus {
     border-color: #00cae3 !important;
     box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important;
@@ -251,8 +173,52 @@ export default {};
     border: 1px solid #ced4da;
     border-radius: 4px;
     padding: 6px 12px;
-    transition:
-        border-color 0.2s ease-in-out,
-        box-shadow 0.2s ease-in-out;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
+
+.active-page {
+    background-color: #5e72e4 !important;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-purple-icon { background-color: #5e72e4; color: white; border: none; }
+.btn-purple-icon:hover, .btn-purple-icon:active { background-color: #2e4ae6; color: white; }
+.btn-gray-icon { background-color: #6c757d; color: white; border: none; }
+.btn-gray-icon:hover, .btn-gray-icon:active { background-color: #464e55; color: white; }
+.btn-coral-icon { background-color: #ef5350; color: white; border: none; }
+.btn-coral-icon:hover, .btn-coral-icon:active { background-color: #ec2a27; color: white; }
+
+.badge-active {
+    background-color: #e0f2f1;
+    color: #00bfa5;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.pixels-table thead th {
+    padding: 15px 10px;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: #f8faff !important;
+    border-bottom: 1px solid #eee;
+}
+.pixels-table tbody td {
+    padding: 12px 10px;
+    font-size: 14px;
+}
+
+
+.table-hover tbody tr:hover {
+    background-color: #fcfcfc;
+}
+
+.btn:hover { color: #fff !important; }
+
+
 </style>

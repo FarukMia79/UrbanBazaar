@@ -2,9 +2,7 @@
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-dark mb-0">Product Manage</h4>
-            <button class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
-                <i class="fa-solid fa-database me-1"></i> Add Product
-            </button>
+            <router-link class="btn btn-pink rounded-pill px-3 shadow-sm text-white" :to="{ name: 'ProductCreate'}"><i class="fa-solid fa-database me-1"></i>Add Product</router-link>
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
@@ -47,7 +45,7 @@
                                 />
                             </th>
                             <th width="50">SL</th>
-                            <th width="120">Action</th>
+                            <th width="150">Action</th>
                             <th>Name</th>
                             <th>Category</th>
                             <th>Image</th>
@@ -68,15 +66,15 @@
                             <td>1</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <i
-                                        class="fa-regular fa-thumbs-down text-muted cursor-pointer action-edit"
-                                    ></i>
-                                    <i
-                                        class="fa-regular fa-edit text-muted cursor-pointer action-edit"
-                                    ></i>
-                                    <i
-                                        class="fa-solid fa-trash text-muted cursor-pointer action-trash"
-                                    ></i>
+                                    <router-link :to="{ name: 'ProductEdit'}" class="text-muted cursor-pointer action-edit me-2">
+                                        <i class="fa-regular fa-thumbs-down"></i>
+                                    </router-link>
+                                    <router-link :to="{ name: 'ProductEdit'}" class="text-muted cursor-pointer action-edit me-2">
+                                        <i class="fa-regular fa-edit"></i>
+                                    </router-link>
+                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-trash">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </router-link>
                                 </div>
                             </td>
                             <td>sneakers</td>

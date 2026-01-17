@@ -183,16 +183,37 @@
                         data-bs-parent="#sidenavAccordion"
                     >
                         <nav class="sb-sidenav-menu-nested nav">
-                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>General Setting</router-link>
-                            <router-link class="nav-link NavHover" :to="{ name: ''}"><i class="fa-solid fa-file-medical me-1"></i>Pixels Setting</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'GeneralSetting'}"><i class="fa-solid fa-file-medical me-1"></i>General Setting</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'PixelsManage'}"><i class="fa-solid fa-file-medical me-1"></i>Pixels Setting</router-link>
                         </nav>
                     </div>
-                    <a class="nav-link" href="tables.html">
+                    <!--Banner Setting Side Manue-->
+                    <a
+                        class="nav-link collapsed NavHover"
+                        href="#"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts7"
+                        aria-expanded="false"
+                        aria-controls="collapseLayouts"
+                    >
                         <div class="sb-nav-link-icon">
-                            <i class="fas fa-images"></i>
+                            <i class="fa-solid fa-images"></i>
                         </div>
                         Banner & Adds
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
                     </a>
+                    <div
+                        class="collapse"
+                        id="collapseLayouts7"
+                        aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion"
+                    >
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <router-link class="nav-link NavHover" :to="{ name: 'BannerCategory'}"><i class="fa-solid fa-file-medical me-1"></i>Banner Category</router-link>
+                        </nav>
+                    </div>
                 </div>
             </div>
             <div class="sb-sidenav-footer">
