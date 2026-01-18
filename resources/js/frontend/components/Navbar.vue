@@ -212,7 +212,9 @@
                                             name="keyword"
                                         />
                                         <button>
-                                            <i class="fa fa-search text-white"></i>
+                                            <i
+                                                class="fa fa-search text-white"
+                                            ></i>
                                         </button>
                                     </form>
                                     <div class="search_result"></div>
@@ -494,7 +496,7 @@
                                                             name: 'UserLogin',
                                                         }"
                                                         ><i
-                                                            class="fa-regular fa-user"
+                                                            class="fa-regular fa-user me-2"
                                                         ></i
                                                         >Login / Sign
                                                         Up</router-link
@@ -516,7 +518,7 @@
     <div class="footer_nav">
         <ul>
             <li>
-                <a class="toggle col"  @click="isMenuOpen = true">
+                <a class="toggle col" @click="isMenuOpen = true">
                     <span>
                         <i class="fa-solid fa-bars"></i>
                     </span>
@@ -544,7 +546,7 @@
             </li>
 
             <li>
-                <router-link class="col" :to="{ name: 'CheckOut'}">
+                <router-link class="col" :to="{ name: 'CheckOut' }">
                     <span>
                         <i class="fa-solid fa-cart-shopping"></i>
                     </span>
@@ -552,7 +554,7 @@
                 </router-link>
             </li>
             <li>
-                <router-link class="col" :to="{ name: 'UserLogin'}">
+                <router-link class="col" :to="{ name: 'UserLogin' }">
                     <span>
                         <i class="fa-solid fa-user"></i>
                     </span>

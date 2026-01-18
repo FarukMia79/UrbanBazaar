@@ -5,6 +5,16 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
+// import axios & AppStorage
+import axios from 'axios';
+import AppStorage from './Helpers/AppStorage';
+
+// globally set token
+const token = AppStorage.getToken();
+if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 // import notification class
 import Notification from './Helpers/Notification';
 window.Notification = Notification;

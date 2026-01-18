@@ -50,13 +50,42 @@
                     <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li class="dropdown-item cursor-pointer" @click="logout">Logout</li>
                 </ul>
             </li>
         </ul>
     </nav>
 </template>
 <script>
-export default {};
+import AppStorage from '../../Helpers/AppStorage';
+export default {
+    methods: {
+        logout() {
+            axios.post('/api/admin/logout')
+                .then(response => {
+                    AppStorage.clear();
+                    Toast.fire({
+                        icon: "success",
+                        title: "Logout successfully"
+                    });
+                    this.$router.push({ name: 'AdminLogin' });
+                })
+                .catch(error => {
+                    console.error('Logout failed', error);
+                    AppStorage.clear();
+                    Toast.fire({
+                        icon: "error",
+                        title: "Logout successfully"
+                    });
+                    this.$router.push({ name: 'AdminLogin' });
+                });
+        }
+
+    }
+};
 </script>
-<style lang="css"></style>
+<style lang="css">
+    .cursor-pointer {
+    cursor: pointer !important;
+}
+</style>

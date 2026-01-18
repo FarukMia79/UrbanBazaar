@@ -5,17 +5,9 @@
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="fw-bold text-dark">Dashboard</h3>
                 <div class="d-flex gap-2">
-                    <button
-                        class="btn btn-primary btn-sm rounded-3 px-3 shadow-sm"
-                    >
-                        <i class="fa-solid fa-globe me-1"></i> Visit Website
-                    </button>
-                    <button
-                        class="btn btn-indigo btn-sm text-white rounded-3 px-3 shadow-sm"
-                    >
-                        <i class="fa-solid fa-headset me-1"></i> Developer
-                        Support
-                    </button>
+                    <router-link :to="{ name: 'index'}" class="btn btn-primary btn-sm rounded-3 px-3 shadow-sm"><i class="fa-solid fa-globe me-1"></i> Visit Website</router-link>
+                    <router-link :to="{ name: 'index'}" class="btn btn-indigo btn-sm text-white rounded-3 px-3 shadow-sm"><i class="fa-solid fa-headset me-1"></i> Developer Support</router-link>
+                    
                 </div>
             </div>
 

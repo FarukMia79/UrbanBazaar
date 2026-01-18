@@ -52,7 +52,7 @@
                             </th>
                             <th width="50">SL</th>
                             <th width="250">Action</th>
-                            <th>Category Name</th>
+                            <th>Brand Name</th>
                             <th>Image</th>
                             <th>Status</th>
                         </tr>

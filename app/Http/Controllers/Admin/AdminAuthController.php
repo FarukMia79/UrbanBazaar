@@ -10,7 +10,8 @@ use Illuminate\Validation\ValidationException;
 
 class AdminAuthController extends Controller
 {
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $validatedata = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -18,13 +19,13 @@ class AdminAuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if( ! $user || ! Hash::check($request->password, $user->password)){
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'message' => ['Invalid credentials'],
             ]);
         }
 
-        if($user->role !== 'admin'){
+        if ($user->role !== 'admin') {
             return response()->json([
                 'message ' => 'Access denied! You are not an Admin.'
             ]);
@@ -39,7 +40,9 @@ class AdminAuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request){
+
+    public function logout(Request $request)
+    {
         $request->user()->tokens()->delete();
         return response()->json([
             'message' => 'Logout Successfully!'

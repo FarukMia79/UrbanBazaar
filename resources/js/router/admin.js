@@ -1,5 +1,7 @@
 import AdminLayout from '../layouts/AdminLayout.vue';
+import AuthLayout from '../layouts/AuthLayout.vue';
 import dashboard from '../backEnd/admin/dashboard.vue';
+import AdminLogin from '../backEnd/admin/AdminLogin.vue';
 import AllOrder from '../backEnd/order/AllOrder.vue';
 import PendingOrder from '../backEnd/order/PendingOrder.vue';
 import CompletedOrder from '../backEnd/order/CompletedOrder.vue';
@@ -32,8 +34,9 @@ import BannerCategory from '../backEnd/setting/Banner/BannerCategory.vue';
 
 export default [
     {
-        path: '/admin',
+        path: '/dashboard',
         component: AdminLayout,
+        meta: { requiresAuth: true },
         children: [
             { path: '', name: 'dashboard', component: dashboard},
             { path: 'order/all', name: 'AllOrder', component: AllOrder},
@@ -67,4 +70,12 @@ export default [
             { path: 'banner-category/manage', name: 'BannerCategory', component: BannerCategory},
         ],
     },
+
+    {
+        path: '/admin',
+        component: AuthLayout,
+        children: [
+            { path: '', name: 'AdminLogin', component: AdminLogin},
+        ]
+    }
 ];

@@ -41,7 +41,7 @@
                             </th>
                             <th width="50">SL</th>
                             <th width="150">Action</th>
-                            <th>Size Name</th>
+                            <th>Size</th>
                             <th>Status</th>
                         </tr>
                     </thead>
