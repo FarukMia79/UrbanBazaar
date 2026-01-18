@@ -16,7 +16,12 @@ import SubCategoryCreate from '../backEnd/subcategory/SubCategoryCreate.vue';
 import SubcategoryEdit from '../backEnd/subcategory/SubcategoryEdit.vue';
 import ChildcategoryManage from '../backEnd/childcategory/ChildcategoryManage.vue';
 import ChildCategoryCreate from '../backEnd/childcategory/ChildCategoryCreate.vue';
+import BrandManage from '../backEnd/brand/BrandManage.vue';
+import BrandCreate from '../backEnd/brand/BrandCreate.vue';
+import ColorManage from '../backEnd/color/ColorManage.vue';
+import ColorCreate from '../backEnd/color/ColorCreate.vue';
 import SizeIndex from '../backEnd/size/SizeIndex.vue';
+import SizeCreate from '../backEnd/size/SizeCreate.vue';
 import CouponManagement from '../backEnd/coupon/CouponManagement.vue';
 import AllReviews from '../backEnd/review/AllReviews.vue';
 import UsersManage from '../backEnd/users/UsersManage.vue';
@@ -47,7 +52,12 @@ export default [
             { path: 'subcategories/edit', name: 'SubcategoryEdit', component: SubcategoryEdit},
             { path: 'chilcategories/manage', name: 'ChildcategoryManage', component: ChildcategoryManage},
             { path: 'chilcategories/create', name: 'ChildCategoryCreate', component: ChildCategoryCreate},
+            { path: 'brand/manage', name: 'BrandManage', component: BrandManage},
+            { path: 'brand/create', name: 'BrandCreate', component: BrandCreate},
+            { path: 'color/manage', name: 'ColorManage', component: ColorManage},
+            { path: 'color/create', name: 'ColorCreate', component: ColorCreate},
             { path: 'sizes/manage', name: 'SizeIndex', component: SizeIndex},
+            { path: 'sizes/create', name: 'SizeCreate', component: SizeCreate},
             { path: 'coupon', name: 'CouponManagement', component: CouponManagement},
             { path: 'reviews', name: 'AllReviews', component: AllReviews},
             { path: 'users/manage', name: 'UsersManage', component: UsersManage},

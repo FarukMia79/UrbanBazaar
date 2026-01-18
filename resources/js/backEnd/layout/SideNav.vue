@@ -67,6 +67,8 @@
                             <router-link class="nav-link NavHover" :to="{ name: 'CategoryIndex'}"><i class="fa-solid fa-file-medical me-1"></i>Categories</router-link>
                             <router-link class="nav-link NavHover" :to="{ name: 'SubCategoryIndex'}"><i class="fa-solid fa-file-medical me-1"></i>Subcategories</router-link>
                             <router-link class="nav-link NavHover" :to="{ name: 'ChildcategoryManage'}"><i class="fa-solid fa-file-medical me-1"></i>Childcategories</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'BrandManage'}"><i class="fa-solid fa-file-medical me-1"></i>Brand</router-link>
+                            <router-link class="nav-link NavHover" :to="{ name: 'ColorManage'}"><i class="fa-solid fa-file-medical me-1"></i>Color</router-link>
                             <router-link class="nav-link NavHover" :to="{ name: 'SizeIndex'}"><i class="fa-solid fa-file-medical me-1"></i>Sizes</router-link>
                             <router-link class="nav-link NavHover" :to="{ name: 'ProductPriceManage'}"><i class="fa-solid fa-file-medical me-1"></i>Price Edit</router-link>
                             <router-link class="nav-link NavHover" :to="{ name: 'CouponManagement'}"><i class="fa-solid fa-file-medical me-1"></i>Coupon</router-link>

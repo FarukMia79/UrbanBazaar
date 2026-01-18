@@ -1,8 +1,13 @@
 <template lang="">
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Sizes Manage</h4>
-            <router-link :to="{ name: 'SizeCreate'}" class="btn btn-pink rounded-pill px-3 shadow-sm text-white"><i class="fa-solid fa-ruler-combined me-1"></i> Add Size</router-link>
+            <h4 class="fw-bold text-dark mb-0">Color Manage</h4>
+            <router-link
+                :to="{ name: 'ColorCreate' }"
+                class="btn btn-pink rounded-pill px-3 shadow-sm text-white"
+                ><i class="fa-solid fa-eye-dropper me-1"></i> Add
+                Color</router-link
+            >
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
@@ -14,20 +19,26 @@
                     <button class="btn btn-red-solid btn-sm px-3">
                         <i class="fa-solid fa-print me-1"></i> Print
                     </button>
-                    <button
-                        class="btn btn-purple-solid btn-sm px-3"
-                    >
+                    <button class="btn btn-purple-solid btn-sm px-3">
                         <i class="fa-solid fa-file-pdf me-1"></i> PDF
                     </button>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
-                    <input type="text" class="search-input rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
-                    <button class="btn btn-search btn-sm rounded-0 text-white px-3">Search</button>
-                </div>
+                        <input
+                            type="text"
+                            class="search-input rounded-0 border-end-0"
+                            placeholder="Search"
+                            style="width: 200px"
+                        />
+                        <button
+                            class="btn btn-search btn-sm rounded-0 text-white px-3"
+                        >
+                            Search
+                        </button>
+                    </div>
                 </div>
             </div>
-
 
             <div class="table-responsive">
                 <table class="table table-hover align-middle product-table">
@@ -39,9 +50,9 @@
                                     class="form-check-input"
                                 />
                             </th>
-                            <th width="50">SL</th>
-                            <th width="150">Action</th>
-                            <th>Size Name</th>
+                            <th width="100">SL</th>
+                            <th width="350">Action</th>
+                            <th>Color Name</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -56,18 +67,18 @@
                             <td>1</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <i
-                                        class="fa-regular fa-thumbs-down text-muted cursor-pointer me-2 action-edit"
-                                    ></i>
-                                    <i
-                                        class="fa-regular fa-edit text-muted cursor-pointer me-2 action-edit"
-                                    ></i>
-                                    <i
-                                        class="fa-solid fa-trash text-muted cursor-pointer action-trash"
-                                    ></i>
+                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
+                                        <i class="fa-regular fa-thumbs-down"></i>
+                                    </router-link>
+                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
+                                        <i class="fa-regular fa-edit"></i>
+                                    </router-link>
+                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-trash">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </router-link>
                                 </div>
                             </td>
-                            <td>L</td>
+                            <td><span class="color-badge text-dark" style="background-color: #00ffff;">Aqua</span></td>
                             <td>
                                 <span class="badge badge-active">Active</span>
                             </td>
@@ -119,7 +130,7 @@ export default {};
     cursor: pointer;
 }
 
-.action-edit:hover{
+.action-edit:hover {
     color: #00bfa5 !important;
     cursor: pointer;
 }
@@ -128,23 +139,65 @@ export default {};
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
 }
 
+.btn-pink {
+    background-color: #f06292;
+    border: none;
+}
+.btn-teal-solid {
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+}
+.btn-red-solid {
+    background-color: #ef5350;
+    color: white;
+    border: none;
+}
+.btn-purple-solid {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+}
+.btn-orange-solid {
+    background-color: #ffca28;
+    color: white;
+    border: none;
+}
+.btn-search {
+    background-color: #00cae3;
+    border: none;
+}
 
-.btn-pink { background-color: #f06292; border: none; }
-.btn-teal-solid { background-color: #00bfa5; color: white; border: none; }
-.btn-red-solid { background-color: #ef5350; color: white; border: none; }
-.btn-purple-solid { background-color: #6a1b9a; color: white; border: none; }
-.btn-orange-solid { background-color: #ffca28; color: white; border: none; }
-.btn-search { background-color: #00cae3; border: none; }
-
-
-.btn-pink:hover, .btn-pink:active { background-color: #d81b60 !important; color: #fff !important; }
-.btn-teal-solid:hover, .btn-teal-solid:active { background-color: #00897b !important; color: #fff !important; }
-.btn-red-solid:hover, .btn-red-solid:active { background-color: #d32f2f !important; color: #fff !important; }
-.btn-purple-solid:hover, .btn-purple-solid:active { background-color: #4a148c !important; color: white !important; }
-.btn-orange-solid:hover, .btn-orange-solid:active { background-color: #f57c00  !important; color: white !important; }
-.btn-search:hover, .btn-search:active { background-color: #00acc1 !important; color: white !important; }
-
-
+.btn-pink:hover,
+.btn-pink:active {
+    background-color: #d81b60 !important;
+    color: #fff !important;
+}
+.btn-teal-solid:hover,
+.btn-teal-solid:active {
+    background-color: #00897b !important;
+    color: #fff !important;
+}
+.btn-red-solid:hover,
+.btn-red-solid:active {
+    background-color: #d32f2f !important;
+    color: #fff !important;
+}
+.btn-purple-solid:hover,
+.btn-purple-solid:active {
+    background-color: #4a148c !important;
+    color: white !important;
+}
+.btn-orange-solid:hover,
+.btn-orange-solid:active {
+    background-color: #f57c00 !important;
+    color: white !important;
+}
+.btn-search:hover,
+.btn-search:active {
+    background-color: #00acc1 !important;
+    color: white !important;
+}
 
 .product-table thead th {
     background-color: #f8faff;
@@ -154,13 +207,16 @@ export default {};
 }
 
 .badge-active {
-    background-color: #e0f2f1;
-    color: #00bfa5;
+    background-color: #c4eeec;
+    color: #009e89;
     padding: 5px 10px;
     border-radius: 4px;
 }
 
-.product-table { border-collapse: separate; border-spacing: 0 5px; }
+.product-table {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
 
 .active-page {
     background-color: #5e72e4 !important;
@@ -173,15 +229,40 @@ export default {};
 
 .search-input:focus {
     border-color: #00cae3 !important;
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
-    outline: none !important; 
-    background-color: #fff; 
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important;
+    outline: none !important;
+    background-color: #fff;
 }
 
 .search-input {
     border: 1px solid #ced4da;
     border-radius: 4px;
     padding: 6px 12px;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition:
+        border-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out;
+}
+
+.color-badge {
+    display: inline-block;
+    padding: 6px 15px;
+    min-width: 100px;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.color-badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+    z-index: 10; 
+}
+
+
+.color-badge:active {
+    transform: scale(0.95); 
 }
 </style>
