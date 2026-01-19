@@ -14,20 +14,14 @@ class UserAuthController extends Controller
     {
         $validatedData = $request->validate([
             'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
+            'email'    => 'required|string|email:rfc,dns|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'age'      => 'nullable|integer|min:10|max:100',
-            'gender'   => 'nullable|string|in:Male,Female,Other',
-            'location' => 'nullable|string|max:255',
         ]);
 
         $user = new User();
         $user->name = $validatedData['name'];
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
-        $user->age = $validatedData['age'];
-        $user->gender = $validatedData['gender'];
-        $user->location = $validatedData['location'];
         $user->save();
 
         $token = $user->createToken('auth_token')->plainTextToken;

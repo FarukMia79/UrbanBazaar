@@ -14,15 +14,13 @@
                                 <h4 class="auth-title mt-3 mb-0 fw-semibold text-dark">Customer Login</h4>
                             </div>
 
-                            <form action="https://ecom.shariatpur.shop/customer/signin" method="POST"
-                                data-parsley-validate="">
-                                <input type="hidden" name="_token" value="fzizel6OXvVl6vA9NZBa3ksxau6J2eaFTthG4tOf">
+                            <form>
                                 <div class="form-group mb-3">
-                                    <label for="phone" class="form-label">Mobile Number</label>
+                                    <label for="email" class="form-label">Email</label>
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light"><i class="fa-solid fa-phone"
+                                        <span class="input-group-text bg-light"><i class="fa-solid fa-envelope"
                                                 style="color: #750377;"></i></span>
-                                        <input type="number" id="phone" class="form-control " name="phone" value=""
+                                        <input type="email" id="email" class="form-control " name="email" value=""
                                             required>
                                     </div>
                                 </div>
@@ -69,8 +67,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+import Notification from '../../../Helpers/Notification';
 export default {
+data(){
+    return {
 
+    }
+}
 }
 </script>
 
