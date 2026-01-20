@@ -9,15 +9,15 @@
             </div>
         </div>
         <ul class="first-nav">
-            <li class="parent-category">
-                <a href="category/women-bags.html" class="menu-category-name">
+            <li class="parent-category" @click="toggleCategory('women-bags')">
+                <a href="#" class="menu-category-name">
                     <img :src="`/uploads/category/1761399037-woman-bag.webp`" alt="" class="side_cat_img" />
                     Women Bags
                 </a>
                 <span class="menu-category-toggle">
-                    <i class="fa fa-chevron-down"></i>
+                    <i class="fa" :class="openCategory === 'women-bags' ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
                 </span>
-                <ul class="second-nav" style="display: none">
+                <ul class="second-nav" v-show="openCategory === 'women-bags'">
                     <li class="parent-subcategory">
                         <a href="subcategory/demo.html" class="menu-subcategory-name">demo</a>
                         <ul class="third-nav" style="display: none"></ul>
@@ -392,12 +392,13 @@
 <script>
 import AppStorage from "../../Helpers/AppStorage";
 import Notification from "../../Helpers/Notification";
-import axios from 'axios'; 
+import axios from 'axios';
 
 export default {
     data() {
         return {
             isMenuOpen: false,
+            openCategory: null,
             isLoggedIn: !!AppStorage.getToken(),
         };
     },
@@ -407,24 +408,32 @@ export default {
             axios.post('/api/user/logout', {}, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
-            .then(() => {
-                AppStorage.clear();
-                this.isLoggedIn = false;
-                Notification.success("Logged Out!");
-                this.$router.push({ name: 'UserLogin' });
-            }).catch((error) => {
-                console.error('Logout failed', error);
-                AppStorage.clear();
-                this.isLoggedIn = false;
-                this.$router.push({ name: 'UserLogin' });
-            });
+                .then(() => {
+                    AppStorage.clear();
+                    this.isLoggedIn = false;
+                    Notification.success("Logged Out!");
+                    this.$router.push({ name: 'UserLogin' });
+                }).catch((error) => {
+                    console.error('Logout failed', error);
+                    AppStorage.clear();
+                    this.isLoggedIn = false;
+                    this.$router.push({ name: 'UserLogin' });
+                });
+        },
+        toggleCategory(categoryName) {
+            if (this.openCategory === categoryName) {
+                this.openCategory = null;
+            } else {
+                this.openCategory = categoryName;
+            }
         },
     },
     watch: {
         '$route'() {
             this.isLoggedIn = !!AppStorage.getToken();
         }
-    }
+    },
+
 };
 </script>
 
@@ -433,7 +442,7 @@ export default {
     cursor: pointer;
 }
 
-.login_logout-nv{
+.login_logout-nv {
     cursor: pointer;
     color: #fff;
 }
