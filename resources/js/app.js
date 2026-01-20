@@ -9,11 +9,16 @@ import router from "./router";
 import axios from 'axios';
 import AppStorage from './Helpers/AppStorage';
 
-// globally set token
-const token = AppStorage.getToken();
-if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
+// globally set token using Interceptors
+axios.interceptors.request.use(function (config) {
+  const token = AppStorage.getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
 
 // import notification class
 import Notification from './Helpers/Notification';
