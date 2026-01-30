@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 
 class PasswordResetController extends Controller
@@ -31,7 +32,7 @@ class PasswordResetController extends Controller
             ]
         );
 
-        $url = env('FRONTEND_URL') . "/reset-password?token=" . $token . "&email=" . $request->email;
+        $url = url("/reset-password?token=$token&email={$request->email}");
 
         Mail::to($request->email)->send(new ResetPasswordLink($url));
 
@@ -44,6 +45,11 @@ class PasswordResetController extends Controller
 
         if (!$resetData || !Hash::check($request->token, $resetData->token)) {
             return response()->json(['message' => 'Invalid or expired token.'], 422);
+        }
+
+        if (Carbon::parse($resetData->created_at)->addMinutes(1)->isPast()) {
+            DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+            return response()->json(['message' => 'Reset link has expired.'], 422);
         }
 
         $user = User::where('email', $request->email)->first();

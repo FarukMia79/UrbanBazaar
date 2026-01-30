@@ -1,32 +1,32 @@
 class Notification {
-    success() {
+    success(msg = "Successfully Done") {
         Toast.fire({
             icon: "success",
-            title: "Successfully Done",
+            title: msg,
         });
     }
-    question(){
+    question(msg = "Are you sure"){
         Toast.fire({
             icon: "question",
-            title: "Are you sure",
+            title: msg,
         });
     }
-    error(){
+    error(msg = "Something went wrong !"){
         Toast.fire({
             icon: "error",
-            title: "Something went wrong !",
+            title: msg,
         });
     }
-    warning(){
+    warning(msg = "Oops..! worng"){
         Toast.fire({
             icon: "warning",
-            title: "Oops..! worng",
+            title: msg,
         });
     }
-    image_validation(){
+    image_validation(msg = "Upload image size less then 1mb"){
         Toast.fire({
             icon: "error",
-            title: "Upload image size less then 1mb",
+            title: msg,
         })
     }
 }

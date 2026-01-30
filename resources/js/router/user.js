@@ -3,6 +3,7 @@ import index from '../frontend/index.vue';
 import UserLogin from '../frontend/page/auth/UserLogin.vue';
 import UserSingup from '../frontend/page/auth/UserSingup.vue';
 import ForgotPassword from '../frontend/page/auth/ForgotPassword.vue';
+import SetForgotPassword from '../frontend/page/auth/SetForgotPassword.vue';
 import SingleProduct from '../frontend/page/product/SingleProduct.vue';
 import HotDeal from '../frontend/page/HotDeal/HotDeal.vue';
 import CheckOut from '../frontend/page/CheckOut.vue';
@@ -26,7 +27,8 @@ export default [
             { path: 'return-policy', name: 'ReturnPolicy', component: ReturnPolicy},
             { path: 'login', name: 'UserLogin', component: UserLogin },
             { path: 'register', name: 'UserSingup', component: UserSingup },
-            { path: 'forgot-password', name: 'ForgotPassword', component: ForgotPassword }
+            { path: 'forgot-password', name: 'ForgotPassword', component: ForgotPassword },
+            { path: 'reset-password', name: 'SetForgotPassword', component: SetForgotPassword },
         ],
     }
 ]

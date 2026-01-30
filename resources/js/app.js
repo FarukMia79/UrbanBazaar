@@ -1,6 +1,7 @@
 import './bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -36,7 +37,7 @@ const Toast = Swal.mixin({
   didOpen: (toast) => {
     toast.onmouseenter = Swal.stopTimer;
     toast.onmouseleave = Swal.resumeTimer;
-  }
+  },
 });
 window.Toast = Toast;
 
