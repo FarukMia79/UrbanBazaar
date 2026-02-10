@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BackEnd\Category;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
+
 class CategoryController extends Controller
 {
     /**
@@ -39,11 +43,27 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
-        $category->status = $request->status;
+        $category->meta_title = $request->meta_title;
+        $category->meta_description = $request->meta_description;
+        $category->front_view = (int) $request->front_view;
+        $category->status = (int) $request->status;
 
         if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads/category'), $imageName);
+            $file = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $uploadPath = public_path('uploads/category/');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+
+            $image->cover(512, 512);
+
+            $image->save($uploadPath . $imageName);
+
             $category->image = 'uploads/category/' . $imageName;
         }
 
@@ -85,6 +105,6 @@ class CategoryController extends Controller
             unlink(public_path($category->image));
         }
         $category->delete();
-        return response()->json(['message'=> 'Category deleted']);
+        return response()->json(['message' => 'Category deleted']);
     }
 }
