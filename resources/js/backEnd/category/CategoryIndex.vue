@@ -58,43 +58,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(category, index) in filterSearch" key:="category.id">
                             <td>
                                 <input
                                     type="checkbox"
                                     class="form-check-input"
                                 />
                             </td>
-                            <td>1</td>
+                            <td>{{index + 1}}</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
-                                        <i class="fa-regular fa-thumbs-down"></i>
-                                    </router-link>
                                     <router-link :to="{ name: 'CategoryEdit'}" class="text-muted cursor-pointer me-2 action-edit">
                                         <i class="fa-regular fa-edit"></i>
                                     </router-link>
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-trash">
+                                    <a @click="deleteCategory(category.id)" class="text-muted cursor-pointer action-trash">
                                         <i class="fa-solid fa-trash"></i>
-                                    </router-link>
+                                    </a>
                                 </div>
                             </td>
-                            <td>Sneakers</td>
+                            <td>{{category.name}}</td>
                             <td>
                                 <img
-                                    src="https://via.placeholder.com/40"
-                                    class="rounded-circle border"
+                                    :src="'/' + category.image"
+                                    class="border"
                                     alt="prod"
-                                    style="
-                                        width: 45px;
-                                        height: 45px;
-                                        object-fit: cover;
-                                    "
+                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
                                 />
                             </td>
                             <td>
-                                <span class="badge badge-active">Active</span>
+                                <span v-if="category.status == 1" class="badge badge-active">Active</span>
+                                <span v-else class="badge bg-danger text-white">Inactive</span>
                             </td>
+                        </tr>
+                        <tr v-if="categories.length == 0">
+                            <td colspan="6" class="text-center text-danger">No Data Found</td>
                         </tr>
                     </tbody>
                 </table>
@@ -131,7 +128,60 @@
     </div>
 </template>
 <script>
-export default {};
+import Notification from '../../Helpers/Notification';
+
+export default {
+    data() {
+        return {
+            categories: [],
+            searchterm: ''
+        }
+    },
+    computed: {
+        filterSearch() {
+            return this.categories.filter(category => {
+                return category.name.toLowerCase().match(this.searchterm.toLocaleLowerCase());
+            });
+        }
+    },
+    methods: {
+        allCategory() {
+            axios.get('/api/category')
+                .then((response) => {
+                    this.categories = response.data;
+                }).catch((error) => {
+                    console.log(error);
+                })
+        },
+        deleteCategory(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/api/category/' + id)
+                        .then(() => {
+                            this.categories = this.categories.filter(category => {
+                                return category.id != id;
+                            });
+                            Notification.success('Deleted Successfully!')
+                        }).catch((error) => {
+                            this.$router.push({ name: 'CategoryIndex' });
+                            Notification.error();
+                        })
+                }
+            });
+        }
+    },
+    mounted() {
+        this.allCategory();
+    }
+};
 </script>
 <style lang="css" scoped>
 .product-table {
@@ -156,26 +206,31 @@ export default {};
     background-color: #f06292;
     border: none;
 }
+
 .btn-teal-solid {
     background-color: #00bfa5;
     color: white;
     border: none;
 }
+
 .btn-red-solid {
     background-color: #ef5350;
     color: white;
     border: none;
 }
+
 .btn-purple-solid {
     background-color: #6a1b9a;
     color: white;
     border: none;
 }
+
 .btn-orange-solid {
     background-color: #ffca28;
     color: white;
     border: none;
 }
+
 .btn-search {
     background-color: #00cae3;
     border: none;
@@ -186,26 +241,31 @@ export default {};
     background-color: #d81b60 !important;
     color: #fff !important;
 }
+
 .btn-teal-solid:hover,
 .btn-teal-solid:active {
     background-color: #00897b !important;
     color: #fff !important;
 }
+
 .btn-red-solid:hover,
 .btn-red-solid:active {
     background-color: #d32f2f !important;
     color: #fff !important;
 }
+
 .btn-purple-solid:hover,
 .btn-purple-solid:active {
     background-color: #4a148c !important;
     color: white !important;
 }
+
 .btn-orange-solid:hover,
 .btn-orange-solid:active {
     background-color: #f57c00 !important;
     color: white !important;
 }
+
 .btn-search:hover,
 .btn-search:active {
     background-color: #00acc1 !important;

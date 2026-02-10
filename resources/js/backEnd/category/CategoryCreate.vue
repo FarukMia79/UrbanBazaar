@@ -173,7 +173,7 @@ export default {
             data.append('status', this.form.status ? 1 : 0);
             data.append('front_view', this.form.front_view ? 1 : 0);
 
-            axios.post('/api/category/store', data)
+            axios.post('/api/category', data)
                 .then(() => {
                     this.$router.push({ name: 'CategoryIndex' });
                     Notification.success();

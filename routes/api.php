@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('is_admin')->group(function () {
         Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
-        Route::post('/category/store', [CategoryController::class, 'store']);
+        //Route::post('/category', [CategoryController::class, 'store']);
+        Route::resource('/category', CategoryController::class);
     });
 });
