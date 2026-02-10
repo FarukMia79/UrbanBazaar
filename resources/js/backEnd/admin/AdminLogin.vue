@@ -74,7 +74,12 @@ export default {
                     console.log("Login Successful!");
                 })
                 .catch((error) => {
-                    console.error("Actual Error:", error);
+                    if (error.response && error.response.data) {
+                        Notification.error(error.response.data.message);
+                    } else {
+                        Notification.error("Something went wrong!");
+                    }
+                    console.error("Login Error:", error.response.data);
                 })
         }
     }

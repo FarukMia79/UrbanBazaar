@@ -62,7 +62,7 @@ export default {
             this.errors = {};
 
             axios.post('/api/password/email', { email: this.email })
-                .then((res) => {
+                .then(() => {
                     this.loading = false;
                     this.email = null; 
                     Notification.success("Reset link sent! Please check your email.");

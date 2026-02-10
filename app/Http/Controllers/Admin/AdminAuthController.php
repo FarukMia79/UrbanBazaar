@@ -27,8 +27,8 @@ class AdminAuthController extends Controller
 
         if ($user->role !== 'admin') {
             return response()->json([
-                'message ' => 'Access denied! You are not an Admin.'
-            ]);
+                'message' => 'Access denied! You are not an Admin.'
+            ], 403);
         }
 
         $token = $user->createToken('admin_auth_token')->plainTextToken;
