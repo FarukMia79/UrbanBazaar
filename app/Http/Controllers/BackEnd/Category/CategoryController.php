@@ -76,7 +76,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Category::findOrFail($id);
     }
 
     /**
@@ -90,9 +90,47 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255|unique:categories,name,' . $id,
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'status' => 'required'
+        ]);
+
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->meta_title = $request->meta_title;
+        $category->meta_description = $request->meta_description;
+        $category->front_view = (int) $request->front_view;
+        $category->status = (int) $request->status;
+
+        if ($request->hasFile('image')) {
+            if ($category->image && file_exists(public_path($category->image))) {
+                unlink(public_path($category->image));
+            }
+
+            $file = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $uploadPath = public_path('uploads/category/');
+
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            // Intervention
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+            $image->cover(512, 512);
+            $image->save($uploadPath . $imageName);
+
+            $category->image = 'uploads/category/' . $imageName;
+        }
+
+        $category->save();
+
+        return response()->json(['message' => 'Category Updated Successfully!']);
     }
 
     /**

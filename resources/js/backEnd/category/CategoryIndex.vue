@@ -68,7 +68,7 @@
                             <td>{{index + 1}}</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <router-link :to="{ name: 'CategoryEdit'}" class="text-muted cursor-pointer me-2 action-edit">
+                                    <router-link :to="{ name: 'CategoryEdit', params: {id: category.id}}" class="text-muted cursor-pointer me-2 action-edit">
                                         <i class="fa-regular fa-edit"></i>
                                     </router-link>
                                     <a @click="deleteCategory(category.id)" class="text-muted cursor-pointer action-trash">
@@ -173,7 +173,7 @@ export default {
                         }).catch((error) => {
                             this.$router.push({ name: 'CategoryIndex' });
                             Notification.error();
-                        })
+                        });
                 }
             });
         }

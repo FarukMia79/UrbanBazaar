@@ -49,7 +49,7 @@ export default [
             { path: 'products/price-edit', name: 'ProductPriceManage', component: ProductPriceManage},
             { path: 'categories/manage', name: 'CategoryIndex', component: CategoryIndex},
             { path: 'categories/create', name: 'CategoryCreate', component: CategoryCreate},
-            { path: 'categories/edit', name: 'CategoryEdit', component: CategoryEdit},
+            { path: 'categories/edit:id', name: 'CategoryEdit', component: CategoryEdit},
             { path: 'subcategories/manage', name: 'SubCategoryIndex', component: SubCategoryIndex},
             { path: 'subcategories/create', name: 'SubCategoryCreate', component: SubCategoryCreate},
             { path: 'subcategories/edit', name: 'SubcategoryEdit', component: SubcategoryEdit},

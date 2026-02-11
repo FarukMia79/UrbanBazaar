@@ -199,7 +199,14 @@
                                                                     demo
                                                                     <i class="fa-solid fa-chevron-right"></i>
                                                                 </a>
-                                                                <ul class="sidebar-childmenu"></ul>
+                                                                <ul class="sidebar-childmenu">
+                                                                    <li>
+                                                                        <a href="subcategory/demo.html">
+                                                                            demo
+                                                                            <i class="fa-solid fa-chevron-right"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
                                                             </li>
                                                         </ul>
                                                     </li>
