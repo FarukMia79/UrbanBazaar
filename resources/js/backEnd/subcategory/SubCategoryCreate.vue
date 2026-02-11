@@ -122,13 +122,6 @@
                             <small class="text-danger" v-if="errors.status">{{ errors.status[0] }}</small>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted d-block">Front View</label>
-                        <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" v-model="form.front_view" />
-                            <small class="text-danger" v-if="errors.front_view">{{ errors.front_view[0] }}</small>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Submit Button -->
@@ -154,7 +147,6 @@ export default {
                 meta_title: '',
                 meta_description: '',
                 status: true,
-                front_view: false
             },
 
             categories: [],
@@ -196,7 +188,6 @@ export default {
             data.append('meta_description', this.form.meta_description || '');
 
             data.append('status', this.form.status ? 1 : 0);
-            data.append('front_view', this.form.front_view ? 1 : 0);
 
             axios.post('/api/subcategory', data)
                 .then((res) => {

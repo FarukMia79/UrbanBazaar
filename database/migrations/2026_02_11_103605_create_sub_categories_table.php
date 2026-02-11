@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
             $table->boolean('status')->default(1);
-            $table->boolean('front_view')->default(0);
             $table->timestamps();
         });
     }

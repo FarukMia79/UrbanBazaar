@@ -47,7 +47,6 @@ class SubCategoryController extends Controller
         $sub->meta_title = $request->meta_title;
         $sub->meta_description = $request->meta_description;
         $sub->status = $request->status;
-        $sub->front_view = $request->front_view;
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
