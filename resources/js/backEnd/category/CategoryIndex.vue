@@ -30,6 +30,7 @@
                             class="search-input rounded-0 border-end-0"
                             placeholder="Search"
                             style="width: 200px"
+                            v-model="searchterm"
                         />
                         <button
                             class="btn btn-search btn-sm rounded-0 text-white px-3"

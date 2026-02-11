@@ -10,6 +10,7 @@ import CheckOut from '../frontend/page/CheckOut.vue';
 import Contact from '../frontend/page/Contact.vue';
 import OrderTrack from '../frontend/page/OrderTrack.vue';
 import CategoryPage from '../frontend/page/CategoryPage.vue';
+import SubCategoryPage from '../frontend/page/SubCategoryPage.vue';
 import ReturnPolicy from '../frontend/page/ReturnPolicy.vue';
 
 export default [
@@ -22,6 +23,7 @@ export default [
             { path: 'contact', name: 'Contact', component: Contact},
             { path: 'single-product', name: 'SingleProduct', component: SingleProduct},
             { path: 'category', name: 'CategoryPage', component: CategoryPage},
+            { path: 'subcategory', name: 'SubCategoryPage', component: SubCategoryPage},
             { path: 'checkout', name: 'CheckOut', component: CheckOut},
             { path: 'order-track', name: 'OrderTrack', component: OrderTrack},
             { path: 'return-policy', name: 'ReturnPolicy', component: ReturnPolicy},

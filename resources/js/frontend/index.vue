@@ -6,105 +6,24 @@
                     <div class="col-sm-3 hidetosm">
                         <div class="sidebar-menu">
                             <ul class="hideshow">
-                                <li>
-                                    <router-link :to="{ name: 'CategoryPage' }"><img
-                                            :src="`/uploads/category/1761399037-woman-bag.webp`" alt="" />Bags<i
-                                            class="fa-solid fa-chevron-right"></i></router-link>
-                                    <ul class="sidebar-submenu">
-                                        <li>
-                                            <a href="subcategory/demo.html">
-                                                Women Bags
-                                                <i class="fa-solid fa-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="subcategory/demo.html">
-                                                Men Bags
-                                                <i class="fa-solid fa-chevron-right"></i>
-                                            </a>
-                                            <ul class="sidebar-childmenu">
-                                                <li>
-                                                    <a href="subcategory/demo.html">
-                                                        Casual Bags
-                                                        <i class="fa-solid fa-chevron-right"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                <li v-for="category in categories" :key="category.id">
+                                    <router-link :to="{ name: 'CategoryPage', params: { id: category.id } }">
+                                        <img :src="'/' + category.image" alt="" />
+                                        {{ category.name }}
+                                        <i v-if="category.subcategories && category.subcategories.length > 0"
+                                            class="fa-solid fa-chevron-right"></i>
+                                    </router-link>
+
+                                    <ul class="sidebar-submenu"
+                                        v-if="category.subcategories && category.subcategories.length > 0">
+                                        <li v-for="sub in category.subcategories" :key="sub.id">
+                                            <router-link :to="{ name: 'SubCategoryPage', params: { id: sub.id } }">
+                                                {{ sub.name }}
+                                            </router-link>
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="category/hijabs.html">
-                                        <img :src="`/uploads/category/1761399044-hijab.webp`" alt="" />
-                                        Hijabs
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/boy-fashion.html">
-                                        <img :src="`/uploads/category/1761399055-uniform.webp`" alt="" />
-                                        Boy Fashion
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/smart-watch.html">
-                                        <img :src="`/uploads/category/1761399063-smartwatch.webp`" alt="" />
-                                        Smart Watch
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/western-dress.html">
-                                        <img :src="`/uploads/category/1761399071-short-dress.webp`" alt="" />
-                                        Western dress
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/skin-care.html">
-                                        <img :src="`/uploads/category/1761399079-face-cream.webp`" alt="" />
-                                        Skin Care
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/undergarments.html">
-                                        <img :src="`/uploads/category/1761399093-underwear.webp`" alt="" />
-                                        undergarments
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/makeup.html">
-                                        <img :src="`/uploads/category/1761399100-make-up.webp`" alt="" />
-                                        Makeup
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/accessories.html">
-                                        <img :src="`/uploads/category/1761399107-hair-styling.webp`" alt="" />
-                                        Accessories
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
-                                <li>
-                                    <a href="category/women-t-shirt.html">
-                                        <img :src="`/uploads/category/1761454578-tshirt.webp`" alt="" />
-                                        Women T-Shirt
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                    <ul class="sidebar-submenu"></ul>
-                                </li>
+                                <li v-if="categories.length == 0" class="p-3 text-muted small">Loading...</li>
                             </ul>
                         </div>
                     </div>
@@ -779,7 +698,24 @@
 <script>
 export default {
     name: "HomeContent",
+    data() {
+        return {
+            categories: [],
+        }
+    },
+    methods: {
+        getSidebarData() {
+            axios.get('/api/category')
+                .then((res) => {
+                    this.categories = res.data;
+                }).catch((error) => {
+                    console.log(error);
+                });
+        }
+    },
     mounted() {
+        this.getSidebarData();
+
         setTimeout(() => {
             if (typeof window.$ !== "undefined") {
                 // Main slider
