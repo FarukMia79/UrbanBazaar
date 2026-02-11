@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\BackEnd\Category\CategoryController;
+use App\Http\Controllers\BackEnd\Category\SubCategoryController;
 use App\Http\Controllers\FrontEnd\Auth\UserAuthController;
 use App\Http\Controllers\FrontEnd\Auth\PasswordResetController;
 use GuzzleHttp\Middleware;
@@ -26,5 +27,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
         //Route::post('/category', [CategoryController::class, 'store']);
         Route::resource('/category', CategoryController::class);
+        Route::resource('/subcategory', SubCategoryController::class);
     });
 });

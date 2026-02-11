@@ -55,6 +55,7 @@
                             <th>Category Name</th>
                             <th>Image</th>
                             <th>Status</th>
+                            <th>Front View</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,6 +89,10 @@
                             <td>
                                 <span v-if="category.status == 1" class="badge badge-active">Active</span>
                                 <span v-else class="badge bg-danger text-white">Inactive</span>
+                            </td>
+                            <td>
+                                <span v-if="category.status == 1" class="badge badge-active">Show</span>
+                                <span v-else class="badge bg-danger text-white">Hid</span>
                             </td>
                         </tr>
                         <tr v-if="categories.length == 0">

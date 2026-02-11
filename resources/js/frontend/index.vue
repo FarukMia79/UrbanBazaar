@@ -8,18 +8,24 @@
                             <ul class="hideshow">
                                 <li>
                                     <router-link :to="{ name: 'CategoryPage' }"><img
-                                            :src="`/uploads/category/1761399037-woman-bag.webp`" alt="" />Women Bags<i
+                                            :src="`/uploads/category/1761399037-woman-bag.webp`" alt="" />Bags<i
                                             class="fa-solid fa-chevron-right"></i></router-link>
                                     <ul class="sidebar-submenu">
                                         <li>
                                             <a href="subcategory/demo.html">
-                                                demo
+                                                Women Bags
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="subcategory/demo.html">
+                                                Men Bags
                                                 <i class="fa-solid fa-chevron-right"></i>
                                             </a>
                                             <ul class="sidebar-childmenu">
                                                 <li>
                                                     <a href="subcategory/demo.html">
-                                                        demo
+                                                        Casual Bags
                                                         <i class="fa-solid fa-chevron-right"></i>
                                                     </a>
                                                 </li>

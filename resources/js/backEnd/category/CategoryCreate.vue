@@ -166,7 +166,7 @@ export default {
             let data = new FormData();
 
             data.append('name', this.form.name);
-            data.append('image', this.form.image);
+            data.append('image', this.form.image || '');
             data.append('meta_title', this.form.meta_title || '');
             data.append('meta_description', this.form.meta_description || '');
 
