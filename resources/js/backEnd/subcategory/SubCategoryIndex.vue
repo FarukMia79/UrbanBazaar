@@ -76,12 +76,12 @@
                                     >
                                         <i class="fa-regular fa-edit"></i>
                                     </router-link>
-                                    <router-link
-                                        :to="{ name: '' }"
+                                    <a
+                                        @click="deleteSubCategory(sub.id)"
                                         class="text-muted cursor-pointer action-trash"
                                     >
                                         <i class="fa-solid fa-trash"></i>
-                                    </router-link>
+                                    </a>
                                 </div>
                             </td>
                             <td>{{sub.category ? sub.category.name : 'N/A'}}</td>
@@ -164,6 +164,30 @@ export default {
                 }).catch((error)=>{
                     console.log(error);
                 });
+        },
+        deleteSubCategory(id){
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    axios.delete('/api/subcategory/' + id)
+                    .then((res)=>{
+                        this.SubCategories = this.SubCategories.filter(sub=>{
+                            return sub.id != id;
+                        });
+                        Notification.success('Deleted successfully');
+                    }).catch((error)=>{
+                        this.$router.push({name: 'SubCategoryIndex'});
+                        Notification.error();
+                    });
+                }
+            });
         }
     }
 };
