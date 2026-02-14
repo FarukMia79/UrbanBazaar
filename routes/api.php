@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\BackEnd\Brand\BrandController;
 use App\Http\Controllers\BackEnd\Category\CategoryController;
 use App\Http\Controllers\BackEnd\Category\SubCategoryController;
 use App\Http\Controllers\FrontEnd\Auth\UserAuthController;
@@ -13,6 +14,8 @@ Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::get('/subcategory', [SubCategoryController::class, 'index']);
 Route::get('/subcategory/{id}', [SubCategoryController::class, 'show']);
+Route::get('/brand', [BrandController::class, 'index']);
+Route::get('/brand', [BrandController::class, 'show']);
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::post('/user/login', [UserAuthController::class, 'login']);
@@ -30,8 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('is_admin')->group(function () {
         Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
-        
+
         Route::resource('/category', CategoryController::class)->except(['index', 'show']);
         Route::resource('/subcategory', SubCategoryController::class)->except(['index', 'show']);
+        Route::resource('/brand', BrandController::class)->except(['index', 'show']);
     });
 });

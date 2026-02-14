@@ -31,13 +31,11 @@
                     <div class="col-sm-9">
                         <div class="home-slider-container">
                             <div class="main_slider owl-carousel">
-                                <!-- প্রথম স্লাইড -->
                                 <div class="slider-item">
                                     <img :src="`/uploads/banner/1761398976jewellery-app-wide-banners.webp`" alt=""
                                         class="main-slider-style" />
                                 </div>
 
-                                <!-- দ্বিতীয় স্লাইড -->
                                 <div class="slider-item">
                                     <img :src="`/uploads/banner/1761398991trimmer-gif`" alt=""
                                         class="main-slider-style" />
