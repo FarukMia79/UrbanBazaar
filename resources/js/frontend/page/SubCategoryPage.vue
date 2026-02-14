@@ -10,7 +10,7 @@
                             >
                                 <a href="../index.html">Home</a>
                                 <span>/</span>
-                                <strong>Women Bags</strong>
+                                <strong>{{ subcategory.name }}</strong>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -87,7 +87,7 @@
                                                 aria-expanded="true"
                                                 aria-controls="collapseOne"
                                             >
-                                                Women Bags
+                                                {{ subcategory.name }}
                                             </button>
                                         </h2>
                                         <div
@@ -99,11 +99,20 @@
                                                 class="accordion-body cust_according_body"
                                             >
                                                 <ul>
-                                                    <li>
-                                                        <a
-                                                            href="../subcategory/demo.html"
-                                                            >demo</a
+                                                    <li
+                                                        v-for="sub in subcategories"
+                                                        :key="sub.id"
+                                                    >
+                                                        <router-link
+                                                            :to="{
+                                                                name: 'SubCategoryPage',
+                                                                params: {
+                                                                    id: sub.id,
+                                                                },
+                                                            }"
                                                         >
+                                                            {{ sub.name }}
+                                                        </router-link>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -715,9 +724,30 @@
 </template>
 <script>
 export default {
-    data(){
+    data() {
         return {
+            subcategory: {}, // এখানে subcategory (একবচন) হবে
             id: this.$route.params.id,
+        }
+    },
+    created() {
+        this.getSubCategoryData();
+    },
+    methods: {
+        getSubCategoryData() {
+            // ভুল করে /api/category লিখবেন না, কারণ এটি সাব-ক্যাটাগরি পেজ
+            axios.get(`/api/subcategory/${this.id}`)
+                .then((res) => {
+                    this.subcategory = res.data;
+                }).catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+    },
+    watch: {
+        '$route.params.id'(newId) {
+            this.id = newId;
+            this.getSubCategoryData();
         }
     }
 };

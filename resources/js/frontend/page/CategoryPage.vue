@@ -10,7 +10,7 @@
                             >
                                 <a href="../index.html">Home</a>
                                 <span>/</span>
-                                <strong>Women Bags</strong>
+                                <strong>{{ category.name }}</strong>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -87,7 +87,7 @@
                                                 aria-expanded="true"
                                                 aria-controls="collapseOne"
                                             >
-                                                Women Bags
+                                                {{ category.name }}
                                             </button>
                                         </h2>
                                         <div
@@ -99,11 +99,20 @@
                                                 class="accordion-body cust_according_body"
                                             >
                                                 <ul>
-                                                    <li>
-                                                        <a
-                                                            href="../subcategory/demo.html"
-                                                            >demo</a
+                                                    <li
+                                                        v-for="sub in category.subcategories"
+                                                        :key="sub.id"
+                                                    >
+                                                        <router-link
+                                                            :to="{
+                                                                name: 'SubCategoryPage',
+                                                                params: {
+                                                                    id: sub.id,
+                                                                },
+                                                            }"
                                                         >
+                                                            {{ sub.name }}
+                                                        </router-link>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -715,11 +724,34 @@
 </template>
 <script>
 export default {
-    data(){
+    data() {
         return {
+            category: {},
             id: this.$route.params.id,
-        }
-    }
+        };
+    },
+    created() {
+        this.getCategoryData();
+    },
+    methods: {
+        getCategoryData() {
+            axios
+                .get(`/api/category/${this.id}`)
+                .then((res) => {
+                    this.category = res.data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Notification.error("Failed to load categories!");
+                });
+        },
+    },
+    watch: {
+        "$route.params.id"(newId) {
+            this.id = newId;
+            this.getCategoryData();
+        },
+    },
 };
 </script>
 <style lang="css"></style>

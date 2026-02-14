@@ -89,119 +89,15 @@
                     </div>
                     <div class="col-sm-12">
                         <div class="category-slider owl-carousel">
-                            <div class="cat_item">
+                            <div v-for="category in categories" :key="category.id" class="cat_item">
                                 <div class="cat_img">
-                                    <router-link :to="{ name: 'CategoryPage' }" class="text-decoration-none"><img
-                                            :src="`/uploads/category/1761399037-woman-bag.webp`" alt="" /></router-link>
+                                    <router-link :to="{ name: 'CategoryPage', params: {id: category.id} }" class="text-decoration-none"><img
+                                            :src="'/' + category.image" alt="" /></router-link>
                                 </div>
                                 <div class="cat_name">
-                                    <a class="text-decoration-none" href="category/women-bags.html">
-                                        Women Bags
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/hijabs.html">
-                                        <img :src="`/uploads/category/1761399044-hijab.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/hijabs.html"> Hijabs </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/boy-fashion.html">
-                                        <img :src="`/uploads/category/1761399055-uniform.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/boy-fashion.html">
-                                        Boy Fashion
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/smart-watch.html">
-                                        <img :src="`/uploads/category/1761399063-smartwatch.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/smart-watch.html">
-                                        Smart Watch
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/western-dress.html">
-                                        <img :src="`/uploads/category/1761399071-short-dress.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/western-dress.html">
-                                        Western dress
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/skin-care.html">
-                                        <img :src="`/uploads/category/1761399079-face-cream.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/skin-care.html">
-                                        Skin Care
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/undergarments.html">
-                                        <img :src="`/uploads/category/1761399093-underwear.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/undergarments.html">
-                                        undergarments
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/makeup.html">
-                                        <img :src="`/uploads/category/1761399100-make-up.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/makeup.html"> Makeup </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/accessories.html">
-                                        <img :src="`/uploads/category/1761399107-hair-styling.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/accessories.html">
-                                        Accessories
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="cat_item">
-                                <div class="cat_img">
-                                    <a href="category/women-t-shirt.html">
-                                        <img :src="`/uploads/category/1761454578-tshirt.webp`" alt="" />
-                                    </a>
-                                </div>
-                                <div class="cat_name">
-                                    <a href="category/women-t-shirt.html">
-                                        Women T-Shirt
-                                    </a>
+                                    <router-link class="text-decoration-none" :to="{name: 'CategoryPage', params: {id: category.id}}">
+                                        {{ category.name }}
+                                    </router-link>
                                 </div>
                             </div>
                         </div>

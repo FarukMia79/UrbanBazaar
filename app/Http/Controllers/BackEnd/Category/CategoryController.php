@@ -74,9 +74,9 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        return Category::findOrFail($id);
+        return Category::with('subcategories')->findOrFail($id);
     }
 
     /**

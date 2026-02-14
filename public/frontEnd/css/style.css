@@ -5253,21 +5253,25 @@ li.all__category__list {
     background: #750377;
 }
 
-li.all__category__list:hover .side__bar {
+li.all__category__list:not(.disable-hover):hover .side__bar {
     opacity: 1;
     z-index: 999;
     visibility: visible;
     display: block;
 }
 
+li.disable-hover .side__bar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
 .side__bar ul li:hover {
-    /* হোভার BG: ডিপ কালার #3F0051 */
     background-color: #3F0051;
     color: #ffffff;
 }
 
 .side__bar ul li:hover>a {
-    /* হোভার BG: ডিপ কালার #3F0051 */
     background-color: #f7e0f8;
     color: #3F0051;
 }
@@ -5279,14 +5283,12 @@ li.all__category__list:hover .side__bar {
 .side__barsub {
     width: 290px;
     border-radius: 0px;
-    /* BG: অ্যাকসেন্ট #750377 */
     background: #750377;
 }
 
 .side__barchild {
     width: 290px;
     border-radius: 0px;
-    /* BG: অ্যাকসেন্ট #750377 */
     background: #750377;
 }
 
@@ -5321,11 +5323,11 @@ li.all__category__list i {
 }
 
 /* ========================================= */
-/* --- গ্লোবাল কনফিগারেশন ও রেসপন্সিভনেস --- */
+/* --- global configuration and responsive --- */
 /* ========================================= */
 .chheckout-section {
     padding: 20px 0;
-    /* Main bg colour (হালকা রঙ): #F9F5FB */
+    /* Main bg colour (color): #F9F5FB */
     background-color: #F9F5FB;
 }
 
@@ -5335,14 +5337,12 @@ li.all__category__list i {
     margin: -10px;
 }
 
-/* কলামগুলির ডিফল্ট উইডথ (মোবাইল ভিউ: সম্পূর্ণ প্রস্থ) */
 .chheckout-section .col-sm-5,
 .chheckout-section .col-sm-7 {
     padding: 10px;
     width: 100%;
 }
 
-/* কলামের ক্রম নিয়ন্ত্রণ: মোবাইলে Form (cus-order-2) উপরে, Details (cust-order-1) নিচে */
 .cus-order-2 {
     order: 1;
 }
@@ -5351,7 +5351,6 @@ li.all__category__list i {
     order: 2;
 }
 
-/* ডেস্কটপ/ট্যাবলেট ভিউ (576px এবং তার উপরে): পাশাপাশি থাকবে */
 @media (min-width: 576px) {
     .chheckout-section .col-sm-5 {
         flex: 0 0 41.666667%;
@@ -5370,21 +5369,17 @@ li.all__category__list i {
 }
 
 /* ========================================= */
-/* --- ১. চেকআউট শিপিং ফর্ম এরিয়া (বাম কলাম) --- */
+/* --- 1. Checkout Shipping Form Area (Left Column) --- */
 /* ========================================= */
 .checkout-shipping .card {
     border: none;
     border-radius: 8px !important;
-    /* শ্যাডো সামান্য হালকা করা হলো হালকা ব্যাকগ্রাউন্ডের জন্য */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    /* কার্ডের ব্যাকগ্রাউন্ড: #ffffff (সাদা) */
     background: #ffffff !important;
 }
 
 .checkout-shipping .card-header {
-    /* সেকেন্ডারি bg colour (ভাইব্রেন্ট অ্যাকসেন্ট): #750377 */
     background-color: #750377 !important;
-    /* সেকেন্ডারি bg এর উপর টেক্সট: #ffffff (সাদা) */
     color: #ffffff;
     padding: 15px 20px;
     font-weight: 700;

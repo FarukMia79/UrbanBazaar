@@ -9,6 +9,11 @@ use App\Http\Controllers\FrontEnd\Auth\UserAuthController;
 use App\Http\Controllers\FrontEnd\Auth\PasswordResetController;
 use GuzzleHttp\Middleware;
 
+Route::get('/category', [CategoryController::class, 'index']);
+Route::get('/category/{id}', [CategoryController::class, 'show']);
+Route::get('/subcategory', [SubCategoryController::class, 'index']);
+Route::get('/subcategory/{id}', [SubCategoryController::class, 'show']);
+
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::post('/user/login', [UserAuthController::class, 'login']);
 Route::post('/register', [UserAuthController::class, 'register']);
@@ -25,8 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('is_admin')->group(function () {
         Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
-        //Route::post('/category', [CategoryController::class, 'store']);
-        Route::resource('/category', CategoryController::class);
-        Route::resource('/subcategory', SubCategoryController::class);
+        
+        Route::resource('/category', CategoryController::class)->except(['index', 'show']);
+        Route::resource('/subcategory', SubCategoryController::class)->except(['index', 'show']);
     });
 });
