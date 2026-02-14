@@ -31,13 +31,17 @@
                     <div class="col-sm-9">
                         <div class="home-slider-container">
                             <div class="main_slider owl-carousel">
+                                <!-- প্রথম স্লাইড -->
                                 <div class="slider-item">
                                     <img :src="`/uploads/banner/1761398976jewellery-app-wide-banners.webp`" alt=""
                                         class="main-slider-style" />
+                                </div>
+
+                                <!-- দ্বিতীয় স্লাইড -->
+                                <div class="slider-item">
                                     <img :src="`/uploads/banner/1761398991trimmer-gif`" alt=""
                                         class="main-slider-style" />
                                 </div>
-                                <!-- slider item -->
                             </div>
                         </div>
                     </div>
@@ -88,14 +92,16 @@
                         </div>
                     </div>
                     <div class="col-sm-12">
-                        <div class="category-slider owl-carousel">
+                        <div v-if="categories.length > 0" class="category-slider owl-carousel">
                             <div v-for="category in categories" :key="category.id" class="cat_item">
                                 <div class="cat_img">
-                                    <router-link :to="{ name: 'CategoryPage', params: {id: category.id} }" class="text-decoration-none"><img
-                                            :src="'/' + category.image" alt="" /></router-link>
+                                    <router-link :to="{ name: 'CategoryPage', params: { id: category.id } }"
+                                        class="text-decoration-none"><img :src="'/' + category.image"
+                                            alt="" /></router-link>
                                 </div>
                                 <div class="cat_name">
-                                    <router-link class="text-decoration-none" :to="{name: 'CategoryPage', params: {id: category.id}}">
+                                    <router-link class="text-decoration-none"
+                                        :to="{ name: 'CategoryPage', params: { id: category.id } }">
                                         {{ category.name }}
                                     </router-link>
                                 </div>
@@ -592,6 +598,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: "HomeContent",
     data() {
@@ -604,6 +612,24 @@ export default {
             axios.get('/api/category')
                 .then((res) => {
                     this.categories = res.data;
+
+                    // ডাটা আসার ঠিক ১০০ মিলি-সেকেন্ড পর স্লাইডার চালু হবে
+                    setTimeout(() => {
+                        if (typeof window.$ !== "undefined") {
+                            window.$(".category-slider").owlCarousel({
+                                loop: true,
+                                margin: 10,
+                                nav: true,
+                                dots: true,
+                                responsive: {
+                                    0: { items: 2 },
+                                    600: { items: 4 },
+                                    1000: { items: 8 },
+                                },
+                            });
+                        }
+                    }, 100);
+
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -614,44 +640,22 @@ export default {
 
         setTimeout(() => {
             if (typeof window.$ !== "undefined") {
-                // Main slider
                 window.$(".main_slider").owlCarousel({
                     items: 1,
                     loop: true,
                     autoplay: true,
                     dots: true,
-                    nav: false,
-                    autoplayTimeout: 5000,
+                    nav: false
                 });
 
-                // Catagory slider
-                window.$(".category-slider").owlCarousel({
-                    loop: true,
-                    margin: 10,
-                    nav: true,
-                    dots: false,
-                    responsive: {
-                        0: { items: 2 },
-                        600: { items: 4 },
-                        1000: { items: 8 },
-                    },
-                });
-
-                // Product slider
                 window.$(".product_slider").owlCarousel({
                     loop: true,
                     margin: 15,
                     nav: true,
                     dots: false,
                     autoplay: true,
-                    responsive: {
-                        0: { items: 2 },
-                        600: { items: 3 },
-                        1000: { items: 5 },
-                    },
+                    responsive: { 0: { items: 2 }, 600: { items: 3 }, 1000: { items: 5 } }
                 });
-            } else {
-                console.error("Can not find jQuery, check index.blade.php");
             }
         }, 500);
     },
@@ -659,6 +663,27 @@ export default {
 </script>
 
 <style scoped>
+:deep(.owl-dots) {
+    text-align: center;
+    margin-top: 15px;
+}
+
+:deep(.owl-dot span) {
+    width: 10px !important;
+    height: 10px !important;
+    margin: 5px 7px !important;
+    background: #ccc !important;
+    display: block;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+:deep(.owl-dot.active span),
+:deep(.owl-dot:hover span) {
+    background: #3f0051 !important;
+    width: 25px !important;
+}
+
 .cat_name a {
     color: black;
     text-decoration: none !important;
