@@ -71,7 +71,7 @@
                             <td>
                                 <div class="d-flex gap-2 fs-5">
                                     <router-link
-                                        :to="{ name: 'SubcategoryEdit' }"
+                                        :to="{ name: 'SubcategoryEdit', params: {id: sub.id} }"
                                         class="text-muted cursor-pointer me-2 action-edit"
                                     >
                                         <i class="fa-regular fa-edit"></i>

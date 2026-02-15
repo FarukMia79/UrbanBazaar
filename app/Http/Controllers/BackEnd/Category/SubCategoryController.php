@@ -90,7 +90,38 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+        ]);
+
+        $sub = SubCategory::findOrFail($id);
+        $sub->name = $request->name;
+        $sub->slug = Str::slug($request->name);
+        $sub->meta_title = $request->meta_title;
+        $sub->meta_description = $request->meta_description;
+        $sub->status = $request->status;
+
+        if ($request->hasFile('image')) {
+            if ($sub->image && file_exists(public_path($sub->image))) {
+                unlink(public_path($sub->image));
+            }
+
+            $file = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $uploadPath = public_path('uploads/subcategory/');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+            $image->cover(512, 512);
+            $image->save($uploadPath . $imageName);
+            $sub->image = 'uploads/subcategory/' . $imageName;
+        }
+        $sub->save();
+        return response()->json(['message' => 'Update successfully!']);
     }
 
     /**

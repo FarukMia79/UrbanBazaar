@@ -11,7 +11,7 @@
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
-            <form>
+            <form @submit.prevent="updateSubData" enctype="multipart/form-data">
                 <div class="row g-4">
                     <!-- Name Field -->
                     <div class="col-6">
@@ -22,6 +22,7 @@
                             type="text"
                             class="form-control"
                             placeholder=""
+                            v-model="form.name"
                         />
                     </div>
                     <div class="col-6">
@@ -29,17 +30,22 @@
                             >Category Name *</label
                         >
                         
-                        <select class="form-select text-muted">
-                            <option selected>Select..</option>
+                        <select v-model="form.category_id" class="form-select text-muted">
+                            <option value="">Select..</option>
+                            <option v-for="category in categories" :key="category.id" :value="category.id" >{{ category.name }}</option>
                         </select>
                     </div>
 
                     <!-- Image Field -->
-                    <div class="col-12">
+                    <div class="col-6">
                         <label class="form-label fw-semibold text-muted"
                             >Image *</label
                         >
-                        <input type="file" class="form-control" />
+                        <input @change="onImageChange" type="file" class="form-control" />
+                    </div>
+                    <div class="col-6" v-if="imagePreview">
+                        <img :src="imagePreview" style="height: 100px; width: 100px; object-fit: cover;"
+                            class="rounded border shadow-sm">
                     </div>
 
                     <!-- Meta Title Field -->
@@ -182,16 +188,8 @@
                             <input
                                 class="form-check-input"
                                 type="checkbox"
-                                checked
+                                v-model="form.status"
                             />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted d-block"
-                            >Front View</label
-                        >
-                        <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" />
                         </div>
                     </div>
                 </div>
@@ -207,7 +205,87 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data(){
+        return {
+            form: {
+                name: '',
+                category_id: '',
+                image: null,
+                meta_title: '',
+                meta_description: '',
+                status: true
+            },
+            categories: [],
+            imagePreview: null,
+            errors: {},
+            id: this.$route.params.id,
+        }
+    },
+    created(){
+        this.getSubData();
+        this.getCategoryData();
+    },
+    methods: {
+        getCategoryData(){
+            axios.get('/api/category')
+            .then((res)=>{
+                this.categories = res.data;
+            }).catch((error)=>{
+                console.error(error);
+            });
+        },
+        getSubData(){
+            axios.get(`/api/subcategory/${this.id}`)
+            .then((res)=>{
+                this.form.name = res.data.name;
+                this.form.category_id = res.data.category_id;
+                this.form.meta_title = res.data.meta_title;
+                this.form.meta_description = res.data.meta_description;
+                this.form.status = res.data.status == 1;
+                this.imagePreview = '/' + res.data.image;
+            }).catch((error)=>{
+                console.error(error);
+            });
+        },
+        onImageChange(e){
+            let file = e.target.files[0];
+            if(file.size > 2097152){
+                Notification.image_validation();
+                e.target.value = "";
+            } else{
+                this.form.image = file;
+                this.imagePreview = URL.createObjectURL(file);
+            }
+        },
+        updateSubData(){
+            let data = new FormData();
+
+            data.append('name', this.form.name);
+            data.append('meta_title', this.form.meta_title);
+            data.append('meta_description', this.form.meta_description);
+            data.append('status', this.form.status ? 1 : 0);
+            if(this.form.image){
+               data.append('image', this.form.image); 
+            }
+            
+            data.append('_method', 'PUT');
+
+            axios.post(`/api/subcategory/${this.id}`, data)
+            .then(()=>{
+                this.$router.push({name: 'SubCategoryIndex'});
+                Notification.success('Update successfully!');
+            }).catch((error)=>{
+                if(error.response && error.response.data){
+                    Notification.error(error.response.data.message)
+                } else{
+                    Notification.error();
+                }
+                console.error(error);
+            });
+        }
+    }
+};
 </script>
 <style scoped>
 .shadow-custom {

@@ -97,6 +97,10 @@ class BrandController extends Controller
         $brand->status = (int) $request->status;
 
         if ($request->hasFile('image')) {
+            if ($brand->image && file_exists(public_path($brand->image))) {
+                unlink(public_path($brand->image));
+            }
+
             $file = $request->file('image');
             $imageNmae = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
