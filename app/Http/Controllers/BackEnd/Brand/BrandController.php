@@ -43,7 +43,7 @@ class BrandController extends Controller
         $brand->slug = Str::slug($request->name);
         $brand->meta_title = $request->meta_title;
         $brand->meta_description = $request->meta_description;
-        $brand->status = $request->status;
+        $brand->status = (int) $request->status;
 
         if ($request->hasFile('image')) {
             $file = request()->file('image');
@@ -58,7 +58,7 @@ class BrandController extends Controller
             $image = $manager->read($file);
             $image->cover(512, 512);
             $image->save($uploadPath . $imageName);
-            $brand->image = 'uploads/brand/' . $imageName;
+            $brand->image = 'uploads/brands/' . $imageName;
         }
         $brand->save();
         return response()->json(['message' => 'Brand created successfully!']);
@@ -67,9 +67,10 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $brand = Brand::findOrFail($id);
+        return response()->json(['message' => 'Show brand data']);
     }
 
     /**
@@ -91,8 +92,13 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $brand = Brand::findOrFail($id);
+        if ($brand->image) {
+            unlink(public_path($brand->image));
+        }
+        $brand->delete();
+        return response()->json(['message' => 'Brand deleted successfully!']);
     }
 }

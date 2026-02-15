@@ -15,7 +15,7 @@ Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::get('/subcategory', [SubCategoryController::class, 'index']);
 Route::get('/subcategory/{id}', [SubCategoryController::class, 'show']);
 Route::get('/brand', [BrandController::class, 'index']);
-Route::get('/brand', [BrandController::class, 'show']);
+Route::get('/brand/{id}', [BrandController::class, 'show']);
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::post('/user/login', [UserAuthController::class, 'login']);

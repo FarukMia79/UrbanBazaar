@@ -157,7 +157,7 @@ export default {
                     this.categories = response.data;
                 }).catch((error) => {
                     console.log(error);
-                })
+                });
         },
         deleteCategory(id) {
             Swal.fire({

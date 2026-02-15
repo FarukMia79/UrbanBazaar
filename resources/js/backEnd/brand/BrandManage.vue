@@ -30,6 +30,7 @@
                             class="search-input rounded-0 border-end-0"
                             placeholder="Search"
                             style="width: 200px"
+                            v-model="searchTerm"
                         />
                         <button
                             class="btn btn-search btn-sm rounded-0 text-white px-3"
@@ -58,43 +59,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(br, index) in filterSearch" :key="br.id">
                             <td>
                                 <input
                                     type="checkbox"
                                     class="form-check-input"
                                 />
                             </td>
-                            <td>1</td>
+                            <td>{{ index + 1 }}</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
                                     <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
-                                        <i class="fa-regular fa-thumbs-down"></i>
-                                    </router-link>
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
                                         <i class="fa-regular fa-edit"></i>
                                     </router-link>
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-trash">
+                                    <a @click="deleteBrandData(br.id)" class="text-muted cursor-pointer action-trash">
                                         <i class="fa-solid fa-trash"></i>
-                                    </router-link>
+                                    </a>
                                 </div>
                             </td>
-                            <td>Sneakers</td>
+                            <td>{{ br.name }}</td>
                             <td>
                                 <img
-                                    src="https://via.placeholder.com/40"
-                                    class="rounded-circle border"
+                                    :src="'/' + br.image"
+                                    class="border"
                                     alt="prod"
-                                    style="
-                                        width: 45px;
-                                        height: 45px;
-                                        object-fit: cover;
-                                    "
+                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
                                 />
                             </td>
                             <td>
-                                <span class="badge badge-active">Active</span>
+                                <span v-if="br.status == 1" class="badge badge-active">Active</span>
+                                <span v-else class="badge badge-danger text-white">Inactive</span>
                             </td>
+                        </tr>
+                        <tr v-if="brands.length == 0">
+                            <td colspan="6" class="text-center text-danger">No Data Found</td>
                         </tr>
                     </tbody>
                 </table>
@@ -131,7 +129,58 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            brands: [],
+            searchTerm: ''
+        }
+    },
+    computed: {
+        filterSearch() {
+            return this.brands.filter(br => {
+                return br.name.toLowerCase().match(this.searchTerm.toLowerCase());
+            });
+        }
+    },
+    methods: {
+        getBrandData() {
+            axios.get('/api/brand')
+                .then((res) => {
+                    this.brands = res.data;
+                }).catch((error) => {
+                    console.error(error);
+                });
+        },
+        deleteBrandData(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/api/brand/' + id)
+                        .then(() => {
+                            this.brands = this.brands.filter(br => {
+                                return br.id != id;
+                            });
+                            Notification.success('Brand deleted successfully!');
+                        }).catch((error) => {
+                            this.$router.push({ name: 'BrandManage' });
+                            Notification.error();
+                        });
+                }
+            });
+        }
+    },
+    mounted() {
+        this.getBrandData();
+    }
+};
 </script>
 <style lang="css" scoped>
 .product-table {
@@ -156,26 +205,31 @@ export default {};
     background-color: #f06292;
     border: none;
 }
+
 .btn-teal-solid {
     background-color: #00bfa5;
     color: white;
     border: none;
 }
+
 .btn-red-solid {
     background-color: #ef5350;
     color: white;
     border: none;
 }
+
 .btn-purple-solid {
     background-color: #6a1b9a;
     color: white;
     border: none;
 }
+
 .btn-orange-solid {
     background-color: #ffca28;
     color: white;
     border: none;
 }
+
 .btn-search {
     background-color: #00cae3;
     border: none;
@@ -186,26 +240,31 @@ export default {};
     background-color: #d81b60 !important;
     color: #fff !important;
 }
+
 .btn-teal-solid:hover,
 .btn-teal-solid:active {
     background-color: #00897b !important;
     color: #fff !important;
 }
+
 .btn-red-solid:hover,
 .btn-red-solid:active {
     background-color: #d32f2f !important;
     color: #fff !important;
 }
+
 .btn-purple-solid:hover,
 .btn-purple-solid:active {
     background-color: #4a148c !important;
     color: white !important;
 }
+
 .btn-orange-solid:hover,
 .btn-orange-solid:active {
     background-color: #f57c00 !important;
     color: white !important;
 }
+
 .btn-search:hover,
 .btn-search:active {
     background-color: #00acc1 !important;
