@@ -37,7 +37,7 @@
                                 </div>
 
                                 <div class="slider-item">
-                                    <img :src="`/uploads/banner/1761398991trimmer-gif`" alt=""
+                                    <img :src="`/uploads/banner/1757232812_mouse`" alt=""
                                         class="main-slider-style" />
                                 </div>
                             </div>

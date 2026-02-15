@@ -25,6 +25,7 @@ import ColorManage from '../backEnd/color/ColorManage.vue';
 import ColorCreate from '../backEnd/color/ColorCreate.vue';
 import SizeIndex from '../backEnd/size/SizeIndex.vue';
 import SizeCreate from '../backEnd/size/SizeCreate.vue';
+import SizeEdit from '../backEnd/size/SizeEdit.vue';
 import CouponManagement from '../backEnd/coupon/CouponManagement.vue';
 import AllReviews from '../backEnd/review/AllReviews.vue';
 import UsersManage from '../backEnd/users/UsersManage.vue';
@@ -63,6 +64,7 @@ export default [
             { path: 'color/create', name: 'ColorCreate', component: ColorCreate},
             { path: 'sizes/manage', name: 'SizeIndex', component: SizeIndex},
             { path: 'sizes/create', name: 'SizeCreate', component: SizeCreate},
+            { path: 'sizes/edit/:id', name: 'SizeEdit', component: SizeEdit},
             { path: 'coupon', name: 'CouponManagement', component: CouponManagement},
             { path: 'reviews', name: 'AllReviews', component: AllReviews},
             { path: 'users/manage', name: 'UsersManage', component: UsersManage},

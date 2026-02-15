@@ -42,17 +42,9 @@
                             <option selected>Choose ...</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted"
-                            >Child Categories (Optional)</label
-                        >
-                        <select class="form-select text-muted">
-                            <option selected>Choose ...</option>
-                        </select>
-                    </div>
 
                     <!-- Brands, Purchase Price, Old Price -->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted"
                             >Brands</label
                         >
@@ -62,13 +54,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold text-muted"
-                            >Purchase Price *</label
-                        >
-                        <input type="text" class="form-control" />
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold text-muted"
-                            >Old Price *</label
+                            >Price *</label
                         >
                         <input type="text" class="form-control" />
                     </div>
@@ -76,7 +62,7 @@
                     <!-- New Price, Stock, Image -->
                     <div class="col-md-4">
                         <label class="form-label fw-semibold text-muted"
-                            >New Price *</label
+                            >discount_price *</label
                         >
                         <input type="text" class="form-control" />
                     </div>
@@ -86,35 +72,20 @@
                         >
                         <input type="text" class="form-control" />
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted"
                             >Image *</label
                         >
-                        <div
-                            v-for="(image, index) in productImages"
-                            :key="image.id"
-                            class="mb-2"
+                        <div class="mb-2"
                         >
                             <div class="input-group">
                                 <input type="file" class="form-control" />
-                                <button
-                                    v-if="index === 0"
-                                    @click="addImageField"
-                                    class="btn btn-teal text-white"
-                                    type="button"
-                                >
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                                <button
-                                    v-else
-                                    @click="removeImageField(index)"
-                                    class="btn btn-danger text-white"
-                                    type="button"
-                                >
-                                    <i class="fa fa-trash"></i>
-                                </button>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-6">
+                        <img src="" style="height: 100px; width: 100px; object-fit: cover;"
+                            class="rounded border shadow-sm">
                     </div>
 
                     <!-- SKU, Unit, Video -->
@@ -228,16 +199,11 @@
 export default {
     data() {
         return {
-            productImages: [{ id: Date.now() }],
+            
         };
     },
     methods: {
-        addImageField() {
-            this.productImages.push({ id: Date.now() });
-        },
-        removeImageField(index) {
-            this.productImages.splice(index, 1);
-        },
+        
     },
 };
 </script>

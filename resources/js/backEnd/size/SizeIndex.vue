@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
-                    <input type="text" class="search-input rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
+                    <input v-model="searchTerm" type="text" class="search-input rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
                     <button class="btn btn-search btn-sm rounded-0 text-white px-3">Search</button>
                 </div>
                 </div>
@@ -46,30 +46,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(size, index) in filterSearch" :key="size.id">
                             <td>
                                 <input
                                     type="checkbox"
                                     class="form-check-input"
                                 />
                             </td>
-                            <td>1</td>
+                            <td>{{index + 1}}</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <i
-                                        class="fa-regular fa-thumbs-down text-muted cursor-pointer me-2 action-edit"
-                                    ></i>
-                                    <i
+                                    <router-link :to="{name: 'SizeEdit', params: {id: size.id}}"
                                         class="fa-regular fa-edit text-muted cursor-pointer me-2 action-edit"
-                                    ></i>
-                                    <i
+                                    ></router-link>
+                                    <a @click="deleteSizeData(size.id)"
                                         class="fa-solid fa-trash text-muted cursor-pointer action-trash"
-                                    ></i>
+                                    ></a>
                                 </div>
                             </td>
-                            <td>L</td>
+                            <td>{{ size.name }}</td>
                             <td>
-                                <span class="badge badge-active">Active</span>
+                                <span v-if="size.status == 1" class="badge badge-active">Active</span>
+                                <span v-else class="badge badge-danger text-white">Inactive</span>
                             </td>
                         </tr>
                     </tbody>
@@ -107,7 +105,58 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data(){
+        return {
+            sizes: [],
+            searchTerm: ''
+        }
+    },
+    created(){
+        this.getSizeData();
+    },
+    computed: {
+        filterSearch(){
+            return this.sizes.filter(si=>{
+                return si.name.toLowerCase().match(this.searchTerm.toLocaleLowerCase());
+            });
+        }
+    },
+    methods: {
+        getSizeData(){
+            axios.get('/api/size')
+            .then((res)=>{
+                this.sizes = res.data;
+            }).catch((error)=>{
+                console.error(error);
+            });
+        },
+        deleteSizeData(sizeId){
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    axios.delete('/api/size/'+ sizeId)
+                    .then((res)=>{
+                        this.sizes = this.sizes.filter(si=>{
+                            return si.id != sizeId;
+                        });
+                        Notification.success('Size deleted successfully!');
+                    }).catch((error)=>{
+                        this.$router.push({name: 'SizeIndex'});
+                        Notification.error();
+                    });
+                }
+            });
+        }
+    }
+};
 </script>
 <style lang="css" scoped>
 .product-table {

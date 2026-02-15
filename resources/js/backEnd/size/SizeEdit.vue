@@ -1,14 +1,14 @@
 <template>
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Size Create</h4>
+            <h4 class="fw-bold text-dark mb-0">Size Update</h4>
             <router-link :to="{ name: 'SizeIndex' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white"><i
                     class="fa-solid fa-ruler-combined me-1"></i>Size
                 Manage</router-link>
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
-            <form @submit.prevent="storeSizeData" enctype="multipart/form-data">
+            <form @submit.prevent="uodateSizeData" enctype="multipart/form-data">
                 <div class="row g-4">
                     <!-- Size Field -->
                     <div class="col-md-6">
@@ -45,18 +45,33 @@ export default {
                 name: '',
                 status: true,
             },
-            errors: {}
+            errors: {},
+            id: this.$route.params.id,
         }
     },
+    created(){
+        this.getSizeData();
+    },
     methods: {
+        getSizeData(){
+            axios.get(`/api/size/${this.id}`)
+            .then((res)=>{
+                this.form.name = res.data.name;
+                this.form.status = res.data.status == 1;
+            }).catch((error)=>{
+                console.error(error);
+            })
+        },
 
-        storeSizeData() {
+        uodateSizeData() {
             let data = new FormData();
 
             data.append('name', this.form.name);
             data.append('status', this.form.status ? 1 : 0);
 
-            axios.post('/api/size', data)
+            data.append('_method', 'PUT');
+
+            axios.post(`/api/size/${this.id}`, data)
             .then((res)=>{
                 this.$router.push({ name: 'SizeIndex' });
                 Notification.success();
