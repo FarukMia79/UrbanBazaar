@@ -69,8 +69,7 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        $brand = Brand::findOrFail($id);
-        return response()->json(['message' => 'Show brand data']);
+        return Brand::findOrFail($id);
     }
 
     /**
@@ -84,9 +83,36 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+        ]);
+
+        $brand = Brand::findOrFail($id);
+        $brand->name = $request->name;
+        $brand->slug = Str::slug($request->name);
+        $brand->meta_title = $request->meta_title;
+        $brand->meta_description = $request->meta_description;
+        $brand->status = (int) $request->status;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $imageNmae = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $uploadPath = public_path('uploads/brands/');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+            $image->cover(512, 512);
+            $image->save($uploadPath . $imageNmae);
+            $brand->image = 'uploads/brands/' . $imageNmae;
+        }
+        $brand->save();
+        return response()->json(['message' => 'Brand updated successfully!']);
     }
 
     /**

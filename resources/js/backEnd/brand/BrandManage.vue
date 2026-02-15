@@ -69,7 +69,7 @@
                             <td>{{ index + 1 }}</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
+                                    <router-link :to="{ name: 'BrandEdit', params: {id: br.id}}" class="text-muted cursor-pointer me-2 action-edit">
                                         <i class="fa-regular fa-edit"></i>
                                     </router-link>
                                     <a @click="deleteBrandData(br.id)" class="text-muted cursor-pointer action-trash">
