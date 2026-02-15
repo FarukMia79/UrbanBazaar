@@ -11,7 +11,7 @@
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
-            <form>
+            <form @submit.prevent="storeColorData" enctype="multipart/form-data">
                 <div class="row g-4">
                     <!-- Name Field -->
                     <div class="col-md-6">
@@ -22,6 +22,7 @@
                             type="text"
                             class="form-control"
                             placeholder=""
+                            v-model="form.name"
                         />
                     </div>
                     <!-- Color Picker -->
@@ -35,6 +36,7 @@
                             class="form-control form-control-color custom-color-input w-100"
                             value="#000000"
                             title="Choose your color"
+                            v-model="form.color_code"
                         />
                     </div>
 
@@ -47,7 +49,7 @@
                             <input
                                 class="form-check-input"
                                 type="checkbox"
-                                checked
+                                v-model="form.status"
                             />
                         </div>
                     </div>
@@ -64,7 +66,35 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data(){
+        return {
+            form: {
+                name: '',
+                color_code: '',
+                status: true,
+            },
+            errors: {}
+        }
+    },
+    methods:{
+        storeColorData(){
+            let data = new FormData();
+
+            data.append('name', this.form.name);
+            data.append('color_code', this.form.color_code);
+            data.append('status', this.form.status ? 1 : 0);
+
+            axios.post('/api/color', data)
+            .then((res)=>{
+                this.$router.push({name: 'ColorManage'});
+                Notification.success();
+            }).catch((error)=>{
+                this.errors = error.response.data.errors;
+            })
+        }
+    }
+};
 </script>
 <style scoped>
 .shadow-custom {

@@ -23,6 +23,7 @@ import BrandCreate from '../backEnd/brand/BrandCreate.vue';
 import BrandEdit from '../backEnd/brand/BrandEdit.vue';
 import ColorManage from '../backEnd/color/ColorManage.vue';
 import ColorCreate from '../backEnd/color/ColorCreate.vue';
+import ColorEdit from '../backEnd/color/ColorEdit.vue';
 import SizeIndex from '../backEnd/size/SizeIndex.vue';
 import SizeCreate from '../backEnd/size/SizeCreate.vue';
 import SizeEdit from '../backEnd/size/SizeEdit.vue';
@@ -62,6 +63,7 @@ export default [
             { path: 'brand/edit/:id', name: 'BrandEdit', component: BrandEdit},
             { path: 'color/manage', name: 'ColorManage', component: ColorManage},
             { path: 'color/create', name: 'ColorCreate', component: ColorCreate},
+            { path: 'color/edit/:id', name: 'ColorEdit', component: ColorEdit},
             { path: 'sizes/manage', name: 'SizeIndex', component: SizeIndex},
             { path: 'sizes/create', name: 'SizeCreate', component: SizeCreate},
             { path: 'sizes/edit/:id', name: 'SizeEdit', component: SizeEdit},

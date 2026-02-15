@@ -1,28 +1,56 @@
 <template>
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Size Update</h4>
-            <router-link :to="{ name: 'SizeIndex' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white"><i
-                    class="fa-solid fa-ruler-combined me-1"></i>Size
-                Manage</router-link>
+            <h4 class="fw-bold text-dark mb-0">Color Update</h4>
+            <router-link
+                :to="{ name: 'ColorManage' }"
+                class="btn btn-pink rounded-pill px-3 shadow-sm text-white"
+                ><i class="fa-solid fa-palette me-1"></i>Color
+                Manage</router-link
+            >
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
-            <form @submit.prevent="uodateSizeData" enctype="multipart/form-data">
+            <form @submit.prevent="updateColorData" enctype="multipart/form-data">
                 <div class="row g-4">
-                    <!-- Size Field -->
+                    <!-- Name Field -->
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted">Size *</label>
-                        <input type="text" class="form-control" placeholder="" v-model="form.name"/>
-                        <small class="text-danger" v-if="errors.name">{{ errors.name[0] }}</small>
+                        <label class="form-label fw-semibold text-muted"
+                            >Color Name *</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder=""
+                            v-model="form.name"
+                        />
+                    </div>
+                    <!-- Color Picker -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted"
+                            >Color *</label
+                        >
+                        <!-- Input color -->
+                        <input
+                            type="color"
+                            class="form-control form-control-color custom-color-input w-100"
+                            value="#000000"
+                            title="Choose your color"
+                            v-model="form.color_code"
+                        />
                     </div>
 
                     <!-- Status & Front View Switches -->
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted d-block">Status</label>
+                        <label class="form-label fw-semibold text-muted d-block"
+                            >Status</label
+                        >
                         <div class="form-check form-switch custom-switch">
-                            <input class="form-check-input" type="checkbox" v-model="form.status" />
-                            <small class="text-danger" v-if="errors.status">{{ errors.status[0] }}</small>
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                v-model="form.status"
+                            />
                         </div>
                     </div>
                 </div>
@@ -39,10 +67,11 @@
 </template>
 <script>
 export default {
-    data() {
+    data(){
         return {
             form: {
                 name: '',
+                color_code: '',
                 status: true,
             },
             errors: {},
@@ -50,40 +79,35 @@ export default {
         }
     },
     created(){
-        this.getSizeData();
+        this.getColorData();
     },
-    methods: {
-        getSizeData(){
-            axios.get(`/api/size/${this.id}`)
+    methods:{
+        getColorData(){
+            axios.get(`/api/color/${this.id}`)
             .then((res)=>{
                 this.form.name = res.data.name;
+                this.form.color_code = res.data.color_code;
                 this.form.status = res.data.status == 1;
             }).catch((error)=>{
                 console.error(error);
             });
         },
-
-        uodateSizeData() {
+        updateColorData(){
             let data = new FormData();
 
             data.append('name', this.form.name);
+            data.append('color_code', this.form.color_code);
             data.append('status', this.form.status ? 1 : 0);
 
             data.append('_method', 'PUT');
 
-            axios.post(`/api/size/${this.id}`, data)
+            axios.post(`/api/color/${this.id}`, data)
             .then((res)=>{
-                this.$router.push({ name: 'SizeIndex' });
+                this.$router.push({name: 'ColorManage'});
                 Notification.success();
             }).catch((error)=>{
-                if(error.response && error.response.data){
-                    Notification.error(error.response.data.message);
-                } else{
-                    Notification.error();
-                }
                 this.errors = error.response.data.errors;
-                console.error(error);
-            });
+            })
         }
     }
 };
@@ -108,7 +132,6 @@ export default {
     background-color: #6f42c1;
     border: none;
 }
-
 .btn-purple:hover {
     background-color: #5e35b1;
     color: #fff;
@@ -119,7 +142,6 @@ export default {
     border: none;
     border-radius: 4px;
 }
-
 .btn-teal:hover {
     background-color: #16a085;
     color: #fff;
@@ -159,8 +181,21 @@ export default {
     border-color: #ddd;
     color: #666;
 }
-
 .editor-toolbar .btn:hover {
     background-color: #f0f0f0;
+}
+
+
+
+.custom-color-input {
+    height: 45px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.custom-color-input::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+    padding: 0;
 }
 </style>

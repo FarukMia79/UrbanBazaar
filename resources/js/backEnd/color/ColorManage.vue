@@ -30,6 +30,7 @@
                             class="search-input rounded-0 border-end-0"
                             placeholder="Search"
                             style="width: 200px"
+                            v-model="searchTerm"
                         />
                         <button
                             class="btn btn-search btn-sm rounded-0 text-white px-3"
@@ -57,31 +58,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(color, index) in filterSearch" :key="color.id">
                             <td>
                                 <input
                                     type="checkbox"
                                     class="form-check-input"
                                 />
                             </td>
-                            <td>1</td>
+                            <td>{{ index + 1 }}</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
-                                        <i class="fa-regular fa-thumbs-down"></i>
-                                    </router-link>
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
+                                    <router-link :to="{ name: 'ColorEdit', params: {id: color.id}}" class="text-muted cursor-pointer me-2 action-edit">
                                         <i class="fa-regular fa-edit"></i>
                                     </router-link>
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-trash">
+                                    <a @click="deleteColorData(color.id)" class="text-muted cursor-pointer action-trash">
                                         <i class="fa-solid fa-trash"></i>
-                                    </router-link>
+                                    </a>
                                 </div>
                             </td>
-                            <td><span class="color-badge text-dark" style="background-color: #00ffff;">Aqua</span></td>
+                            <td><span class="color-badge text-dark" :style="{ backgroundColor: color.color_code }">{{ color.name }}</span></td>
                             <td>
-                                <span class="badge badge-active">Active</span>
+                                <span v-if="color.status == 1" class="badge badge-active">Active</span>
+                                <span v-else class="badge badge-danger text-white">Inactive</span>
                             </td>
+                        </tr>
+                        <tr v-if="colors.length == 0">
+                            <td colspan="6" class="text-center text-danger">No Data Found</td>
                         </tr>
                     </tbody>
                 </table>
@@ -118,7 +120,58 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data(){
+        return {
+            colors: [],
+            searchTerm: '',
+        }
+    },
+    created(){
+        this.getColorData();
+    },
+    computed: {
+        filterSearch(){
+            return this.colors.filter(co=>{
+                return co.name.toLowerCase().match(this.searchTerm.toLocaleLowerCase());
+            });
+        }
+    },
+    methods: {
+        getColorData(){
+            axios.get('/api/color')
+            .then((res)=>{
+                this.colors = res.data;
+            }).catch((error)=>{
+                console.error(error);
+            });
+        },
+        deleteColorData(colorId){
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    axios.delete('/api/color/'+ colorId )
+                    .then((res)=>{
+                        this.colors = this.colors.filter(co=>{
+                            return co.id != id;
+                        });
+                        Notification.success();
+                    }).catch((error)=>{
+                        this.$router.push({name: 'ColorManage'});
+                        Notification.error();
+                    });
+                }
+            })
+        }
+    }
+};
 </script>
 <style lang="css" scoped>
 .product-table {
