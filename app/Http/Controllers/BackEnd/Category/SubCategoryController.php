@@ -68,10 +68,17 @@ class SubCategoryController extends Controller
         return response()->json(['message' => 'SubCategory Created Successfully!']);
     }
 
+    public function getSubByCategory($category_id)
+    {
+        $subcategories = SubCategory::where('category_id', $category_id)
+            ->where('status', 1)
+            ->get();
+        return response()->json($subcategories);
+    }
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         $subcategory = SubCategory::findOrFail($id);
         return response()->json($subcategory);

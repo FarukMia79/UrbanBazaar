@@ -8,6 +8,7 @@ use App\Http\Controllers\BackEnd\Category\CategoryController;
 use App\Http\Controllers\BackEnd\Category\SubCategoryController;
 use App\Http\Controllers\BackEnd\Product\ColorController;
 use App\Http\Controllers\BackEnd\Product\SizeController;
+use App\Http\Controllers\BackEnd\Product\ProductController;
 use App\Http\Controllers\FrontEnd\Auth\UserAuthController;
 use App\Http\Controllers\FrontEnd\Auth\PasswordResetController;
 use GuzzleHttp\Middleware;
@@ -22,6 +23,9 @@ Route::get('/size', [SizeController::class, 'index']);
 Route::get('/size/{id}', [SizeController::class, 'show']);
 Route::get('/color', [ColorController::class, 'index']);
 Route::get('/color/{id}', [ColorController::class, 'show']);
+Route::get('/product', [ProductController::class, 'index']);
+Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::get('/get-subcategories/{category_id}', [SubCategoryController::class, 'getSubByCategory']);
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::post('/user/login', [UserAuthController::class, 'login']);
@@ -45,5 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('/brand', BrandController::class)->except(['index', 'show']);
         Route::resource('/size', SizeController::class)->except(['index', 'show']);
         Route::resource('/color', ColorController::class)->except(['index', 'show']);
+        Route::resource('/product', ProductController::class)->except(['index', 'show']);
     });
 });
