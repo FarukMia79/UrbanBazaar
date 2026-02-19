@@ -104,19 +104,35 @@
 
                     <!-- Size -->
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted">Size (Option)</label>
-                        <select class="form-select" v-model="form.size_ids" multiple>
-                            <option value="">Select..</option>
-                            <option v-for="size in sizes" :key="size.id" :value="size.id">{{ size.name }}</option>
-                        </select>
+                        <label class="form-label fw-semibold text-muted">Select Sizes (Option) *</label>
+                        <div class="d-flex flex-wrap gap-3 border p-3 rounded">
+                            <div v-for="size in sizes" :key="size.id" class="form-check">
+                                <input class="form-check-input" type="checkbox" :value="size.id" v-model="form.size_ids"
+                                    :id="'size' + size.id">
+                                <label class="form-check-label cursor-pointer" :for="'size' + size.id">
+                                    {{ size.name }}
+                                </label>
+                            </div>
+                        </div>
+                        <small class="text-muted" v-if="form.size_ids.length > 0">
+                            Selected: {{ form.size_ids.length }} sizes
+                        </small>
                     </div>
                     <!-- Color -->
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted">Color (Optional)</label>
-                        <select class="form-select" v-model="form.color_ids" multiple>
-                            <option value="">Select..</option>
-                            <option v-for="color in colors" :key="color.id" :value="color.id">{{ color.name }}</option>
-                        </select>
+                        <label class="form-label fw-semibold text-muted">Select Colors *</label>
+                        <div class="d-flex flex-wrap gap-3 border p-3 rounded">
+                            <div v-for="color in colors" :key="color.id" class="form-check">
+                                <input class="form-check-input" type="checkbox" :value="color.id"
+                                    v-model="form.color_ids" :id="'color' + color.id">
+                                <label class="form-check-label" :for="'color' + color.id">
+                                    {{ color.name }}
+                                </label>
+                            </div>
+                        </div>
+                        <small class="text-muted" v-if="form.color_ids.length > 0">
+                            Selected: {{ form.color_ids.length }} colors
+                        </small>
                     </div>
 
                     <!-- Description (Text Editor Area) -->

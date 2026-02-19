@@ -18,7 +18,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = Product::with('category')->latest()->get();
+        return response()->json($product);
     }
 
     /**

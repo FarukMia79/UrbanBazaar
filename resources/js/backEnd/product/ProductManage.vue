@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
-                    <input type="text" class=" rounded-0 border-end-0 search-input" placeholder="Search" style="width: 200px;">
+                    <input v-model="searchTerm" type="text" class=" rounded-0 border-end-0 search-input" placeholder="Search" style="width: 200px;">
                     <button class="btn btn-search btn-sm rounded-0 text-white px-3">Search</button>
                 </div>
                 </div>
@@ -56,32 +56,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(product, index) in filterSearch" :key="product.id">
                             <td>
                                 <input
                                     type="checkbox"
                                     class="form-check-input"
                                 />
                             </td>
-                            <td>1</td>
+                            <td>{{ index + 1 }}</td>
                             <td>
                                 <div class="d-flex gap-2 fs-5">
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-edit me-2">
-                                        <i class="fa-regular fa-thumbs-down"></i>
-                                    </router-link>
                                     <router-link :to="{ name: 'ProductEdit'}" class="text-muted cursor-pointer action-edit me-2">
                                         <i class="fa-regular fa-edit"></i>
                                     </router-link>
-                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer action-trash">
+                                    <a @click="deleteProductData(product.id)" class="text-muted cursor-pointer action-trash">
                                         <i class="fa-solid fa-trash"></i>
-                                    </router-link>
+                                    </a>
                                 </div>
                             </td>
-                            <td>sneakers</td>
-                            <td>Sneakers</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category ? product.category.name : 'No Category' }}</td>
                             <td>
                                 <img
-                                    src="https://via.placeholder.com/40"
+                                    :src="'/' + product.image"
                                     class="rounded-circle border"
                                     alt="prod"
                                     style="
@@ -91,14 +88,15 @@
                                     "
                                 />
                             </td>
-                            <td>2500</td>
-                            <td>100</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.stock_quantity }}</td>
                             <td class="small">
-                                Hot Deals : No <br />
+                                Hot Deals : {{ product.hot_deals }} <br />
                                 Top Feature : No
                             </td>
                             <td>
-                                <span class="badge badge-active">Active</span>
+                                <span v-if="product.status == 1" class="badge badge-active">Active</span>
+                                <span v-else class="badge bg-danger text-white">Inactive</span>
                             </td>
                         </tr>
                     </tbody>
@@ -136,7 +134,61 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data(){
+        return {
+            products: [],
+            searchTerm: '',
+        }
+    },
+    created(){
+        this.getProductData();
+    },
+    computed: {
+        filterSearch(){
+            return this.products.filter(product=>{
+                return product.name.toLowerCase().match(this.searchTerm.toLowerCase());
+            });
+        }
+    },
+    methods: {
+        getProductData(){
+            axios.get('/api/product')
+            .then((res)=>{
+                this.products = res.data;
+                console.log(res.data);
+            }).catch((error)=>{
+                console.log(error);
+            })
+        },
+
+        deleteProductData(ProductId){
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    axios.delete('/api/product/' + ProductId)
+                    .then((res)=>{
+                        this.products = this.products.filter(product=>{
+                            return product.id != ProductId;
+                        });
+                        Notification.success('Product deleted successfully!');
+                    }).catch((error)=>{
+                        this.$router.push({ name: 'ProductManage'});
+                        Notification.error();
+                    });
+                }
+            });
+        }
+
+    }
+};
 </script>
 <style lang="css" scoped>
 .product-table {
