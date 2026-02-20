@@ -22,8 +22,9 @@
                 <ul v-if="category.subcategories && category.subcategories.length > 0" class="second-nav"
                     v-show="openCategory === category.id">
                     <li v-for="sub in category.subcategories" :key="sub.id" class="parent-subcategory">
-                        <router-link v-if="sub.id" :to="{ name: 'CategoryPage', params: { id: sub.id } }" class="menu-subcategory-name">{{
-                            sub.name }}</router-link>
+                        <router-link v-if="sub.id" :to="{ name: 'CategoryPage', params: { id: sub.id } }"
+                            class="menu-subcategory-name">{{
+                                sub.name }}</router-link>
                         <ul class="third-nav" style="display: none"></ul>
                     </li>
                 </ul>
@@ -92,19 +93,30 @@
                                         </li>
 
                                         <li class="cart-dialog" id="cart-qty">
-                                            <a href="customer/checkout.html">
+                                            <a href="#">
                                                 <p class="margin-shopping">
                                                     <i class="fa-solid fa-cart-shopping"></i>
-                                                    <span>0</span>
+                                                    <span>{{ cartQtyCount }}</span>
                                                 </p>
                                             </a>
                                             <div class="cshort-summary">
-                                                <ul></ul>
-                                                <p>
-                                                    <strong>Total : ৳0.00</strong>
-                                                </p>
-                                                <router-link :to="{ name: 'CheckOut' }"
-                                                    class="go_cart text-decoration-none">Buy Now</router-link>
+                                                <ul v-for="item in cartItems" :key="item.id">
+                                                    <li>
+                                                        <a href="#"><img :src="'/' + item.product.image" alt="" /></a>
+                                                    </li>
+                                                    <li><a href="#">{{ item.product.name.substring(0, 20) }}...</a></li>
+                                                    <li>Qty: {{ item.qty }}</li>
+                                                    <li>
+                                                        <p>৳{{ item.price }}</p>
+                                                        <button @click.prevent="removeCartItem(item.id)"
+                                                            class="remove-cart cart_remove"
+                                                            data-id="6ff56841fef028e732b292abe4be602b"><i
+                                                                class="fa-solid fa-xmark"></i></button>
+                                                    </li>
+                                                </ul>
+                                                <p><strong>Total : ৳{{ cartTotal }}</strong></p>
+                                                <router-link :to="{ name: 'CheckOut' }" class="go_cart"> Buy Now
+                                                </router-link>
                                             </div>
                                         </li>
                                     </ul>
@@ -132,13 +144,12 @@
                                                         <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
-                                                            }}<i v-if="category.subcategories && category.subcategories.length > 0"
+                                                        }}<i v-if="category.subcategories && category.subcategories.length > 0"
                                                                 class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu"
                                                             v-if="category.subcategories && category.subcategories.length > 0">
                                                             <li v-for="sub in category.subcategories" :key="sub.id">
-                                                                <router-link
-                                                                    v-if="sub.id"
+                                                                <router-link v-if="sub.id"
                                                                     :to="{ name: 'CategoryPage', params: { id: sub.id } }">
                                                                     {{ sub.name }}
                                                                     <i class="fa-solid fa-chevron-right"></i>
@@ -260,6 +271,8 @@ export default {
     data() {
         return {
             categories: [],
+            cartItems: [],
+            cartTotal: 0,
             isMenuOpen: false,
             openCategory: null,
             isLoggedIn: !!AppStorage.getToken(),
@@ -268,12 +281,44 @@ export default {
     computed: {
         isHomePage() {
             return this.$route.name === 'index';
+        },
+        cartQtyCount() {
+            return this.cartItems.reduce((acc, item) => acc + parseInt(item.qty), 0);
         }
     },
     created() {
         this.getTopCategoryData();
+        this.getCartData();
+
+        // গ্লোবাল ইভেন্ট লিসেনার: অন্য পেজ থেকে কার্ট আপডেট হলে এটি অটো কল হবে
+        window.addEventListener('cart-updated', () => {
+            this.getCartData();
+        });
     },
     methods: {
+        getCartData() {
+            if (this.isLoggedIn) {
+                axios.get('/api/cart')
+                    .then((res) => {
+                        this.cartItems = res.data;
+                        this.calculateTotal();
+                        console.log(res.data);
+                    })
+                    .catch((error) => console.log(error));
+            }
+        },
+        calculateTotal() {
+            this.cartTotal = this.cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
+        },
+        removeCartItem(id) {
+            axios.delete('/api/cart/' + id)
+                .then(() => {
+                    this.getCartData();
+                    Notification.success("Item removed from cart");
+                    // গ্লোবাল কাউন্ট আপডেট সিগন্যাল
+                    window.dispatchEvent(new CustomEvent('cart-updated'));
+                });
+        },
         getTopCategoryData() {
             axios.get('/api/category')
                 .then((res) => {
@@ -310,7 +355,8 @@ export default {
     watch: {
         '$route'() {
             this.isLoggedIn = !!AppStorage.getToken();
-        }
+        },
+
     },
 
 };

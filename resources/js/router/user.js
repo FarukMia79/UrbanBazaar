@@ -24,13 +24,21 @@ export default [
             { path: 'single-product/:id', name: 'SingleProduct', component: SingleProduct},
             { path: 'category/:id', name: 'CategoryPage', component: CategoryPage},
             { path: 'subcategory/:id', name: 'SubCategoryPage', component: SubCategoryPage},
-            { path: 'checkout', name: 'CheckOut', component: CheckOut},
-            { path: 'order-track', name: 'OrderTrack', component: OrderTrack},
             { path: 'return-policy', name: 'ReturnPolicy', component: ReturnPolicy},
             { path: 'login', name: 'UserLogin', component: UserLogin },
             { path: 'register', name: 'UserSingup', component: UserSingup },
             { path: 'forgot-password', name: 'ForgotPassword', component: ForgotPassword },
             { path: 'reset-password', name: 'SetForgotPassword', component: SetForgotPassword },
         ],
+    },
+
+    {
+            path: '/',
+            component: UserLayout,
+            meta: { requiresAuth: true },
+            children: [
+               { path: 'checkout', name: 'CheckOut', component: CheckOut},
+               { path: 'order-track', name: 'OrderTrack', component: OrderTrack},
+            ]
     }
 ]

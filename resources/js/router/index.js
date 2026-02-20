@@ -14,11 +14,16 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const token = AppStorage.getToken();
 
-    if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
+    if (to.matched.some((record) => record.meta.requiresAdmin) && !token) {
         next({ name: "AdminLogin" });
-    } else if (to.name === "AdminLogin" && token) {
-        next({ name: "dashboard" });
-    } else {
+    } 
+    else if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
+        next({ name: "UserLogin" });
+    } 
+    else if ((to.name === "AdminLogin" || to.name === "UserLogin") && token) {
+        next({ name: "index" });
+    } 
+    else {
         next();
     }
 });

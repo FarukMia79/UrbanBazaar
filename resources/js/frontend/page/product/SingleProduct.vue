@@ -87,11 +87,7 @@
                                                             }}
                                                         </p>
                                                     </div>
-                                                    <form action="https://ecom.shariatpur.shop/cart/store" method="POST"
-                                                        name="formName">
-                                                        <input type="hidden" name="_token"
-                                                            value="y7aDCAV3se8t4D9O7zmHvVTyqAEWJLJlKXFMjaO8" />
-                                                        <input type="hidden" name="id" value="34" />
+                                                    <form name="formName">
                                                         <div class="pro-color" style="width: 100%" v-if="
                                                             product.colors &&
                                                             product.colors
@@ -779,6 +775,7 @@
 </template>
 
 <script>
+import AppStorage from "../../../Helpers/AppStorage";
 export default {
     data() {
         return {
@@ -798,8 +795,6 @@ export default {
                     this.product = res.data.product;
                     this.recommendations = res.data.recommendations;
 
-                    console.log(res.data);
-
                     this.initSlider();
                     this.initRelatedSlider();
                 })
@@ -808,7 +803,7 @@ export default {
         initSlider() {
             this.$nextTick(() => {
                 if (window.$ && $(".details_slider").length > 0) {
-                    $(".details_slider").owlCarousel("destroy"); // আগেরটা রিসেট
+                    $(".details_slider").owlCarousel("destroy"); 
                     $(".details_slider").owlCarousel({
                         items: 1,
                         loop: true,
@@ -823,9 +818,9 @@ export default {
         initRelatedSlider() {
             this.$nextTick(() => {
                 if (window.$ && $(".related_slider").length > 0) {
-                    $(".related_slider").owlCarousel("destroy"); // আগেরটা রিসেট
+                    $(".related_slider").owlCarousel("destroy"); 
                     $(".related_slider").owlCarousel({
-                        loop: this.recommendations.length > 4, // প্রোডাক্ট ৪টার বেশি হলে লুপ হবে
+                        loop: this.recommendations.length > 4, 
                         margin: 15,
                         nav: true,
                         dots: false,
@@ -841,7 +836,13 @@ export default {
         },
 
         addToCart() {
-            // ভ্যালিডেশন: কালার এবং সাইজ সিলেক্ট করেছে কি না চেক (যদি থাকে)
+
+            if (!AppStorage.getToken()) {
+                Notification.error("Please login first to add items to cart!");
+                this.$router.push({ name: "UserLogin" });
+                return false;
+            }
+
             if (this.product.colors.length > 0 && !this.selectedColor) {
                 Notification.error("Please select a color!");
                 return false;
@@ -869,20 +870,24 @@ export default {
                 .post("/api/cart", cartData)
                 .then((res) => {
                     Notification.success("Added to cart successfully!");
-                    // আপনি চাইলে এখানে নেভবারের কার্ট কাউন্ট আপডেট করতে পারেন
+                    window.dispatchEvent(new CustomEvent('cart-updated'));
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    if (err.response && err.response.status === 401) {
+                        AppStorage.clear();
+                        this.$router.push({ name: "UserLogin" });
+                    }
+                });
 
             return true
         },
 
-        // ২. সরাসরি কেনার ফাংশন
+
         buyNow() {
             // addToCart কল করে রেজাল্ট চেক করা হচ্ছে
             let status = this.addToCart();
 
             if (status) {
-                // যদি ভ্যালিডেশন পাস করে (true আসে), তবেই চেকআউটে যাবে
                 this.$router.push({ name: "CheckOut" });
             }
         },
@@ -907,6 +912,9 @@ export default {
         "$route.params.id": function (newId) {
             this.id = newId;
             this.product = {};
+            this.selectedColor = null;
+            this.selectedSize = null;
+            this.qty = 1;
             this.getProductData();
             window.scrollTo(0, 0);
         },

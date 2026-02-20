@@ -17,7 +17,15 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $userId = auth('sanctum')->id();
+
+        // এখানে অবশ্যই with('product') থাকতে হবে
+        $cartItems = Cart::with('product')
+            ->where('user_id', $userId)
+            ->latest()
+            ->get();
+
+        return response()->json($cartItems);
     }
 
     /**
@@ -39,8 +47,7 @@ class CartController extends Controller
 
         $user_id = Auth::id();
 
-        // ১. কার্টে ডাটা সেভ বা আপডেট করা
-        // একই প্রোডাক্ট, একই কালার ও সাইজ হলে শুধু কোয়ান্টিটি বাড়বে
+
         Cart::updateOrCreate(
             [
                 'user_id' => $user_id,
@@ -54,16 +61,15 @@ class CartController extends Controller
             ]
         );
 
-        // ২. রিকমেন্ডেশন ইঞ্জিনের জন্য ইন্টারঅ্যাকশন ট্রাক করা (AI Logic) 🚀
-        // ইউজার কার্টে যোগ করেছে মানে তার আগ্রহ অনেক। আমরা ওয়েট ৩ দিচ্ছি।
+
         UserInteraction::updateOrCreate(
             [
                 'user_id' => auth()->id(),
                 'product_id' => $request->product_id,
-                'interaction_type' => 'cart' // একই কাজের জন্য একটি রো থাকবে
+                'interaction_type' => 'cart' 
             ],
             [
-                'weight' => 3, // প্রতিবার ৩-ই থাকবে, ডুপ্লিকেট হবে না
+                'weight' => 3, 
                 'updated_at' => now()
             ]
         );
@@ -98,8 +104,15 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $cartItem = Cart::find($id);
+
+        if ($cartItem) {
+            $cartItem->delete();
+            return response()->json(['message' => 'Item removed from cart'], 200);
+        }
+
+        return response()->json(['message' => 'Item not found'], 404);
     }
 }

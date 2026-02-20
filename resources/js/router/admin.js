@@ -39,7 +39,7 @@ export default [
     {
         path: '/dashboard',
         component: AdminLayout,
-        meta: { requiresAuth: true },
+        meta: { requiresAdmin: true },
         children: [
             { path: '', name: 'dashboard', component: dashboard},
             { path: 'order/all', name: 'AllOrder', component: AllOrder},
