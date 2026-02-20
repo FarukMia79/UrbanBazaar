@@ -145,13 +145,13 @@
                                         </div>
                                     </div>
                                     <div class="pro_img">
-                                        <router-link :to="{ name: 'SingleProduct', params: { slug: product.slug } }">
+                                        <router-link :to="{ name: 'SingleProduct', params: { id: product.id } }">
                                             <img :src="'/' + product.image" :alt="product.name" />
                                         </router-link>
                                     </div>
                                     <div class="pro_des">
                                         <div class="pro_name">
-                                            <router-link :to="{ name: 'SingleProduct', params: { slug: product.slug } }">{{ product.name }}</router-link>
+                                            <router-link :to="{ name: 'SingleProduct', params: { id: product.id } }">{{ product.name }}</router-link>
                                         </div>
                                     </div>
                                 </div>

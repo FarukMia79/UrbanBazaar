@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Models\BackEnd\Color;
+use App\Models\BackEnd\Size;
+use App\Models\BackEnd\UserInteraction;
 
 class ProductController extends Controller
 {
@@ -109,7 +112,7 @@ class ProductController extends Controller
                     $multi_name = time() . '_gallery_' . uniqid() . '.' . $multi_file->getClientOriginalExtension();
 
                     $galleryImage = $manager->read($multi_file);
-                    $galleryImage->cover(720, 714);
+                    $galleryImage->cover(1024, 1080);
                     $galleryImage->save($galleryPath . $multi_name);
 
                     ProductImage::create([
@@ -130,9 +133,71 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $product = Product::with(['category', 'subcategory', 'brand', 'multi_images'])->findOrFail($id);
+
+        // ২. কালার ডাটা নিয়ে আসা (JSON IDs থেকে)
+        if ($product->color_ids && count($product->color_ids) > 0) {
+            $product->colors = Color::whereIn('id', $product->color_ids)->get();
+        } else {
+            $product->colors = [];
+        }
+
+        // ৩. সাইজ ডাটা নিয়ে আসা (JSON IDs থেকে)
+        if ($product->size_ids && count($product->size_ids) > 0) {
+            $product->sizes = Size::whereIn('id', $product->size_ids)->get();
+        } else {
+            $product->sizes = [];
+        }
+
+        // ৪. রিকমেন্ডেশন লজিক (Collaborative Filtering) 🚀
+        // এই প্রোডাক্টটি যারা দেখেছে তারা আর কী কী দেখেছে
+        $userIds = UserInteraction::where('product_id', $id)
+            ->pluck('user_id')
+            ->unique();
+
+        $recommendedProductIds = UserInteraction::whereIn('user_id', $userIds)
+            ->where('product_id', '!=', $id)
+            ->select('product_id', DB::raw('SUM(weight) as total_weight'))
+            ->groupBy('product_id')
+            ->orderBy('total_weight', 'desc')
+            ->limit(10)
+            ->pluck('product_id');
+
+        $recommendations = Product::whereIn('id', $recommendedProductIds)
+            ->where('status', 1)
+            ->get();
+
+        // ৫. Fallback লজিক: যদি এআই ডাটা না থাকে তবে একই ক্যাটাগরির প্রোডাক্ট দেখাবে
+        if ($recommendations->isEmpty()) {
+            $recommendations = Product::where('category_id', $product->category_id)
+                ->where('id', '!=', $id)
+                ->where('status', 1)
+                ->limit(10)
+                ->get();
+        }
+
+        // ৬. ইন্টারঅ্যাকশন ট্রাক করা (ভিউ হিসেবে ওয়েট ১ দেওয়া)
+        if (auth('sanctum')->check()) {
+            UserInteraction::updateOrCreate(
+                [
+                    'user_id' => auth('sanctum')->id(),
+                    'product_id' => $id,
+                    'interaction_type' => 'view'
+                ],
+                [
+                    'weight' => 1,
+                    'updated_at' => now()
+                ]
+            );
+        }
+
+        // ৭. ফাইনাল রেসপন্স
+        return response()->json([
+            'product' => $product,
+            'recommendations' => $recommendations
+        ]);
     }
 
     /**

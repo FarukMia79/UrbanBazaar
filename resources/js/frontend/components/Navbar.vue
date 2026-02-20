@@ -11,7 +11,7 @@
         <ul class="first-nav">
             <li v-for="category in categories" :key="category.id" class="parent-category"
                 @click="toggleCategory(category.id)">
-                <router-link class="menu-category-name">
+                <router-link v-if="category.id" class="menu-category-name">
                     <img :src="'/' + category.image" alt="" class="side_cat_img" />
                     {{ category.name }}
                 </router-link>
@@ -22,7 +22,7 @@
                 <ul v-if="category.subcategories && category.subcategories.length > 0" class="second-nav"
                     v-show="openCategory === category.id">
                     <li v-for="sub in category.subcategories" :key="sub.id" class="parent-subcategory">
-                        <router-link :to="{ name: 'CategoryPage', params: { id: sub.id } }" class="menu-subcategory-name">{{
+                        <router-link v-if="sub.id" :to="{ name: 'CategoryPage', params: { id: sub.id } }" class="menu-subcategory-name">{{
                             sub.name }}</router-link>
                         <ul class="third-nav" style="display: none"></ul>
                     </li>
@@ -129,7 +129,7 @@
                                             <div class="sidebar-menu side__bar">
                                                 <ul class="hideshow">
                                                     <li v-for="category in categories" :key="category.id">
-                                                        <router-link :to="{
+                                                        <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
                                                             }}<i v-if="category.subcategories && category.subcategories.length > 0"
@@ -138,6 +138,7 @@
                                                             v-if="category.subcategories && category.subcategories.length > 0">
                                                             <li v-for="sub in category.subcategories" :key="sub.id">
                                                                 <router-link
+                                                                    v-if="sub.id"
                                                                     :to="{ name: 'CategoryPage', params: { id: sub.id } }">
                                                                     {{ sub.name }}
                                                                     <i class="fa-solid fa-chevron-right"></i>

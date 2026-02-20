@@ -21,7 +21,7 @@ export default [
             { path: '', name: 'index', component: index },
             { path: 'hot-deal', name: 'HotDeal', component: HotDeal},
             { path: 'contact', name: 'Contact', component: Contact},
-            { path: 'single-product', name: 'SingleProduct', component: SingleProduct},
+            { path: 'single-product/:id', name: 'SingleProduct', component: SingleProduct},
             { path: 'category/:id', name: 'CategoryPage', component: CategoryPage},
             { path: 'subcategory/:id', name: 'SubCategoryPage', component: SubCategoryPage},
             { path: 'checkout', name: 'CheckOut', component: CheckOut},
