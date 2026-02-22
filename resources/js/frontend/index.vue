@@ -151,7 +151,8 @@
                                     </div>
                                     <div class="pro_des">
                                         <div class="pro_name">
-                                            <router-link :to="{ name: 'SingleProduct', params: { id: product.id } }">{{ product.name }}</router-link>
+                                            <router-link :to="{ name: 'SingleProduct', params: { id: product.id } }">{{
+                                                product.name }}</router-link>
                                         </div>
                                     </div>
                                 </div>
@@ -191,6 +192,77 @@
                 </div>
             </div>
         </section>
+
+        <!-- For You Section (Static Grid) -->
+        <section class="homeproduct" v-if="personalizedProducts.length > 0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sec_title">
+                            <h3 class="section-title-header">
+                                <div class="timer_inner">
+                                    <span class="section-title-name">
+                                        For You
+                                    </span>
+                                </div>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- গ্রিড লেআউট: মোবাইলে ২টা, ট্যাবে ৩টা এবং ডেসক্রিপটপে ৫টা করে দেখাবে -->
+                <div class="row g-3">
+                    <div v-for="personalized in personalizedProducts" :key="personalized.id"
+                        class="col-6 col-sm-4 col-md-3 col-lg-custom">
+                        <div class="product_item wist_item wow zoomIn" data-wow-duration="1.0s">
+                            <div class="product_item_inner">
+                                <!-- ডিসকাউন্ট ব্যাজ -->
+                                <div class="sale-badge" v-if="personalized.discount_price">
+                                    <div class="sale-badge-inner">
+                                        <div class="sale-badge-box">
+                                            <span class="sale-badge-text">
+                                                <p>{{ calculateDiscount(personalized.price, personalized.discount_price)
+                                                    }}%</p>
+                                                OFF
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pro_img">
+                                    <router-link :to="{ name: 'SingleProduct', params: { id: personalized.id } }">
+                                        <img :src="'/' + personalized.image" :alt="personalized.name" />
+                                    </router-link>
+                                </div>
+                                <div class="pro_des">
+                                    <div class="pro_name">
+                                        <router-link :to="{ name: 'SingleProduct', params: { id: personalized.id } }">
+                                            {{ personalized.name.substring(0, 40) }}...
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pro_price">
+                                <p>
+                                    <del v-if="personalized.discount_price">৳ {{ personalized.price }}</del>
+                                    ৳ {{ personalized.discount_price ? personalized.discount_price : personalized.price
+                                    }}
+                                </p>
+                            </div>
+
+                            <div class="pro_btn d-flex justify-content-between align-items-center gap-2">
+                                <router-link :to="{ name: 'SingleProduct', params: { id: personalized.id } }"
+                                    class="btn btn-sm w-100"
+                                    style="background-color: #3f0051; color: #ffffff; border: none;">
+                                    Order Now
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
 
@@ -203,9 +275,16 @@ export default {
         return {
             categories: [],
             products: [],
+            personalizedProducts: [],
         }
     },
     methods: {
+        getAIRecommendations() {
+            axios.get('/api/personalized-recommendations')
+                .then(res => {
+                    this.personalizedProducts = res.data;
+                }).catch(err => console.error("AI Data Fetch Error:", err));
+        },
         getProductData() {
             axios.get('/api/product')
                 .then((res) => {
@@ -213,9 +292,9 @@ export default {
 
                     this.$nextTick(() => {
                         if (typeof window.$ !== "undefined") {
-                            window.$(".product_slider").owlCarousel('destroy'); // আগেরটা থাকলে রিসেট
+                            window.$(".product_slider").owlCarousel('destroy');
                             window.$(".product_slider").owlCarousel({
-                                loop: this.products.length > 4, // প্রোডাক্ট ৪টার বেশি হলে লুপ হবে
+                                loop: this.products.length > 4,
                                 margin: 15,
                                 nav: true,
                                 dots: false,
@@ -263,6 +342,7 @@ export default {
     mounted() {
         this.getProductData();
         this.getSidebarData();
+        this.getAIRecommendations();
 
         setTimeout(() => {
             if (typeof window.$ !== "undefined") {
@@ -312,5 +392,18 @@ export default {
 
 .product_item p {
     margin-bottom: 0px;
+}
+
+@media (min-width: 1200px) {
+    .col-lg-custom {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+.wist_item {
+    margin-bottom: 20px;
+    height: 100%;
+    /* কার্ডগুলো সমান করার জন্য */
 }
 </style>

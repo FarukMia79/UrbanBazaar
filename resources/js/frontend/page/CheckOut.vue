@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-sm-5 cus-order-2">
                         <div class="checkout-shipping">
-                            <form
+                            <form @submit.prevent="placeOrder"
                                 action="https://ecom.shariatpur.shop/customer/order-save"
                                 method="POST"
                                 data-parsley-validate=""
@@ -13,7 +13,7 @@
                                 <input
                                     type="hidden"
                                     name="_token"
-                                    value="y7aDCAV3se8t4D9O7zmHvVTyqAEWJLJlKXFMjaO8"
+                                    value=""
                                 />
                                 <div
                                     class="card"
@@ -48,6 +48,7 @@
                                                         Enter your name *</label
                                                     >
                                                     <input
+                                                        v-model="form.name"
                                                         type="text"
                                                         id="name"
                                                         name="name"
@@ -77,6 +78,7 @@
                                                         *</label
                                                     >
                                                     <input
+                                                        v-model="form.phone"
                                                         type="text"
                                                         id="number"
                                                         name="phone"
@@ -108,6 +110,7 @@
                                                         Enter address *</label
                                                     >
                                                     <input
+                                                        v-model="form.address"
                                                         type="text"
                                                         id="address"
                                                         name="address"
@@ -137,6 +140,7 @@
                                                         *</label
                                                     >
                                                     <select
+                                                        v-model="form.area"
                                                         id="area"
                                                         name="area"
                                                         class="form-control"
@@ -150,13 +154,13 @@
                                                         "
                                                         required
                                                     >
-                                                        <option value="2">
-                                                            সারা বাংলাদেশ ১৫০
+                                                        <option value="130">
+                                                            সারা বাংলাদেশ ১৩০
                                                             টাকা ডেলিভারি চার্জ
                                                         </option>
 
-                                                        <option value="4">
-                                                            ঢাকার ভিতরে ৮০ টাকা
+                                                        <option value="60">
+                                                            ঢাকার ভিতরে ৬০ টাকা
                                                         </option>
                                                     </select>
                                                 </div>
@@ -178,6 +182,7 @@
                                                         class="form-check p_cash"
                                                     >
                                                         <input
+                                                            v-model="form.payment_method"
                                                             class="form-check-input"
                                                             type="radio"
                                                             name="payment_method"
@@ -196,15 +201,16 @@
                                                         class="form-check p_shurjo"
                                                     >
                                                         <input
+                                                            v-model="form.payment_method"
                                                             class="form-check-input"
                                                             type="radio"
                                                             name="payment_method"
-                                                            id="inlineRadio3"
+                                                            id="inlineRadio2"
                                                             value="Bkash"
                                                         />
                                                         <label
                                                             class="form-check-label"
-                                                            for="inlineRadio3"
+                                                            for="inlineRadio2"
                                                         >
                                                             Bkash
                                                         </label>
@@ -213,6 +219,7 @@
                                                         class="form-check p_shurjo"
                                                     >
                                                         <input
+                                                            v-model="form.payment_method"
                                                             class="form-check-input"
                                                             type="radio"
                                                             name="payment_method"
@@ -291,7 +298,22 @@
                                             </tr>
                                         </thead>
 
-                                        <tbody></tbody>
+                                        <tbody>
+                                            <tr v-for="item in cartItems" :key="item.id">
+                                                <td><button @click="removeItem(item.id)" class="btn btn-sm text-danger">X</button></td>
+                                                
+                                                <td class="text-start">
+                                                    <img
+                                                        :src="'/' + item.product.image"
+                                                        alt=""
+                                                        style="width: 30px; height: 30px; object-fit: cover; border-radius: 8px;"
+                                                    />
+                                                    {{ item.product.name.substring(0,20) }}...
+                                                </td>
+                                                <td>{{ item.qty }}</td>
+                                                <td>৳{{ item.price * item.qty }}</td>
+                                            </tr>
+                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th
@@ -305,7 +327,7 @@
                                                         ><span class="alinur"
                                                             >৳ </span
                                                         ><strong
-                                                            >0</strong
+                                                            >{{ subTotal }}</strong
                                                         ></span
                                                     >
                                                 </td>
@@ -323,7 +345,7 @@
                                                         ><span class="alinur"
                                                             >৳ </span
                                                         ><strong
-                                                            >150</strong
+                                                            >{{ form.area }}</strong
                                                         ></span
                                                     >
                                                 </td>
@@ -340,7 +362,7 @@
                                                         ><span class="alinur"
                                                             >৳ </span
                                                         ><strong
-                                                            >150</strong
+                                                            >{{ grandTotal }}</strong
                                                         ></span
                                                     >
                                                 </td>
@@ -430,6 +452,69 @@
     <!-- content end -->
 </template>
 <script>
-export default {};
+import AppStorage from "../../Helpers/AppStorage";
+
+export default {
+    data() {
+        return {
+            cartItems: [],
+            form: {
+                name: '',
+                phone: '',
+                address: '',
+                area: 130,
+                payment_method: 'Cash On Delivery',
+            },
+            errors: {}
+        };
+    },
+    computed: {
+        subTotal() {
+            return this.cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
+        },
+        grandTotal() {
+            return parseFloat(this.subTotal) + parseFloat(this.form.area);
+        }
+    },
+    created() {
+        if (!AppStorage.getToken()) {
+            this.$router.push({ name: 'UserLogin' });
+        }
+        this.getCartItems();
+    },
+    methods: {
+        getCartItems() {
+            axios.get('/api/cart')
+                .then(res => {
+                    this.cartItems = res.data;
+                });
+        },
+        placeOrder() {
+            let orderData = {
+                ...this.form,
+                subtotal: this.subTotal,
+                total: this.grandTotal,
+                shipping_cost: this.form.area,
+                items: this.cartItems
+            };
+
+            axios.post('/api/order', orderData)
+                .then(res => {
+                    Notification.success("Order Placed Successfully!");
+                    window.dispatchEvent(new CustomEvent('cart-updated'));
+                    this.$router.push({ name: 'index' });
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors;
+                });
+        },
+        removeItem(id) {
+            axios.get(`/api/cart/${id}`).then(() => {
+                this.cartItems = this.cartItems.filter(i => i.id !== id);
+                window.dispatchEvent(new CustomEvent('cart-updated'));
+            });
+        }
+    }
+};
 </script>
 <style lang=""></style>

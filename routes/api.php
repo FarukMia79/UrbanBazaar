@@ -12,6 +12,8 @@ use App\Http\Controllers\BackEnd\Product\ProductController;
 use App\Http\Controllers\FrontEnd\Auth\UserAuthController;
 use App\Http\Controllers\FrontEnd\Auth\PasswordResetController;
 use App\Http\Controllers\FrontEnd\CartController;
+use App\Http\Controllers\BackEnd\Order\OrderController;
+use App\Http\Controllers\FrontEnd\HomeController;
 use GuzzleHttp\Middleware;
 
 Route::get('/category', [CategoryController::class, 'index']);
@@ -42,6 +44,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::post('/user/logout', [UserAuthController::class, 'logout']);
     Route::resource('/cart', CartController::class);
+    Route::resource('/order', OrderController::class);
+    Route::get('/personalized-recommendations', [HomeController::class, 'getPersonalizedRecommendations']);
+
 
     Route::middleware('is_admin')->group(function () {
         Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
