@@ -50,6 +50,13 @@ class OrderController extends Controller
         try {
             $order = new Order();
             $order->user_id = Auth::id();
+
+            do {
+                $invoice_no = str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+            } while (Order::where('invoice_no', $invoice_no)->exists());
+
+            $order->invoice_no = $invoice_no;
+
             $order->name = $request->name;
             $order->phone = $request->phone;
             $order->address = $request->address;
@@ -59,6 +66,7 @@ class OrderController extends Controller
             $order->subtotal = $request->subtotal;
             $order->total = $request->total;
             $order->status = 'pending';
+            $order->ip_address = $request->ip();
             $order->save();
 
             foreach ($request->items as $item) {
@@ -144,8 +152,20 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        foreach ($order->orderItems as $item) {
+            $product = Product::find($item->product_id);
+            if ($product) {
+                $product->increment('stock_quantity', $item['qty']);
+            }
+        }
+        $order->delete();
+
+        return response()->json([
+            'message' => 'Order deleted successfully!'
+        ], 200);
     }
 }

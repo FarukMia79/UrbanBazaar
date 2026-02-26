@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('invoice_no')->nullable();
             $table->string('name');
             $table->string('phone');
             $table->text('address');
@@ -24,6 +25,9 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
 
             $table->string('status')->default('pending');
+
+            $table->string('ip_address')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

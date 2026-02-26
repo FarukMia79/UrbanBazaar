@@ -44,7 +44,7 @@
                                     <i class="fa-regular fa-eye me-2"></i>
                                     <i class="fa-solid fa-gear me-2"></i>
                                     <i class="fa-regular fa-edit me-2"></i>
-                                    <i class="fa-solid fa-trash text-danger"></i>
+                                    <i @click="deleteOrder(item.order.id)" class="fa-solid fa-trash text-danger"></i>
                                 </div>
                                 <span class="badge-fraud">Fraud Check</span>
                             </td>
@@ -52,7 +52,7 @@
                                 <div class="d-flex invoice-box">
                                     <div class="w-50 border-end pe-2">
                                         <p><label>SL:</label>{{ index + 1 }}</p>
-                                        <p><label>Invoice:</label> 33127</p>
+                                        <p><label>Invoice:</label>{{ item.order.invoice_no }}</p>
                                         <p><label>Date:</label>{{ new Date(item.order.created_at).toLocaleDateString() }}</p>
                                         <p><label>Time:</label>{{ new Date(item.order.created_at).toLocaleTimeString() }}</p>
                                         <p><label>Name:</label>{{ item.order.name }}</p>
@@ -62,7 +62,7 @@
                                         <p><label>Phone:</label>{{ item.order.phone }}</p>
                                         <p><label>Assign:</label> </p>
                                         <p><label>Amount:</label> ৳{{ item.price }}</p>
-                                        <p><label>IP:</label> 36.255.81.132</p>
+                                        <p><label>IP:</label> {{ item.order.ip_address }}</p>
                                         <p><label>Comment:</label> ""</p>
                                         <p><label>Status:</label> <span class="badge btn-pending">{{ item.order.status }}</span></p>
                                     </div>
@@ -123,6 +123,14 @@ export default {
                     Notification.error("Something went wrong!");
                 });
         },
+        deleteOrder(orderId) {
+            axios.delete(`/api/order/${orderId}`)
+                .then((res) => {
+                    this.getOrderItem();
+                }).catch((error) => {
+                    Notification.error();
+                });
+        }
     }
 };
 </script>
