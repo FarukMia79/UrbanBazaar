@@ -19,7 +19,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $order = Order::latest()->get();
+        return response()->json($order);
     }
 
     /**
@@ -124,9 +125,20 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         //
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+
+        return response()->json([
+            'message' => 'Order status updated to ' . $request->status
+        ], 200);
     }
 
     /**

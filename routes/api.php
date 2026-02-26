@@ -13,6 +13,7 @@ use App\Http\Controllers\FrontEnd\Auth\UserAuthController;
 use App\Http\Controllers\FrontEnd\Auth\PasswordResetController;
 use App\Http\Controllers\FrontEnd\CartController;
 use App\Http\Controllers\BackEnd\Order\OrderController;
+use App\Http\Controllers\BackEnd\Order\OrderItemController;
 use App\Http\Controllers\FrontEnd\HomeController;
 use GuzzleHttp\Middleware;
 
@@ -57,5 +58,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('/size', SizeController::class)->except(['index', 'show']);
         Route::resource('/color', ColorController::class)->except(['index', 'show']);
         Route::resource('/product', ProductController::class)->except(['index', 'show']);
+        Route::resource('/orderitem', OrderItemController::class);
+        Route::resource('/order', OrderController::class);
+        Route::post('/order/update-status/{id}', [OrderController::class, 'updateStatus']);
     });
 });

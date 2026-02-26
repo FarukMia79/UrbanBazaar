@@ -1,5 +1,5 @@
 <template lang="">
-    
+
 <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="mb-0 fw-bold">All Order (16)</h5>
@@ -37,7 +37,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(item, index) in orderItem" :key="item.id">
                             <td><input type="checkbox" class="form-check-input"></td>
                             <td class="text-center">
                                 <div class="action-icons mb-2 btn-color">
@@ -51,37 +51,39 @@
                             <td>
                                 <div class="d-flex invoice-box">
                                     <div class="w-50 border-end pe-2">
-                                        <p><label>SL:</label> 1</p>
+                                        <p><label>SL:</label>{{ index + 1 }}</p>
                                         <p><label>Invoice:</label> 33127</p>
-                                        <p><label>Date:</label> 11-01-2026</p>
-                                        <p><label>Time:</label> 02:43:28 am</p>
-                                        <p><label>Name:</label> mohammed sakil rahman</p>
-                                        <p><label>Address:</label> cumilla nangolkot jathiapara</p>
+                                        <p><label>Date:</label>{{ new Date(item.order.created_at).toLocaleDateString() }}</p>
+                                        <p><label>Time:</label>{{ new Date(item.order.created_at).toLocaleTimeString() }}</p>
+                                        <p><label>Name:</label>{{ item.order.name }}</p>
+                                        <p><label>Address:</label>{{ item.order.address }}</p>
                                     </div>
                                     <div class="w-50 ps-3">
-                                        <p><label>Phone:</label> 01855580555</p>
+                                        <p><label>Phone:</label>{{ item.order.phone }}</p>
                                         <p><label>Assign:</label> </p>
-                                        <p><label>Amount:</label> ৳700</p>
+                                        <p><label>Amount:</label> ৳{{ item.price }}</p>
                                         <p><label>IP:</label> 36.255.81.132</p>
                                         <p><label>Comment:</label> ""</p>
-                                        <p><label>Status:</label> <span class="badge btn-pending">Pending</span></p>
+                                        <p><label>Status:</label> <span class="badge btn-pending">{{ item.order.status }}</span></p>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <p><strong>Product:</strong> Large Capacity Waterproof Anti-...</p>
-                                        <p><strong>Qty:</strong> 1</p>
-                                        <p><strong>Size:</strong> N/A</p>
-                                        <p><strong>Color:</strong> N/A</p>
-                                        <p><strong>Price:</strong> ৳550</p>
+                                        <p><label>Product:</label> {{ item.product.name }}</p>
+                                        <p><label>Qty:</label> {{ item.qty }}</p>
+                                        <p><label>Size:</label>{{ item.size || 'N/A' }}</p>
+                                        <p><label>Color:</label>{{ item.color || 'N/A' }}</p>
+                                        <p><label>Price:</label> ৳{{ item.product.discount_price || 'N/A' }}</p>
                                     </div>
-                                    <img src="https://via.placeholder.com/60" class="img-thumbnail" style="width: 70px; height: 50px;">
+                                    <img :src="'/' + item.product.image" class="img-thumbnail" style="width: 100px; height: 100px;">
                                 </div>
                             </td>
                             <td class="text-center">
-                                <button class="btn btn-pending btn-sm w-100">Pending</button>
+                                <button @click="changeStatus(item.order.id, 'completed')" :disabled="item.order.status === 'completed'" class="btn btn-green btn-sm w-100 text-white">Completed</button>
+                                <button @click="changeStatus(item.order.id, 'pending')" :disabled="item.order.status === 'pending'" class="btn btn-sky btn-sm w-100 text-white mt-2">Pending</button>
+                                <button @click="changeStatus(item.order.id, 'cancelled')" :disabled="item.order.status === 'cancelled'" class="btn btn-danger btn-sm w-100 mt-2">Cancelled</button>
                             </td>
                         </tr>
                     </tbody>
@@ -92,63 +94,216 @@
 </div>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            orderItem: [],
+            searchTerm: '',
+        }
+    },
+    created() {
+        this.getOrderItem();
+    },
+    methods: {
+        getOrderItem() {
+            axios.get("/api/orderitem")
+                .then((res) => {
+                    this.orderItem = res.data;
+                }).catch(err => console.log(err));
+        },
+        changeStatus(orderId, newStatus) {
+            axios.post(`/api/order/update-status/${orderId}`, { status: newStatus })
+                .then(res => {
+                    Notification.success(res.data.message);
+
+                    this.getOrderItem();
+                })
+                .catch(error => {
+                    console.error("Status update failed", error);
+                    Notification.error("Something went wrong!");
+                });
+        },
+    }
+};
 </script>
 <style lang="css" scoped>
 /* Font Size & General */
-.order-table { font-size: 14px; }
-.order-table p { margin-bottom: 2px; display: flex; align-items: flex-start; }
-.order-table p label { width: 75px; flex-shrink: 0; font-weight: 500; color: #555; }
-.order-table i { cursor: pointer; }
+.order-table {
+    font-size: 14px;
+}
+
+.order-table p {
+    margin-bottom: 2px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.order-table p label {
+    width: 75px;
+    flex-shrink: 0;
+    font-weight: 500;
+    color: #555;
+}
+
+.order-table i {
+    cursor: pointer;
+}
 
 /* Action Icons & Badges */
-.badge-fraud { background: #ffc107; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; font-style: italic; }
+.badge-fraud {
+    background: #ffc107;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    font-style: italic;
+}
 
 /* Custom Button Colors */
-.btn-add { background-color: #f06292; border: none; }
-.btn-teal { background-color: #00bfa5; border: none; }
-.btn-purple-dark { background-color: #6a1b9a; border: none; }
-.btn-coral { background-color: #ef5350; border: none; }
-.btn-sky { background-color: #4fc3f7; border: none; }
-.btn-cyan { background-color: #00bcd4; border: none; }
-.btn-gray { background-color: #78909c; border: none; }
-.btn-green { background-color: #00c853; border: none; }
-.btn-search { background-color: #00cae3; border: none; }
-.btn-pending { background-color: #6f42c1; color: white; border: none; }
+.btn-add {
+    background-color: #f06292;
+    border: none;
+}
+
+.btn-teal {
+    background-color: #00bfa5;
+    border: none;
+}
+
+.btn-purple-dark {
+    background-color: #6a1b9a;
+    border: none;
+}
+
+.btn-coral {
+    background-color: #ef5350;
+    border: none;
+}
+
+.btn-sky {
+    background-color: #4fc3f7;
+    border: none;
+}
+
+.btn-cyan {
+    background-color: #00bcd4;
+    border: none;
+}
+
+.btn-gray {
+    background-color: #78909c;
+    border: none;
+}
+
+.btn-green {
+    background-color: #00c853;
+    border: none;
+}
+
+.btn-search {
+    background-color: #00cae3;
+    border: none;
+}
+
+.btn-pending {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+}
 
 
 /* --- Custom Button Hover Fix --- */
-.btn-teal:hover, .btn-teal:active { background-color: #00897b !important; color: #fff !important; }
-.btn-add:hover, .btn-add:active { background-color: #d81b60 !important; color: #fff !important; }
-.btn-purple-dark:hover, .btn-purple-dark:active { background-color: #4a148c !important; color: #fff !important; }
-.btn-coral:hover, .btn-coral:active { background-color: #e53935 !important; color: #fff !important; }
-.btn-sky:hover, .btn-sky:active { background-color: #039be5 !important; color: #fff !important; }
-.btn-cyan:hover, .btn-cyan:active { background-color: #0097a7 !important; color: #fff !important; }
-.btn-gray:hover, .btn-gray:active { background-color: #546e7a !important; color: #fff !important; }
-.btn-green:hover, .btn-green:active { background-color: #00a041 !important; color: #fff !important; }
-.btn-search:hover, .btn-search:active { background-color: #00acc1 !important; color: #fff !important; }
-.btn-pending:hover, .btn-pending:active { background-color: #59359a !important; color: #fff !important; }
+.btn-teal:hover,
+.btn-teal:active {
+    background-color: #00897b !important;
+    color: #fff !important;
+}
+
+.btn-add:hover,
+.btn-add:active {
+    background-color: #d81b60 !important;
+    color: #fff !important;
+}
+
+.btn-purple-dark:hover,
+.btn-purple-dark:active {
+    background-color: #4a148c !important;
+    color: #fff !important;
+}
+
+.btn-coral:hover,
+.btn-coral:active {
+    background-color: #e53935 !important;
+    color: #fff !important;
+}
+
+.btn-sky:hover,
+.btn-sky:active {
+    background-color: #039be5 !important;
+    color: #fff !important;
+}
+
+.btn-cyan:hover,
+.btn-cyan:active {
+    background-color: #0097a7 !important;
+    color: #fff !important;
+}
+
+.btn-gray:hover,
+.btn-gray:active {
+    background-color: #546e7a !important;
+    color: #fff !important;
+}
+
+.btn-green:hover,
+.btn-green:active {
+    background-color: #00a041 !important;
+    color: #fff !important;
+}
+
+.btn-search:hover,
+.btn-search:active {
+    background-color: #00acc1 !important;
+    color: #fff !important;
+}
+
+.btn-pending:hover,
+.btn-pending:active {
+    background-color: #59359a !important;
+    color: #fff !important;
+}
 
 .btn-sm.text-white:hover {
     color: #ffffff !important;
 }
 
-.gray-color { color: #78909c;}
-.btn-color { color: #6f42c1;}
+.gray-color {
+    color: #78909c;
+}
+
+.btn-color {
+    color: #6f42c1;
+}
+
 .card-header h5 {
     color: #333 !important;
     font-size: 18px;
 }
 
 /* Layout Fix */
-.invoice-box .border-end { border-color: #f0f0f0 !important; }
-.table-bordered > :not(caption) > * > * { border-color: #eee; }
+.invoice-box .border-end {
+    border-color: #f0f0f0 !important;
+}
+
+.table-bordered> :not(caption)>*>* {
+    border-color: #eee;
+}
 
 .search-input:focus {
     border-color: #00cae3 !important;
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
-    outline: none !important; 
-    background-color: #fff; 
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important;
+    outline: none !important;
+    background-color: #fff;
 }
 
 .search-input {
