@@ -7,6 +7,7 @@ import SetForgotPassword from '../frontend/page/auth/SetForgotPassword.vue';
 import SingleProduct from '../frontend/page/product/SingleProduct.vue';
 import HotDeal from '../frontend/page/HotDeal/HotDeal.vue';
 import CheckOut from '../frontend/page/CheckOut.vue';
+import UserDashboard from '../frontend/page/UserDashboard.vue';
 import Contact from '../frontend/page/Contact.vue';
 import OrderTrack from '../frontend/page/OrderTrack.vue';
 import CategoryPage from '../frontend/page/CategoryPage.vue';
@@ -39,6 +40,7 @@ export default [
             children: [
                { path: 'checkout', name: 'CheckOut', component: CheckOut},
                { path: 'order-track', name: 'OrderTrack', component: OrderTrack},
+               { path: 'user-account', name: 'UserDashboard', component: UserDashboard},
             ]
     }
 ]

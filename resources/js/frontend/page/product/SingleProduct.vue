@@ -64,7 +64,7 @@
                                                     <p class="details-price">
                                                         <del>৳{{
                                                             product.price
-                                                        }}</del>
+                                                            }}</del>
                                                         ৳{{
                                                             product.discount_price
                                                         }}
@@ -695,9 +695,39 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="insert-review">
-                                                            <a class="customer-login-redirect"
-                                                                href="../customer/login.html">Login to Post
-                                                                Your Review</a>
+                                                            <!-- Review Form Section -->
+                                                            <div class="card border-0 shadow-sm p-4 mt-5 rounded-4">
+                                                                <h5 class="fw-bold mb-3">Write a Customer Review</h5>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="mb-3">
+                                                                            <label class="small fw-bold">Your Rating
+                                                                                *</label>
+                                                                            <select v-model="reviewForm.ratting"
+                                                                                class="form-select border-0 bg-light">
+                                                                                <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+                                                                                <option value="4">⭐⭐⭐⭐ (4/5)</option>
+                                                                                <option value="3">⭐⭐⭐ (3/5)</option>
+                                                                                <option value="2">⭐⭐ (2/5)</option>
+                                                                                <option value="1">⭐ (1/5)</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label class="small fw-bold">Your Review
+                                                                                *</label>
+                                                                            <textarea v-model="reviewForm.review"
+                                                                                class="form-control border-0 bg-light"
+                                                                                rows="4"
+                                                                                placeholder="Tell us about the product..."></textarea>
+                                                                        </div>
+                                                                        <button @click="submitReview"
+                                                                            class="btn btn-review-submit">
+                                                                            Submit Feedback
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -785,6 +815,11 @@ export default {
             qty: 1,
             selectedColor: null,
             selectedSize: null,
+            reviewForm: {
+                ratting: 5,
+                review: '',
+                product_id: this.$route.params.id
+            }
         };
     },
     methods: {
@@ -803,7 +838,7 @@ export default {
         initSlider() {
             this.$nextTick(() => {
                 if (window.$ && $(".details_slider").length > 0) {
-                    $(".details_slider").owlCarousel("destroy"); 
+                    $(".details_slider").owlCarousel("destroy");
                     $(".details_slider").owlCarousel({
                         items: 1,
                         loop: true,
@@ -818,9 +853,9 @@ export default {
         initRelatedSlider() {
             this.$nextTick(() => {
                 if (window.$ && $(".related_slider").length > 0) {
-                    $(".related_slider").owlCarousel("destroy"); 
+                    $(".related_slider").owlCarousel("destroy");
                     $(".related_slider").owlCarousel({
-                        loop: this.recommendations.length > 4, 
+                        loop: this.recommendations.length > 4,
                         margin: 15,
                         nav: true,
                         dots: false,
@@ -852,7 +887,6 @@ export default {
                 return false;
             }
 
-            // ডাটা অবজেক্ট তৈরি
             let cartData = {
                 product_id: this.product.id,
                 name: this.product.name,
@@ -884,7 +918,6 @@ export default {
 
 
         buyNow() {
-            // addToCart কল করে রেজাল্ট চেক করা হচ্ছে
             let status = this.addToCart();
 
             if (status) {
@@ -903,6 +936,23 @@ export default {
             if (this.qty > 1) {
                 this.qty--;
             }
+        },
+        submitReview() {
+            if (this.reviewForm.review === '') {
+                Notification.error("Please write something!");
+                return;
+            }
+
+            axios.post('/api/review/store', this.reviewForm)
+                .then(res => {
+                    Notification.success(res.data.message);
+                    this.reviewForm.review = '';
+                })
+                .catch(error => {
+                    if (error.response.status === 401) {
+                        Notification.error("Please login first!");
+                    }
+                });
         },
     },
     mounted() {
@@ -936,5 +986,34 @@ export default {
     background-color: #3f0051;
     color: white;
     border-color: #3f0051;
+}
+
+.btn-review-submit {
+    background-color: #760478 !important;
+    color: white !important;
+    padding: 10px 25px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    margin-top: 15px;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-review-submit:hover {
+    background-color: #3f0051 !important;
+    box-shadow: 0 4px 12px rgba(63, 0, 81, 0.3);
+    transform: translateY(-2px);
+}
+
+.form-select.bg-light,
+.form-control.bg-light {
+    border: 1px solid #eee !important;
+}
+
+.form-select.bg-light:focus,
+.form-control.bg-light:focus {
+    background-color: #fff !important;
+    border-color: #3f0051 !important;
+    box-shadow: none;
 }
 </style>

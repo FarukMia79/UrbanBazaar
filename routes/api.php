@@ -15,6 +15,7 @@ use App\Http\Controllers\FrontEnd\CartController;
 use App\Http\Controllers\BackEnd\Order\OrderController;
 use App\Http\Controllers\BackEnd\Order\OrderItemController;
 use App\Http\Controllers\FrontEnd\HomeController;
+use App\Http\Controllers\FrontEnd\ReviewController;
 use GuzzleHttp\Middleware;
 
 Route::get('/category', [CategoryController::class, 'index']);
@@ -46,6 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserAuthController::class, 'logout']);
     Route::resource('/cart', CartController::class);
     Route::resource('/order', OrderController::class);
+    Route::get('/user/orders', [OrderController::class, 'userOrders']);
+    Route::post('/review/store', [ReviewController::class, 'store']);
     Route::get('/personalized-recommendations', [HomeController::class, 'getPersonalizedRecommendations']);
 
 
@@ -59,7 +62,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('/color', ColorController::class)->except(['index', 'show']);
         Route::resource('/product', ProductController::class)->except(['index', 'show']);
         Route::resource('/orderitem', OrderItemController::class);
-        Route::resource('/order', OrderController::class);
         Route::post('/order/update-status/{id}', [OrderController::class, 'updateStatus']);
     });
 });

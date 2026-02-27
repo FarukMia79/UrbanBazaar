@@ -23,6 +23,16 @@ class OrderController extends Controller
         return response()->json($order);
     }
 
+    public function userOrders()
+    {
+        $orders = Order::with('orderItems.product')
+            ->where('user_id', auth('sanctum')->id())
+            ->latest()
+            ->get();
+
+        return response()->json($orders);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

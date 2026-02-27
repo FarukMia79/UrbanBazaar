@@ -2,7 +2,7 @@
 
 <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="mb-0 fw-bold">All Order (16)</h5>
+            <h5 class="mb-0 fw-bold">All Order ({{ filterSearch.length }})</h5>
             <button class="btn btn-add rounded-pill px-3 text-white"><i class="fa fa-cart-shopping me-1"></i> Add New</button>
         </div>
 
@@ -19,7 +19,7 @@
                 <button class="btn btn-green btn-sm text-white"><i class="fa fa-truck"></i> Safe Delivery</button>
                 
                 <div class="ms-auto d-flex">
-                    <input type="text" class="search-input rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
+                    <input v-model="searchTerm" type="text" class="search-input rounded-0 border-end-0" placeholder="Search" style="width: 200px;">
                     <button class="btn btn-search btn-sm rounded-0 text-white px-3">Search</button>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in orderItem" :key="item.id">
+                        <tr v-for="(item, index) in filterSearch" :key="item.id">
                             <td><input type="checkbox" class="form-check-input"></td>
                             <td class="text-center">
                                 <div class="action-icons mb-2 btn-color">
@@ -64,7 +64,13 @@
                                         <p><label>Amount:</label> ৳{{ item.price }}</p>
                                         <p><label>IP:</label> {{ item.order.ip_address }}</p>
                                         <p><label>Comment:</label> ""</p>
-                                        <p><label>Status:</label> <span class="badge btn-pending">{{ item.order.status }}</span></p>
+                                        <p><label>Status:</label> <span class="badge text-capitalize"  :class="{
+                                                                            'btn-pending': item.order.status === 'pending',
+                                                                            'btn-green': item.order.status === 'completed',
+                                                                            'btn-danger': item.order.status === 'cancelled'
+                                                                        }">{{ item.order.status }}
+                                                                    </span>
+                                        </p>
                                     </div>
                                 </div>
                             </td>
@@ -104,6 +110,21 @@ export default {
     created() {
         this.getOrderItem();
     },
+    computed: {
+        filterSearch() {
+            if (!this.searchTerm) return this.orderItem;
+
+            const term = this.searchTerm.toLowerCase();
+            return this.orderItem.filter(orderItem => {
+                const order = orderItem.order || {};
+                return (
+                    (order.name && order.name.toLowerCase().includes(term)) ||
+                    (order.phone && order.phone.includes(term)) ||
+                    (order.invoice_no && String(order.invoice_no).includes(term))
+                );
+            });
+        },
+    },
     methods: {
         getOrderItem() {
             axios.get("/api/orderitem")
@@ -124,12 +145,25 @@ export default {
                 });
         },
         deleteOrder(orderId) {
-            axios.delete(`/api/order/${orderId}`)
-                .then((res) => {
-                    this.getOrderItem();
-                }).catch((error) => {
-                    Notification.error();
-                });
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/api/order/${orderId}`)
+                        .then((res) => {
+                            this.getOrderItem();
+                        }).catch((error) => {
+                            Notification.error();
+                        });
+                }
+            });
+
         }
     }
 };
@@ -219,6 +253,12 @@ export default {
     border: none;
 }
 
+.btn-danger {
+    background-color: #ef5350;
+    color: white;
+    border: none;
+}
+
 
 /* --- Custom Button Hover Fix --- */
 .btn-teal:hover,
@@ -266,6 +306,12 @@ export default {
 .btn-green:hover,
 .btn-green:active {
     background-color: #00a041 !important;
+    color: #fff !important;
+}
+
+.btn-danger:hover,
+.btn-danger:active {
+    background-color: #ec2e2b !important;
     color: #fff !important;
 }
 
