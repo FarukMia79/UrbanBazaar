@@ -133,7 +133,7 @@
                             <div v-for="product in products" :key="product.id" class="product_item wist_item wow zoomIn"
                                 data-wow-duration="1.5s" data-wow-delay="0.0s">
                                 <div class="product_item_inner">
-                                    <div class="sale-badge">
+                                    <div v-if="product.discount_price !== null || 0" class="sale-badge">
                                         <div class="sale-badge-inner">
                                             <div class="sale-badge-box">
                                                 <span class="sale-badge-text">
@@ -158,9 +158,12 @@
                                 </div>
 
                                 <div class="pro_price">
-                                    <p>
+                                    <p v-if="product.discount_price !== null || 0">
                                         <del>৳ {{ product.price }}</del>
                                         ৳ {{ product.discount_price }}
+                                    </p>
+                                    <p v-else>
+                                        ৳ {{ product.price }}
                                     </p>
                                 </div>
                                 <div class="pro_btn d-flex justify-content-between align-items-center gap-2">
@@ -222,7 +225,7 @@
                                         <div class="sale-badge-box">
                                             <span class="sale-badge-text">
                                                 <p>{{ calculateDiscount(personalized.price, personalized.discount_price)
-                                                    }}%</p>
+                                                }}%</p>
                                                 OFF
                                             </span>
                                         </div>
@@ -297,7 +300,10 @@ export default {
         getProductData() {
             axios.get('/api/product')
                 .then((res) => {
-                    this.products = res.data;
+                    this.products = res.data.filter(product => {
+                        return product.hot_deals != null && product.hot_deals != 0;
+                    });
+
 
                     this.$nextTick(() => {
                         if (typeof window.$ !== "undefined") {

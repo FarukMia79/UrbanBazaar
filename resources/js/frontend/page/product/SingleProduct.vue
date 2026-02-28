@@ -8,7 +8,8 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-sm-6 position-relative">
-                                        <div class="product-details-discount-badge">
+                                        <div v-if="product.discount_price !== null || 0"
+                                            class="product-details-discount-badge">
                                             <div class="sale-badge">
                                                 <div class="sale-badge-inner">
                                                     <div class="sale-badge-box">
@@ -61,12 +62,18 @@
                                                     <p class="name">
                                                         {{ product.name }}
                                                     </p>
-                                                    <p class="details-price">
+                                                    <p v-if="product.discount_price !== null || 0"
+                                                        class="details-price">
                                                         <del>৳{{
                                                             product.price
-                                                        }}</del>
+                                                            }}</del>
                                                         ৳{{
                                                             product.discount_price
+                                                        }}
+                                                    </p>
+                                                    <p v-else class="details-price">
+                                                        ৳{{
+                                                            product.price
                                                         }}
                                                     </p>
                                                     <div class="details-ratting-wrapper">
@@ -295,361 +302,12 @@
                     <div class="col-sm-8">
                         <div class="description tab-content details-action-box" id="description">
                             <h2>Details</h2>
-                            <div class="html-content pdp-product-highlights" style="
-                                    margin: 0px;
-                                    padding: 11px 0px 16px;
-                                    word-break: break-word;
-                                    border-bottom: 1px solid rgb(239, 240, 245);
-                                    overflow: hidden;
-                                    font-family:
-                                        Roboto,
-                                        -apple-system,
-                                        BlinkMacSystemFont,
-                                        &quot;Helvetica Neue&quot;,
-                                        Helvetica,
-                                        sans-serif;
-                                    font-size: 12px;
-                                ">
-                                <article class="lzd-article" style="
-                                        margin: 0px;
-                                        padding: 0px;
-                                        white-space-collapse: break-spaces;
-                                    ">
-                                    <ul style="
-                                            margin-right: 0px;
-                                            margin-bottom: 0px;
-                                            margin-left: 16px;
-                                            padding: 0px;
-                                            list-style-position: initial;
-                                            list-style-image: initial;
-                                            overflow: hidden;
-                                            column-count: 2;
-                                            column-gap: 32px;
-                                        ">
-                                        <li data-spm-anchor-id="a2a0e.pdp_revamp.product_detail.i1.3b147e2cb2J5os"
-                                            style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Product details of 2021 New
-                                                    Model Hand Bag For Girls
-                                                    /Stylish And Fashionable
-                                                    Ladies Shoulder/ Hand Bag/
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Product Type: Hand Bag,
-                                                    Shoulder Bag</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul style="
-                                            margin-right: 0px;
-                                            margin-bottom: 0px;
-                                            margin-left: 16px;
-                                            padding: 0px;
-                                            list-style-position: initial;
-                                            list-style-image: initial;
-                                            overflow: hidden;
-                                            column-count: 2;
-                                            column-gap: 32px;
-                                        ">
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Available Colours: Black,
-                                                    Brown, Sand, Ash, Blush
-                                                    Pink, etc.</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Body Material: Artificial
-                                                    Leather</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Inside Material: Waterproof
-                                                    Fabric</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Gender: Girls</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Interior: No Pocket</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Closure Type: Zipper</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Style: Casual</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Exterior: Open Pocket</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Hardness: Soft</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Size: Length 10", Height
-                                                    7", Width 4.5"</span>
-                                            </div>
-                                        </li>
-                                        <li style="
-                                                margin: 0px;
-                                                padding: 0px 0px 0px 15px;
-                                                position: relative;
-                                                font-size: 14px;
-                                                line-height: 18px;
-                                                text-align: left;
-                                                list-style: none;
-                                                word-break: break-word;
-                                                break-inside: avoid;
-                                            ">
-                                            <div style="
-                                                    margin: 0px;
-                                                    padding: 0px;
-                                                ">
-                                                <span style="
-                                                        margin: 0px;
-                                                        padding: 0px;
-                                                    ">Features: Lightweight,
-                                                    Durable, Long-lasting,
-                                                    Budget-friendly</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </article>
-                            </div>
-                            <div class="html-content detail-content" style="
-                                    margin: 16px 0px 0px;
-                                    padding: 0px 0px 16px;
-                                    border-bottom: 1px solid #efeff5;
-                                ">
-                                <article class="lzd-article" style="margin: 0px; padding: 0px">
-                                    <!-- এখানে style-এ !important ব্যবহার করা হয়েছে যা অন্য সব সিএসএস-কে হারিয়ে দিবে -->
-                                    <p style="
-                                            white-space: pre-wrap !important;
-                                            display: block !important;
-                                            margin: 0px !important;
-                                            font-size: 14px !important;
-                                            line-height: 1.8 !important;
-                                            font-family: inherit !important;
-                                        ">
-                                        Product: Women stylish bag is fur ball
-                                        toe Gender: Female Same as picure
-                                        Material: PU Leather Comfortable and
-                                        fashionable Stylish and beautiful
-                                        appearance SIZE: L-32CM, H-20CM, W-16CM.
-                                        Available Colors: Pink,
-                                    </p>
-                                </article>
+                            <div class="html-content pdp-product-highlights p-3">
+                                <!-- v-html ব্যবহার করা হয়েছে যাতে আপনার টেক্সট এডিটরের ডিজাইন কাজ করে -->
+                                <div v-if="product.description" v-html="product.description"
+                                    class="product-description-content">
+                                </div>
+                                <p v-else class="text-muted">No description available for this product.</p>
                             </div>
                         </div>
                         <div class="tab-content details-action-box" id="writeReview">
@@ -1026,5 +684,11 @@ export default {
 .details-ratting-wrapper i {
     font-size: 14px;
     margin-right: 2px;
+}
+
+.product-description-content {
+    white-space: pre-wrap !important;
+    line-height: 1.6;
+    color: #444;
 }
 </style>

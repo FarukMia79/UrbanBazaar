@@ -147,7 +147,7 @@
                                                         <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
-                                                            }}<i v-if="category.subcategories && category.subcategories.length > 0"
+                                                        }}<i v-if="category.subcategories && category.subcategories.length > 0"
                                                                 class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu"
                                                             v-if="category.subcategories && category.subcategories.length > 0">
@@ -192,7 +192,7 @@
                                                 <router-link :to="{
                                                     name: 'UserLogin',
                                                 }">
-                                                    <i class="fa-regular fa-user me-2"></i>Login
+                                                    <i class="fa-regular fa-user me-2"></i>Login / Sign Up
                                                 </router-link>
                                             </div>
 

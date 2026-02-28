@@ -31,6 +31,8 @@ Route::get('/color/{id}', [ColorController::class, 'show']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/get-subcategories/{category_id}', [SubCategoryController::class, 'getSubByCategory']);
+Route::get('/personalized-recommendations', [HomeController::class, 'getPersonalizedRecommendations']);
+
 
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::post('/user/login', [UserAuthController::class, 'login']);
@@ -49,7 +51,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/order', OrderController::class);
     Route::get('/user/orders', [OrderController::class, 'userOrders']);
     Route::post('/review/store', [ReviewController::class, 'store']);
-    Route::get('/personalized-recommendations', [HomeController::class, 'getPersonalizedRecommendations']);
 
 
     Route::middleware('is_admin')->group(function () {
