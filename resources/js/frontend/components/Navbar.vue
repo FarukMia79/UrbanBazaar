@@ -44,12 +44,15 @@
                     <router-link :to="{ name: 'index' }"><img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`"
                             alt="" /></router-link>
                 </div>
-                <div class="menu-bag">
-                    <p class="margin-shopping">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="mobilecart-qty">0</span>
-                    </p>
-                </div>
+                <router-link :to="{ name: 'CheckOut' }">
+                    <div class="menu-bag">
+                        <p class="margin-shopping">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="mobilecart-qty">{{ cartQtyCount }}</span>
+                        </p>
+                    </div>
+                </router-link>
+
             </div>
         </div>
 
@@ -135,7 +138,7 @@
                                 <ul class="heder__category mb-0">
                                     <div>
                                         <li class="all__category__list" :class="{ 'disable-hover': isHomePage }">
-                                            <a href="#">TOP CATEGORIES
+                                            <a href="#" :class="{ 'nav-user-item': !isHomePage }">TOP CATEGORIES
                                                 <i class="fa-solid fa-list"></i>
                                             </a>
                                             <div class="sidebar-menu side__bar">
@@ -144,7 +147,7 @@
                                                         <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
-                                                        }}<i v-if="category.subcategories && category.subcategories.length > 0"
+                                                            }}<i v-if="category.subcategories && category.subcategories.length > 0"
                                                                 class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu"
                                                             v-if="category.subcategories && category.subcategories.length > 0">
@@ -164,20 +167,24 @@
 
                                     <div>
                                         <li>
-                                            <router-link :to="{ name: 'index' }">Home</router-link>
+                                            <router-link :to="{ name: 'index' }"
+                                                class="nav-user-item">Home</router-link>
                                         </li>
                                     </div>
                                     <div>
                                         <li>
-                                            <router-link :to="{ name: 'HotDeal' }">Offers</router-link>
+                                            <router-link :to="{ name: 'HotDeal' }"
+                                                class="nav-user-item">Offers</router-link>
+                                        </li>
+                                    </div>
+                                    <div>
+                                        <li>
+                                            <router-link :to="{ name: 'Contact' }"
+                                                class="nav-user-item">Contact</router-link>
                                         </li>
                                     </div>
 
-                                    <div class="contact__menu">
-                                        <li>
-                                            <router-link :to="{ name: 'Contact' }">Contact</router-link>
-                                        </li>
-                                    </div>
+
                                     <div class="right__menu__top">
                                         <li class="for_order">
                                             <p>
@@ -190,8 +197,14 @@
                                             </div>
 
                                             <div class="login_logout-nv" v-else>
-                                                <a @click.prevent="logout">
-                                                    <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+                                                <router-link :to="{ name: 'UserDashboard' }" class="nav-user-item">
+                                                    <i class="fa-solid fa-circle-user"></i>
+                                                    <span>Account</span>
+                                                </router-link>
+
+                                                <a @click.prevent="logout" class="nav-user-item">
+                                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                                    <span>Logout</span>
                                                 </a>
                                             </div>
                                             </p>
@@ -239,7 +252,7 @@
                     <span>
                         <i class="fa-solid fa-cart-shopping"></i>
                     </span>
-                    <span>Cart (<b class="mobilecart-qty">0</b>)</span>
+                    <span>Cart (<b class="mobilecart-qty">{{ cartQtyCount }}</b>)</span>
                 </router-link>
             </li>
             <li class="login_logout">
@@ -249,14 +262,14 @@
                     </span>
                     <span>Login</span>
                 </router-link>
-                <a v-else class="col" @click.prevent="logout">
+                <router-link v-else :to="{ name: 'CheckOut' }" class="col">
                     <span>
-                        <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-circle-user"></i>
                     </span>
                     <span>
-                        logout
+                        Account
                     </span>
-                </a>
+                </router-link>
             </li>
         </ul>
     </div>
@@ -363,13 +376,32 @@ export default {
 </script>
 
 <style scoped>
-.login_logout {
-    cursor: pointer;
+/* মেইন কন্টেইনার */
+.login_logout-nv {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Account এবং Logout এর মাঝখানের দূরত্ব */
 }
 
-.login_logout-nv {
+/* প্রতিটি আইটেম (Account/Logout) */
+.nav-user-item {
+    display: flex;
+    flex-direction: row;
+    /* আইকন বামে আর লেখা ডানে রাখার জন্য */
+    align-items: center;
+    color: #ffffff !important;
+    text-decoration: none;
     cursor: pointer;
-    color: #fff;
+    gap: 6px;
+    /* আইকন এবং লেখার মাঝখানের দূরত্ব */
+    transition: 0.3s;
+}
+
+
+.nav-user-item:hover {
+    color: #ffca28 !important;
+    /* হোভার করলে সোনালী রঙ (ঐচ্ছিক) */
 }
 
 .mobile-menu {

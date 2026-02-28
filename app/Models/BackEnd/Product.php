@@ -9,6 +9,7 @@ use App\Models\BackEnd\Category;
 use App\Models\BackEnd\SubCategory;
 use App\Models\BackEnd\Brand;
 use App\Models\BackEnd\ProductImage;
+use App\Models\FrontEnd\Review;
 
 class Product extends Model
 {
@@ -69,5 +70,10 @@ class Product extends Model
     public function multi_images(): HasMany
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'product_id');
     }
 }

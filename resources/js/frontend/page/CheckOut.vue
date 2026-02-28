@@ -509,10 +509,16 @@ export default {
                 });
         },
         removeItem(id) {
-            axios.get(`/api/cart/${id}`).then(() => {
-                this.cartItems = this.cartItems.filter(i => i.id !== id);
-                window.dispatchEvent(new CustomEvent('cart-updated'));
-            });
+            axios.delete(`/api/cart/${id}`)
+                .then(() => {
+                    this.cartItems = this.cartItems.filter(i => i.id !== id);
+                    Notification.success("Item removed");
+                    window.dispatchEvent(new CustomEvent('cart-updated'));
+                })
+                .catch(err => {
+                    console.error("Remove Error:", err);
+                    Notification.error("Could not remove item");
+                });
         }
     }
 };

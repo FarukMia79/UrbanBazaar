@@ -64,21 +64,22 @@
                                                     <p class="details-price">
                                                         <del>৳{{
                                                             product.price
-                                                            }}</del>
+                                                        }}</del>
                                                         ৳{{
                                                             product.discount_price
                                                         }}
                                                     </p>
                                                     <div class="details-ratting-wrapper">
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-                                                        <i class="far fa-star"></i>
-
-                                                        <span>0.00/5</span>
-                                                        <a class="all-reviews-button" href="#writeReview">See
-                                                            Reviews</a>
+                                                        <i v-for="i in 5" :key="i"
+                                                            :class="i <= Math.round(product.average_rating) ? 'fas fa-star text-warning' : 'far fa-star'">
+                                                        </i>
+                                                        <span class="ms-2">
+                                                            {{ product.average_rating ?
+                                                                parseFloat(product.average_rating).toFixed(1) : '0.0' }}/5
+                                                        </span>
+                                                        <a class="all-reviews-button ms-3" href="#description">
+                                                            ({{ product.reviews_count || 0 }} Reviews)
+                                                        </a>
                                                     </div>
                                                     <div class="product-code">
                                                         <p>
@@ -1015,5 +1016,15 @@ export default {
     background-color: #fff !important;
     border-color: #3f0051 !important;
     box-shadow: none;
+}
+
+.text-warning {
+    color: #ffc107 !important;
+    /* Gold/Yellow color */
+}
+
+.details-ratting-wrapper i {
+    font-size: 14px;
+    margin-right: 2px;
 }
 </style>

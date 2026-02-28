@@ -4765,30 +4765,21 @@ ul.social_link {
     text-decoration: none;
 }
 
-/* --- সক্রিয় এবং হোভার স্টাইল (ডিপ ও অ্যাকসেন্ট থিম) --- */
 .desc-nav-ul li.active a,
 .desc-nav-ul li:hover a {
-    /* হোভার BG: ডিপ কালার #3F0051 */
     background-color: #3F0051;
-    /* হোভার টেক্সট: Main text colour #ffffff (সাদা) */
     color: #ffffff;
-    /* হোভার বর্ডার: ডিপ কালার #3F0051 */
     border-color: #3F0051;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 .desc-nav-ul li.active a {
-    /* সক্রিয় ট্যাব BG: সেকেন্ডারি অ্যাকসেন্ট #750377 */
     background-color: #750377;
-    /* সক্রিয় ট্যাব টেক্সট: Secondary text colour #ffffff (সাদা) - অ্যাকসেন্ট কালার ডার্ক হওয়ায় টেক্সট সাদা করা হলো */
     color: #ffffff;
-    /* সক্রিয় ট্যাব বর্ডার: সেকেন্ডারি অ্যাকসেন্ট #750377 */
     border-color: #750377;
-    /* অ্যাকসেন্ট কালারের শ্যাডো */
     box-shadow: 0 3px 8px rgba(117, 3, 119, 0.5);
 }
 
-/* --- বিবরণ কন্টেন্ট এরিয়া --- */
 .description {
     margin-top: 30px !important;
     background: #fff !important;
@@ -4827,7 +4818,6 @@ a.forget-link {
 
 /* --- Cart Button (Accent/Deep) --- */
 .cart_btn.order_button a {
-    /* BG: ডিপ কালার #3F0051 */
     background: #3F0051;
     color: #fff;
     width: 60%;
@@ -4840,7 +4830,6 @@ a.forget-link {
 }
 
 .cart_btn.order_button a:hover {
-    /* হোভার BG: অ্যাকসেন্ট কালার #750377 */
     background: #750377;
 }
 
@@ -4848,7 +4837,6 @@ span.sale-badge-text p {
     margin: 0% !important;
     font-size: 11px !important;
     color: #fff !important;
-    /* সেলের ব্যাজের টেক্সট সাদা রাখা হলো */
 }
 
 .hightlight_cont ul li {
@@ -5299,10 +5287,11 @@ li.all__category__list i {
 .heder__category {
     padding: 0px;
     display: grid;
-    grid-template-columns: 25% 7% 12% 42% 14%;
+    grid-template-columns: 25% 7% 7% 46% 15%;
     height: 48px;
     line-height: 48px;
 }
+
 
 .contact__menu {
     text-align: end;

@@ -257,6 +257,15 @@
                                     style="background-color: #3f0051; color: #ffffff; border: none;">
                                     Order Now
                                 </router-link>
+                                <a href="javascript:void(0)" class="btn btn-sm add-to-cart-btn" data-id="62" style="
+                                            width: 40px;
+                                            padding: 4px;
+                                            background-color: transparent;
+                                            color: #ffffff;
+                                            border: 1px solid #3f0051;
+                                        ">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -403,7 +412,5 @@ export default {
 
 .wist_item {
     margin-bottom: 20px;
-    height: 100%;
-    /* কার্ডগুলো সমান করার জন্য */
 }
 </style>

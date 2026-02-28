@@ -135,7 +135,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with(['category', 'subcategory', 'brand', 'multi_images'])->findOrFail($id);
+        $product = Product::with(['category', 'subcategory', 'brand', 'multi_images'])
+            ->withAvg('reviews as average_rating', 'ratting')
+            ->withCount('reviews')
+            ->findOrFail($id);
 
         // ২. কালার ডাটা নিয়ে আসা (JSON IDs থেকে)
         if ($product->color_ids && count($product->color_ids) > 0) {

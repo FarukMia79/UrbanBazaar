@@ -80,8 +80,20 @@ export default {
             return 'bg-secondary';
         },
         logout() {
-            // আপনার আগের লগআউট মেথড
-        }
+            const token = AppStorage.getToken();
+            axios.post('/api/user/logout', {}, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+                .then(() => {
+                    AppStorage.clear();
+                    Notification.success("Logged Out!");
+                    this.$router.push({ name: 'UserLogin' });
+                }).catch((error) => {
+                    console.error('Logout failed', error);
+                    AppStorage.clear();
+                    this.$router.push({ name: 'UserLogin' });
+                });
+        },
     },
     mounted() {
         this.loadUserOrders();
