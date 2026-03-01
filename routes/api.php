@@ -16,6 +16,7 @@ use App\Http\Controllers\BackEnd\Order\OrderController;
 use App\Http\Controllers\BackEnd\Order\OrderItemController;
 use App\Http\Controllers\FrontEnd\HomeController;
 use App\Http\Controllers\FrontEnd\ReviewController;
+use App\Http\Controllers\FrontEnd\BannerController;
 use GuzzleHttp\Middleware;
 
 Route::get('/category', [CategoryController::class, 'index']);
@@ -64,5 +65,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('/product', ProductController::class)->except(['index', 'show']);
         Route::resource('/orderitem', OrderItemController::class);
         Route::post('/order/update-status/{id}', [OrderController::class, 'updateStatus']);
+        Route::post('/banner/banner-store', [BannerController::class, 'bannerStore']);
     });
 });

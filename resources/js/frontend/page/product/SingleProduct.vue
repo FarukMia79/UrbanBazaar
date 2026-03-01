@@ -8,7 +8,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-sm-6 position-relative">
-                                        <div v-if="product.discount_price !== null || 0"
+                                        <div v-if="product.discount_price && product.discount_price > 0"
                                             class="product-details-discount-badge">
                                             <div class="sale-badge">
                                                 <div class="sale-badge-inner">
@@ -66,7 +66,7 @@
                                                         class="details-price">
                                                         <del>৳{{
                                                             product.price
-                                                            }}</del>
+                                                        }}</del>
                                                         ৳{{
                                                             product.discount_price
                                                         }}
@@ -303,7 +303,6 @@
                         <div class="description tab-content details-action-box" id="description">
                             <h2>Details</h2>
                             <div class="html-content pdp-product-highlights p-3">
-                                <!-- v-html ব্যবহার করা হয়েছে যাতে আপনার টেক্সট এডিটরের ডিজাইন কাজ করে -->
                                 <div v-if="product.description" v-html="product.description"
                                     class="product-description-content">
                                 </div>
