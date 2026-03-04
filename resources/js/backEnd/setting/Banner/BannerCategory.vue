@@ -2,8 +2,9 @@
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-dark mb-0">Banner Category</h4>
-            <router-link :to="{ name: 'CreateBanner' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
-                Create Banner
+            <router-link :to="{ name: 'CreateBannerCategory' }"
+                class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
+                Create
             </router-link>
         </div>
 
@@ -22,8 +23,8 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
-                        <input type="text" class="search-input rounded-0 border-end-0" placeholder="Search"
-                            style="width: 200px" />
+                        <input v-model="searchTerm" type="text" class="search-input rounded-0 border-end-0"
+                            placeholder="Search" style="width: 200px" />
                         <button class="btn btn-search btn-sm rounded-0 text-white px-3">
                             Search
                         </button>
@@ -43,11 +44,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(banner, index) in banners" :key="banner.id">
+                        <tr v-for="(bannerCat, index) in filterSearch" :key="bannerCat.id">
                             <td class="text-muted">{{ index + 1 }}</td>
-                            <td class="text-muted">{{ banner.name }}</td>
+                            <td class="text-muted">{{ bannerCat.name }}</td>
                             <td>
-                                <span class="badge-active" v-if="banner.status == 1">Active</span>
+                                <span class="badge-active" v-if="bannerCat.status == 1">Active</span>
                                 <span class="badge-active" v-else>Inactive</span>
                             </td>
                             <td class="text-center">
@@ -56,7 +57,8 @@
                                             class="fa-solid fa-thumbs-down"></i></button>
                                     <button class="btn btn-purple-icon btn-sm me-2"><i
                                             class="fa-solid fa-edit"></i></button>
-                                    <button class="btn btn-coral-icon btn-sm"><i class="fa-solid fa-trash"></i></button>
+                                    <button @click="deleteBannerCategory(bannerCat.id)"
+                                        class="btn btn-coral-icon btn-sm"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -88,19 +90,50 @@
 export default {
     data() {
         return {
-            banners: [],
+            bannerCategory: [],
             searchTerm: ''
         }
     },
     created() {
         this.getBannerData();
     },
+    computed: {
+        filterSearch() {
+            return this.bannerCategory.filter(bannCat => {
+                return bannCat.name.toLowerCase().match(this.searchTerm.toLowerCase());
+            });
+        }
+    },
     methods: {
         getBannerData() {
             axios.get('/api/banner')
                 .then((res) => {
-                    this.banners = res.data;
+                    this.bannerCategory = res.data;
                 });
+        },
+        deleteBannerCategory(bannerCatID) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/api/banner/bannerCatDelete/' + bannerCatID)
+                        .then((res) => {
+                            Notification.success();
+                            this.bannerCategory = this.bannerCategory.filter(bannCat => {
+                                return bannCat.id != bannerCatID;
+                            });
+                        }).catch((error) => {
+                            Notification.error();
+                            this.$router().push({ name: 'Banner' });
+                        });
+                }
+            })
         }
     }
 };

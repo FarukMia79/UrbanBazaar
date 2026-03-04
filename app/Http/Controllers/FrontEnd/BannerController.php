@@ -104,8 +104,14 @@ class BannerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
+    }
+    public function bannerCatDelete($id)
+    {
+        $bannerCategory = BannerCategory::findOrFail($id);
+        $bannerCategory->delete();
+        return response()->json(['message' => 'Deleted successfully']);
     }
 }

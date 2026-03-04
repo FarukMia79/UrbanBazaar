@@ -165,7 +165,7 @@
                     <div class="collapse" id="collapseLayouts7" aria-labelledby="headingOne"
                         data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <router-link class="nav-link NavHover" :to="{ name: 'Banner' }"><i
+                            <router-link class="nav-link NavHover" :to="{ name: 'BannerCategory' }"><i
                                     class="fa-solid fa-file-medical me-1"></i>Banner</router-link>
                         </nav>
                     </div>

@@ -1,9 +1,9 @@
 <template>
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h4 class="fw-bold text-dark mb-0">Banner Create</h4>
-            <router-link :to="{ name: 'Banner' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white"><i
-                    class="fa-solid fa-tags me-1"></i>Banner
+            <h4 class="fw-bold text-dark mb-0">Create Banner Category</h4>
+            <router-link :to="{ name: 'BannerCategory' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white"><i
+                    class="fa-solid fa-tags me-1"></i>Banner Category
                 Manage</router-link>
         </div>
 
@@ -59,7 +59,7 @@ export default {
             axios.post('/api/banner/banner-store', data)
                 .then((res) => {
                     Notification.success();
-                    this.$router.push({ name: 'Banner' });
+                    this.$router.push({ name: 'BannerCategory' });
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
                 });

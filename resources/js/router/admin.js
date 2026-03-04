@@ -33,8 +33,8 @@ import UsersManage from '../backEnd/users/UsersManage.vue';
 import CustomerManage from '../backEnd/users/CustomerManage.vue';
 import GeneralSetting from '../backEnd/setting/generalSetting/GeneralSetting.vue';
 import PixelsManage from '../backEnd/setting/PixelsManage/PixelsManage.vue';
-import Banner from '../backEnd/setting/Banner/Banner.vue';
-import CreateBanner from '../backEnd/setting/Banner/CreateBanner.vue';
+import BannerCategory from '../backEnd/setting/Banner/BannerCategory.vue';
+import CreateBannerCategory from '../backEnd/setting/Banner/CreateBannerCategory.vue';
 
 export default [
     {
@@ -74,8 +74,8 @@ export default [
             { path: 'customer/manage', name: 'CustomerManage', component: CustomerManage},
             { path: 'setting/manage', name: 'GeneralSetting', component: GeneralSetting},
             { path: 'pixel/manage', name: 'PixelsManage', component: PixelsManage},
-            { path: 'banner/manage', name: 'Banner', component: Banner},
-            { path: 'banner/create', name: 'CreateBanner', component: CreateBanner},
+            { path: 'banner/category', name: 'BannerCategory', component: BannerCategory},
+            { path: 'banner/category-create', name: 'CreateBannerCategory', component: CreateBannerCategory},
         ],
     },
 
