@@ -83,7 +83,7 @@
                                 <img
                                     :src="'/' + category.image"
                                     class="border"
-                                    alt="prod"
+                                    alt="CategoryImage"
                                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
                                 />
                             </td>
