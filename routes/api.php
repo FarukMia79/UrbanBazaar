@@ -21,14 +21,27 @@ use GuzzleHttp\Middleware;
 
 Route::get('/category', [CategoryController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
+
+
 Route::get('/subcategory', [SubCategoryController::class, 'index']);
 Route::get('/subcategory/{id}', [SubCategoryController::class, 'show']);
+
+
 Route::get('/brand', [BrandController::class, 'index']);
 Route::get('/brand/{id}', [BrandController::class, 'show']);
+
+
 Route::get('/size', [SizeController::class, 'index']);
 Route::get('/size/{id}', [SizeController::class, 'show']);
+
+
 Route::get('/color', [ColorController::class, 'index']);
 Route::get('/color/{id}', [ColorController::class, 'show']);
+
+Route::get('/banner', [BannerController::class, 'index']);
+Route::get('/banner/{id}', [BannerController::class, 'show']);
+
+
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/get-subcategories/{category_id}', [SubCategoryController::class, 'getSubByCategory']);
@@ -59,12 +72,21 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::resource('/category', CategoryController::class)->except(['index', 'show']);
         Route::resource('/subcategory', SubCategoryController::class)->except(['index', 'show']);
+
         Route::resource('/brand', BrandController::class)->except(['index', 'show']);
+
         Route::resource('/size', SizeController::class)->except(['index', 'show']);
+
         Route::resource('/color', ColorController::class)->except(['index', 'show']);
+
         Route::resource('/product', ProductController::class)->except(['index', 'show']);
+
+
         Route::resource('/orderitem', OrderItemController::class);
         Route::post('/order/update-status/{id}', [OrderController::class, 'updateStatus']);
+
+
         Route::post('/banner/banner-store', [BannerController::class, 'bannerStore']);
+        Route::resource('/banner', BannerController::class)->except(['index', 'show']);
     });
 });

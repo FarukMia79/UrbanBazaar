@@ -17,8 +17,8 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $banners = Banner::latest()->get();
-        return response()->json($banners);
+        $bannerCategory = BannerCategory::latest()->get();
+        return response()->json($bannerCategory);
     }
 
     /**
@@ -79,9 +79,10 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $banner = BannerCategory::findOrFail($id);
+        return response()->json(['message' => $banner]);
     }
 
     /**

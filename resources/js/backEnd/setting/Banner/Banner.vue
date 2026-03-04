@@ -43,17 +43,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-muted">1</td>
-                            <td class="text-muted">Slider (1060x395)</td>
-                            <td><span class="badge-active">Active</span></td>
+                        <tr v-for="(banner, index) in banners" :key="banner.id">
+                            <td class="text-muted">{{ index + 1 }}</td>
+                            <td class="text-muted">{{ banner.name }}</td>
+                            <td>
+                                <span class="badge-active" v-if="banner.status == 1">Active</span>
+                                <span class="badge-active" v-else>Inactive</span>
+                            </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1">
                                     <button class="btn btn-gray-icon btn-sm me-2"><i
                                             class="fa-solid fa-thumbs-down"></i></button>
                                     <button class="btn btn-purple-icon btn-sm me-2"><i
                                             class="fa-solid fa-edit"></i></button>
-                                    <button class="btn btn-coral-icon btn-sm"><i class="fa-solid fa-xmark"></i></button>
+                                    <button class="btn btn-coral-icon btn-sm"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -82,7 +85,25 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            banners: [],
+            searchTerm: ''
+        }
+    },
+    created() {
+        this.getBannerData();
+    },
+    methods: {
+        getBannerData() {
+            axios.get('/api/banner')
+                .then((res) => {
+                    this.banners = res.data;
+                });
+        }
+    }
+};
 </script>
 <style scoped>
 .shadow-custom {
