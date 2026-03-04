@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BackEnd\Banner;
 use App\Models\BackEnd\BannerCategory;
-use Intervention\Image\Drivers\Gd\driver;
+use Intervention\Image\Drivers\Gd\Driver;
 
 use Intervention\Image\ImageManager;
 
@@ -18,7 +18,8 @@ class BannerController extends Controller
     public function index()
     {
         $bannerCategory = BannerCategory::latest()->get();
-        return response()->json($bannerCategory);
+        $banners = Banner::with('category')->get();
+        return response()->json(['bannerCategory' => $bannerCategory, 'banners' => $banners]);
     }
 
     /**
@@ -61,7 +62,7 @@ class BannerController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'image'       => 'required|image|mimes:jpeg,png,jpg,webp',
+            'image'       => 'required',
         ]);
 
         $banner = new Banner();
@@ -81,6 +82,7 @@ class BannerController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($file);
             $image->cover(1060, 395);
+            $image->save($uploadPath . $imageName); 
             $banner->image = 'uploads/banner/' . $imageName;
         }
 

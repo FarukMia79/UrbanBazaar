@@ -89,7 +89,7 @@ export default {
         getBannerCategory() {
             axios.get('/api/banner')
                 .then((res) => {
-                    this.BannerCategory = res.data;
+                    this.BannerCategory = res.data.bannerCategory;
                 });
         },
         onImageChange(e) {

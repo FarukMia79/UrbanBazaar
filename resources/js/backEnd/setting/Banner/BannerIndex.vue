@@ -2,8 +2,7 @@
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-dark mb-0">Banner</h4>
-            <router-link :to="{ name: 'CreateBanner' }"
-                class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
+            <router-link :to="{ name: 'CreateBanner' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
                 Create
             </router-link>
         </div>
@@ -45,15 +44,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-muted">1</td>
-                            <td class="text-muted">vsd</td>
-                            <td class="text-muted"><img src="" alt="Banner-Image"
+                        <tr v-for="(banner, index) in banners" :key="banner.id">
+                            <td class="text-muted">{{ index + 1 }}</td>
+                            <td class="text-muted">{{ banner.category ? banner.category.name : 'N/A' }}</td>
+                            <td class="text-muted"><img :src="'/' + banner.image" alt="Banner-Image"
                                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
                             </td>
                             <td>
-                                <span class="badge-active">Active</span>
-                                <span class="badge-active">Inactive</span>
+                                <span class="badge-active" v-if="banner.status == 1">Active</span>
+                                <span class="badge-active" v-else>Inactive</span>
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1">
@@ -91,6 +90,23 @@
 </template>
 <script>
 export default {
+    data() {
+        return {
+            banners: [],
+            searchTerm: ''
+        }
+    },
+    created() {
+        this.getBannerData();
+    },
+    methods: {
+        getBannerData() {
+            axios.get('/api/banner')
+                .then((res) => {
+                    this.banners = res.data.banners;
+                });
+        }
+    }
 }
 </script>
 <style scoped>

@@ -109,7 +109,7 @@ export default {
         getBannerData() {
             axios.get('/api/banner')
                 .then((res) => {
-                    this.bannerCategory = res.data;
+                    this.bannerCategory = res.data.bannerCategory;
                 });
         },
         deleteBannerCategory(bannerCatID) {
