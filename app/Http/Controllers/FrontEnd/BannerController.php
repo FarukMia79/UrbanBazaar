@@ -35,11 +35,23 @@ class BannerController extends Controller
             'name' => 'required',
         ]);
 
-        $banner = new BannerCategory();
-        $banner->name = $request->name;
-        $banner->status = (int) $request->status;
-        $banner->save();
+        $bannerCat = new BannerCategory();
+        $bannerCat->name = $request->name;
+        $bannerCat->status = (int) $request->status;
+        $bannerCat->save();
         return response()->json(['message' => 'Banner Created Successfully!']);
+    }
+    public function bannerUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $bannerCat = BannerCategory::findOrFail($id);
+        $bannerCat->name = $request->name;
+        $bannerCat->status = (int) $request->status;
+        $bannerCat->save();
+        return response()->json(['message' => 'Banner updated Successfully!']);
     }
 
     /**
@@ -81,8 +93,8 @@ class BannerController extends Controller
      */
     public function show($id)
     {
-        $banner = BannerCategory::findOrFail($id);
-        return response()->json(['message' => $banner]);
+        $bannerCategory = BannerCategory::findOrFail($id);
+        return response()->json($bannerCategory);
     }
 
     /**

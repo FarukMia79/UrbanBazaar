@@ -87,6 +87,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
         Route::post('/banner/banner-store', [BannerController::class, 'bannerStore']);
+        Route::put('/banner-update/{id}', [BannerController::class, 'bannerUpdate']);
         Route::delete('/banner/bannerCatDelete/{id}', [BannerController::class, 'bannerCatDelete']);
         Route::resource('/banner', BannerController::class)->except(['index', 'show']);
     });

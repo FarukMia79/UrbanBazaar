@@ -55,8 +55,9 @@
                                 <div class="d-flex justify-content-center gap-1">
                                     <button class="btn btn-gray-icon btn-sm me-2"><i
                                             class="fa-solid fa-thumbs-down"></i></button>
-                                    <button class="btn btn-purple-icon btn-sm me-2"><i
-                                            class="fa-solid fa-edit"></i></button>
+                                    <router-link :to="{ name: 'EditBannerCategory', params: { id: bannerCat.id } }"
+                                        class="btn btn-purple-icon btn-sm me-2"><i
+                                            class="fa-solid fa-edit"></i></router-link>
                                     <button @click="deleteBannerCategory(bannerCat.id)"
                                         class="btn btn-coral-icon btn-sm"><i class="fa-solid fa-trash"></i></button>
                                 </div>

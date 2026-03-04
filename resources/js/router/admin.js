@@ -35,6 +35,7 @@ import GeneralSetting from '../backEnd/setting/generalSetting/GeneralSetting.vue
 import PixelsManage from '../backEnd/setting/PixelsManage/PixelsManage.vue';
 import BannerCategory from '../backEnd/setting/Banner/BannerCategory.vue';
 import CreateBannerCategory from '../backEnd/setting/Banner/CreateBannerCategory.vue';
+import EditBannerCategory from '../backEnd/setting/Banner/EditBannerCategory.vue';
 
 export default [
     {
@@ -76,6 +77,7 @@ export default [
             { path: 'pixel/manage', name: 'PixelsManage', component: PixelsManage},
             { path: 'banner/category', name: 'BannerCategory', component: BannerCategory},
             { path: 'banner/category-create', name: 'CreateBannerCategory', component: CreateBannerCategory},
+            { path: 'banner/category-edit/:id', name: 'EditBannerCategory', component: EditBannerCategory},
         ],
     },
 
