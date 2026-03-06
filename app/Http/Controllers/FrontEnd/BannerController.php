@@ -81,7 +81,7 @@ class BannerController extends Controller
 
             $manager = new ImageManager(new Driver());
             $image = $manager->read($file);
-            $image->cover(1060, 395);
+            $image->cover(980, 428);
             $image->save($uploadPath . $imageName);
             $banner->image = 'uploads/banner/' . $imageName;
         }
@@ -142,7 +142,7 @@ class BannerController extends Controller
 
             $manager = new ImageManager(new Driver());
             $image = $manager->read($file);
-            $image->cover(1060, 395);
+            $image->cover(980, 428);
             $image->save($uploadPath . $imageName);
             $banner->image = 'uploads/banner/' . $imageName;
         }

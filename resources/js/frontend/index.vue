@@ -30,15 +30,21 @@
 
                     <div class="col-sm-9">
                         <div class="home-slider-container">
-                            <div class="main_slider owl-carousel">
-                                <div class="slider-item">
-                                    <img :src="`/uploads/banner/1761398976jewellery-app-wide-banners.webp`" alt=""
-                                        class="main-slider-style" />
+                            <!-- ডাটা লোড হওয়ার পর স্লাইডার দেখাবে -->
+                            <div v-if="banners.length > 0" class="main_slider owl-carousel">
+                                <!-- লুপের ভেতর ফিল্টার ব্যবহার করা হয়েছে যাতে শুধু মেইন স্লাইডারের ছবি আসে -->
+                                <div class="slider-item"
+                                    v-for="banner in banners.filter(b => b.category && b.category.name == 'Slider (1060*395)')"
+                                    :key="banner.id">
+                                    <a :href="banner.link || '#'">
+                                        <img :src="'/' + banner.image" alt="Banner" class="main-slider-style" />
+                                    </a>
                                 </div>
-
-                                <div class="slider-item">
-                                    <img :src="`/uploads/banner/1757232812_mouse`" alt="" class="main-slider-style" />
-                                </div>
+                            </div>
+                            <!-- ডাটা না আসা পর্যন্ত একটি ডিফল্ট টেক্সট বা হাইট দিয়ে রাখুন -->
+                            <div v-else style="height: 395px; background: #f0f0f0;"
+                                class="rounded d-flex align-items-center justify-content-center">
+                                Loading Banners...
                             </div>
                         </div>
                     </div>
@@ -225,7 +231,7 @@
                                         <div class="sale-badge-box">
                                             <span class="sale-badge-text">
                                                 <p>{{ calculateDiscount(personalized.price, personalized.discount_price)
-                                                }}%</p>
+                                                    }}%</p>
                                                 OFF
                                             </span>
                                         </div>
@@ -285,12 +291,33 @@ export default {
     name: "HomeContent",
     data() {
         return {
+            banners: [],
             categories: [],
             products: [],
             personalizedProducts: [],
         }
     },
     methods: {
+        getBanner() {
+            axios.get('/api/banner')
+                .then((res) => {
+                    this.banners = res.data.banners;
+
+                    this.$nextTick(() => {
+                        if (typeof window.$ !== "undefined") {
+                            window.$(".main_slider").owlCarousel('destroy'); // আগেরটা থাকলে রিসেট
+                            window.$(".main_slider").owlCarousel({
+                                items: 1,
+                                loop: true,
+                                autoplay: true,
+                                dots: true,
+                                nav: false,
+                                smartSpeed: 1000,
+                            });
+                        }
+                    });
+                })
+        },
         getAIRecommendations() {
             axios.get('/api/personalized-recommendations')
                 .then(res => {
@@ -355,6 +382,7 @@ export default {
         }
     },
     mounted() {
+        this.getBanner();
         this.getProductData();
         this.getSidebarData();
         this.getAIRecommendations();
