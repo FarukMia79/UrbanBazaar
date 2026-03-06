@@ -60,7 +60,8 @@
                                             class="fa-solid fa-thumbs-down"></i></button>
                                     <button class="btn btn-purple-icon btn-sm me-2"><i
                                             class="fa-solid fa-edit"></i></button>
-                                    <button class="btn btn-coral-icon btn-sm"><i class="fa-solid fa-trash"></i></button>
+                                    <button @click="deleteBanner(banner.id)" class="btn btn-coral-icon btn-sm"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -105,6 +106,30 @@ export default {
                 .then((res) => {
                     this.banners = res.data.banners;
                 });
+        },
+        deleteBanner(bannerId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete('/api/banner/' + bannerId)
+                        .then((res) => {
+                            Notification.success();
+                            this.banners = this.banners.filter(banner => {
+                                return banner.id != bannerId;
+                            });
+                        }).catch((error) => {
+                            Notification.error();
+                            this.$router.push({ name: 'BannerIndex' });
+                        });
+                }
+            });
         }
     }
 }

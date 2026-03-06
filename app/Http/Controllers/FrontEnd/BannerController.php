@@ -82,7 +82,7 @@ class BannerController extends Controller
             $manager = new ImageManager(new Driver());
             $image = $manager->read($file);
             $image->cover(1060, 395);
-            $image->save($uploadPath . $imageName); 
+            $image->save($uploadPath . $imageName);
             $banner->image = 'uploads/banner/' . $imageName;
         }
 
@@ -120,7 +120,11 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $banner = Banner::findOrFail($id);
+        if (file_exists($banner->image)) {
+            unlink($banner->image);
+        }
+        $banner->delete();
     }
     public function bannerCatDelete($id)
     {
