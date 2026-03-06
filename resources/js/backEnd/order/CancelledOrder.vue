@@ -74,10 +74,16 @@
                                         <p><label>Product:</label> {{ item.product.name }}</p>
                                         <p><label>Qty:</label> {{ item.qty }}</p>
                                         <p><label>Size:</label>{{ item.size || 'N/A' }}</p>
-                                        <p><label>Color:</label>{{ item.color || 'N/A' }}</p>
+                                        <p>
+                                            <label>Color:</label>
+                                            <span v-if="item.color && item.color.includes('uploads/')">
+                                            <img :src="'/' + item.color" style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;">
+                                            </span>
+                                            <span v-else>{{ item.color || 'N/A' }}</span>
+                                        </p>
                                         <p><label>Price:</label> ৳{{ item.product.discount_price || 'N/A' }}</p>
                                     </div>
-                                    <img :src="'/' + item.product.image" class="img-thumbnail" style="width: 100px; height: 100px;">
+                                    <img :src="'/' + (item.color ? item.color : item.product.image)" class="img-thumbnail" style="width: 100px; height: 100px;">
                                 </div>
                             </td>
                             <td class="text-center">

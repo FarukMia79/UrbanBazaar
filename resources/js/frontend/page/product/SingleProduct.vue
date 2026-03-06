@@ -96,34 +96,30 @@
                                                         </p>
                                                     </div>
                                                     <form name="formName">
-                                                        <div class="pro-color" style="width: 100%" v-if="
-                                                            product.colors &&
-                                                            product.colors
-                                                                .length > 0
-                                                        ">
+                                                        <div class="pro-color" style="width: 100%"
+                                                            v-if="product.colors && product.colors.length > 0">
                                                             <div class="color_inner">
-                                                                <p>Color -</p>
+                                                                <p class="fw-bold mb-2">Select Color/Style -</p>
                                                                 <div class="size-container">
-                                                                    <div class="selector">
+                                                                    <div class="selector d-flex flex-wrap gap-2">
                                                                         <div class="selector-item"
-                                                                            v-for="color in product.colors" :key="color.id
-                                                                                ">
-                                                                            <input type="radio" :id="'fc-option' +
-                                                                                color.id
-                                                                                " :value="color.name
-                                                                                    " v-model="selectedColor
-                                                                                        " name="product_color"
-                                                                                class="selector-item_radio" />
-                                                                            <label :for="'fc-option' +
-                                                                                color.id
-                                                                                " :style="{
-                                                                                    backgroundColor:
-                                                                                        color.color_code,
-                                                                                }" class="selector-item_label">
-                                                                                <span>
-                                                                                    <img :src="`/frontEnd/images/check-icon.svg`"
-                                                                                        alt="Checked Icon" />
-                                                                                </span>
+                                                                            v-for="(colorPath, index) in product.colors"
+                                                                            :key="index">
+                                                                            <input type="radio" :id="'variant-' + index"
+                                                                                :value="colorPath"
+                                                                                v-model="selectedColor"
+                                                                                name="product_color"
+                                                                                class="selector-item_radio d-none"
+                                                                                required />
+                                                                            <label :for="'variant-' + index"
+                                                                                class="variant-img-label">
+                                                                                <img :src="'/' + colorPath"
+                                                                                    class="img-thumbnail variant-img" />
+
+                                                                                <div class="selected-check"
+                                                                                    v-if="selectedColor === colorPath">
+                                                                                    <i class="fas fa-check-circle"></i>
+                                                                                </div>
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -529,37 +525,35 @@ export default {
         },
 
         addToCart() {
-
             if (!AppStorage.getToken()) {
                 Notification.error("Please login first to add items to cart!");
                 this.$router.push({ name: "UserLogin" });
                 return false;
             }
 
-            if (this.product.colors.length > 0 && !this.selectedColor) {
-                Notification.error("Please select a color!");
+            if (this.product.colors && this.product.colors.length > 0 && !this.selectedColor) {
+                Notification.error("Please select a specific style/image!");
                 return false;
             }
-            if (this.product.sizes.length > 0 && !this.selectedSize) {
+            if (this.product.sizes && this.product.sizes.length > 0 && !this.selectedSize) {
                 Notification.error("Please select a size!");
                 return false;
             }
+
+
+            let cartImage = this.selectedColor ? this.selectedColor : this.product.image;
 
             let cartData = {
                 product_id: this.product.id,
                 name: this.product.name,
                 qty: this.qty,
-                price: this.product.discount_price
-                    ? this.product.discount_price
-                    : this.product.price,
+                price: this.product.discount_price ? this.product.discount_price : this.product.price,
                 color: this.selectedColor,
                 size: this.selectedSize,
-                image: this.product.image,
+                image: cartImage,
             };
 
-
-            axios
-                .post("/api/cart", cartData)
+            axios.post("/api/cart", cartData)
                 .then((res) => {
                     Notification.success("Added to cart successfully!");
                     window.dispatchEvent(new CustomEvent('cart-updated'));
@@ -569,9 +563,10 @@ export default {
                         AppStorage.clear();
                         this.$router.push({ name: "UserLogin" });
                     }
+                    console.error("Cart storage error:", err);
                 });
 
-            return true
+            return true;
         },
 
 
@@ -689,5 +684,48 @@ export default {
     white-space: pre-wrap !important;
     line-height: 1.6;
     color: #444;
+}
+
+.pro-color {
+    margin-bottom: 25px !important;
+}
+
+.variant-img-label {
+    position: relative;
+    cursor: pointer;
+    display: block;
+}
+
+.variant-img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 2px;
+    transition: 0.3s ease-in-out;
+}
+
+/* মাউস নিলে বর্ডার কালার চেঞ্জ হবে */
+.variant-img-label:hover .variant-img {
+    border-color: #3f0051;
+}
+
+/* সিলেক্ট হওয়া ইমেজের বর্ডার */
+.selector-item_radio:checked+.variant-img-label .variant-img {
+    border-color: #3f0051;
+    background-color: #f3e5f5;
+}
+
+/* চেক আইকন স্টাইল */
+.selected-check {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: white;
+    border-radius: 50%;
+    color: #3f0051;
+    font-size: 18px;
+    line-height: 1;
 }
 </style>

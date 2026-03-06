@@ -2,9 +2,9 @@
     <div class="container-fluid mt-4 px-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-dark mb-0">Product Create</h4>
-            <router-link :to="{ name: 'ProductManage' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white"><i
-                    class="fa-solid fa-database me-1"></i>Product
-                Manage</router-link>
+            <router-link :to="{ name: 'ProductManage' }" class="btn btn-pink rounded-pill px-3 shadow-sm text-white">
+                <i class="fa-solid fa-database me-1"></i>Product Manage
+            </router-link>
         </div>
 
         <div class="card border-0 shadow-custom rounded-4 p-4">
@@ -13,7 +13,7 @@
                     <!-- Product Name & Categories -->
                     <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted">Product Name *</label>
-                        <input type="text" class="form-control" placeholder="" v-model="form.name" />
+                        <input type="text" class="form-control" v-model="form.name" />
                         <small class="text-danger" v-if="errors.name">{{ errors.name[0] }}</small>
                     </div>
                     <div class="col-md-6">
@@ -24,7 +24,6 @@
                         </select>
                     </div>
 
-                    <!-- Sub & Child Categories -->
                     <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted">SubCategories (Optional)</label>
                         <select class="form-select" v-model="form.subcategory_id">
@@ -33,7 +32,6 @@
                         </select>
                     </div>
 
-                    <!-- Brands, Purchase Price, Old Price -->
                     <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted">Brands</label>
                         <select class="form-select" v-model="form.brand_id">
@@ -41,121 +39,87 @@
                             <option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.name }}</option>
                         </select>
                     </div>
+
+                    <!-- Prices & Stock -->
                     <div class="col-md-4">
                         <label class="form-label fw-semibold text-muted">Price *</label>
                         <input type="text" class="form-control" v-model="form.price" />
                     </div>
-
-                    <!-- New Price, Stock, Image -->
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold text-muted">discount_price *</label>
+                        <label class="form-label fw-semibold text-muted">Discount Price</label>
                         <input type="text" class="form-control" v-model="form.discount_price" />
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-semibold text-muted">Stock *</label>
                         <input type="text" class="form-control" v-model="form.stock_quantity" />
                     </div>
+
+                    <!-- Main Image -->
                     <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted">Image *</label>
-                        <div class="mb-2">
-                            <div class="input-group">
-                                <input type="file" class="form-control" @change="onMainImageChange" />
+                        <label class="form-label fw-semibold text-muted">Main Image *</label>
+                        <input type="file" class="form-control" @change="onMainImageChange" />
+                    </div>
+                    <div class="col-md-6">
+                        <img :src="imagePreview" v-if="imagePreview"
+                            style="height: 80px; width: 80px; object-fit: cover;" class="rounded border">
+                    </div>
+
+                    <!-- Multi Image Gallery & Color Variant Selection -->
+                    <div class="col-md-12 border-top pt-3">
+                        <label class="form-label fw-bold text-dark">Gallery Images & Color Selection *</label>
+                        <p class="small text-muted">Upload gallery images and tick the checkbox below each image if it
+                            represents a different color/variant.</p>
+                        <input type="file" class="form-control mb-3" @change="onMultiImageChange" multiple />
+
+                        <div class="row g-2" v-if="multiImagePreviews.length">
+                            <div v-for="(img, index) in multiImagePreviews" :key="index" class="col-auto text-center">
+                                <div class="position-relative border rounded p-1 bg-white shadow-sm">
+                                    <img :src="img" style="width: 100px; height: 100px; object-fit: cover;"
+                                        class="rounded">
+                                    <div class="mt-2 p-1 bg-light rounded">
+                                        <input type="checkbox" :value="index" v-model="form.selected_variant_indices"
+                                            class="form-check-input">
+                                        <label class="small ms-1 fw-bold">As Color</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <img :src="imagePreview" style="height: 100px; width: 100px; object-fit: cover;"
-                            class="rounded border shadow-sm">
-                    </div>
 
-                    <!-- Multi Image Gallery -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted">Gallery Images (Multiple) *</label>
-                        <div class="mb-2">
-                            <div class="input-group">
-                                <!-- এখানে multiple অ্যাট্রিবিউট যোগ করা হয়েছে -->
-                                <input type="file" class="form-control" @change="onMultiImageChange" multiple />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Gallery Preview -->
-                    <div class="col-6 mt-2">
-                        <p class="small text-muted mb-1">Gallery Preview ({{ multiImagePreviews.length }} images):</p>
-                        <div class="d-flex gap-2 flex-wrap">
-                            <img v-for="(img, index) in multiImagePreviews" :key="index" :src="img"
-                                style="width: 60px; height: 60px; object-fit: cover;" class="rounded border shadow-sm">
-                        </div>
-                    </div>
-
-                    <!-- SKU, Unit, Video -->
+                    <!-- SKU & Video -->
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold text-muted">Product Code (SKU) *</label>
+                        <label class="form-label fw-semibold text-muted">Product Code (SKU)</label>
                         <input type="text" class="form-control" v-model="form.product_code" />
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold text-muted">Product Unit (Optional)</label>
+                        <label class="form-label fw-semibold text-muted">Unit</label>
                         <input type="text" class="form-control" v-model="form.unit" />
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold text-muted">Product Video (Optional)</label>
+                        <label class="form-label fw-semibold text-muted">Video URL</label>
                         <input type="text" class="form-control" v-model="form.video_url" />
                     </div>
 
-                    <!-- Size -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted">Select Sizes (Option) *</label>
-                        <div class="d-flex flex-wrap gap-3 border p-3 rounded">
+                    <!-- Sizes Only (Color is now handled by images) -->
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold text-muted">Select Sizes</label>
+                        <div class="d-flex flex-wrap gap-3 border p-3 rounded bg-light">
                             <div v-for="size in sizes" :key="size.id" class="form-check">
                                 <input class="form-check-input" type="checkbox" :value="size.id" v-model="form.size_ids"
                                     :id="'size' + size.id">
-                                <label class="form-check-label cursor-pointer" :for="'size' + size.id">
-                                    {{ size.name }}
-                                </label>
+                                <label class="form-check-label" :for="'size' + size.id">{{ size.name }}</label>
                             </div>
                         </div>
-                        <small class="text-muted" v-if="form.size_ids.length > 0">
-                            Selected: {{ form.size_ids.length }} sizes
-                        </small>
-                    </div>
-                    <!-- Color -->
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold text-muted">Select Colors *</label>
-                        <div class="d-flex flex-wrap gap-3 border p-3 rounded">
-                            <div v-for="color in colors" :key="color.id" class="form-check">
-                                <input class="form-check-input" type="checkbox" :value="color.id"
-                                    v-model="form.color_ids" :id="'color' + color.id">
-                                <label class="form-check-label" :for="'color' + color.id">
-                                    {{ color.name }}
-                                </label>
-                            </div>
-                        </div>
-                        <small class="text-muted" v-if="form.color_ids.length > 0">
-                            Selected: {{ form.color_ids.length }} colors
-                        </small>
                     </div>
 
-                    <!-- Description (Text Editor Area) -->
+                    <!-- Description -->
                     <div class="col-12">
                         <label class="form-label fw-semibold text-muted">Description *</label>
-                        <div class="editor-container border rounded">
-                            <div class="editor-toolbar bg-light border-bottom p-2 d-flex gap-2">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <i class="fa fa-bold"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <i class="fa fa-italic"></i>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <i class="fa fa-list"></i>
-                                </button>
-                            </div>
-                            <textarea class="form-control border-0" rows="4" placeholder="Enter Your Text Here"
-                                v-model="form.description"></textarea>
-                        </div>
+                        <textarea class="form-control" rows="6" v-model="form.description"
+                            placeholder="Enter product details..."></textarea>
                     </div>
 
-                    <!-- Status & Hot Deals Switches -->
+                    <!-- Status -->
                     <div class="col-md-2">
                         <label class="form-label fw-semibold text-muted d-block">Status</label>
                         <div class="form-check form-switch custom-switch">
@@ -170,17 +134,16 @@
                     </div>
                 </div>
 
-                <!-- Submit Button -->
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-teal px-4 text-white">
-                        Submit
-                    </button>
+                    <button type="submit" class="btn btn-teal px-5 text-white fw-bold">Create Product</button>
                 </div>
             </form>
         </div>
     </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -197,16 +160,15 @@ export default {
                 product_code: '',
                 unit: '',
                 video_url: '',
-                color_ids: [],
                 size_ids: [],
-                description: '',
+                description: '', 
                 status: true,
                 hot_deals: false,
+                selected_variant_indices: [],
             },
             categories: [],
             subcategories: [],
             brands: [],
-            colors: [],
             sizes: [],
             imagePreview: null,
             multiImagePreviews: [],
@@ -217,34 +179,30 @@ export default {
         loadInitialData() {
             axios.get('/api/category').then(res => this.categories = res.data);
             axios.get('/api/brand').then(res => this.brands = res.data);
-            axios.get('/api/color').then(res => this.colors = res.data);
             axios.get('/api/size').then(res => this.sizes = res.data);
         },
-
         getSubCategories() {
             if (this.form.category_id) {
                 axios.get('/api/get-subcategories/' + this.form.category_id)
                     .then(res => this.subcategories = res.data);
             }
         },
-
         onMainImageChange(e) {
             let file = e.target.files[0];
             this.form.image = file;
             this.imagePreview = URL.createObjectURL(file);
         },
-
         onMultiImageChange(e) {
             let files = e.target.files;
             this.form.multi_images = Array.from(files);
             this.multiImagePreviews = this.form.multi_images.map(file => URL.createObjectURL(file));
+            this.form.selected_variant_indices = [];
         },
-
         submitProduct() {
             let data = new FormData();
 
             Object.keys(this.form).forEach(key => {
-                if (key !== 'multi_images' && key !== 'image' && key !== 'color_ids' && key !== 'size_ids') {
+                if (!['multi_images', 'image', 'selected_variant_indices', 'size_ids'].includes(key)) {
                     data.append(key, this.form[key] || '');
                 }
             });
@@ -252,9 +210,8 @@ export default {
             if (this.form.image) data.append('image', this.form.image);
             data.append('status', this.form.status ? 1 : 0);
             data.append('hot_deals', this.form.hot_deals ? 1 : 0);
-
-            data.append('color_ids', this.form.color_ids.join(','));
             data.append('size_ids', this.form.size_ids.join(','));
+            data.append('variant_indices', this.form.selected_variant_indices.join(','));
 
             this.form.multi_images.forEach(file => {
                 data.append('multi_images[]', file);
@@ -266,10 +223,8 @@ export default {
                     this.$router.push({ name: 'ProductManage' });
                 })
                 .catch(err => {
-                    if (err.response && err.response.status === 422) {
+                    if (err.response.status === 422) {
                         this.errors = err.response.data.errors;
-                    } else {
-                        console.log(err.response);
                     }
                 });
         }

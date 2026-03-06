@@ -105,7 +105,9 @@
                                             <div class="cshort-summary">
                                                 <ul v-for="item in cartItems" :key="item.id">
                                                     <li>
-                                                        <a href="#"><img :src="'/' + item.product.image" alt="" /></a>
+                                                        <a href="#"><img
+                                                                :src="'/' + (item.color ? item.color : item.product.image)"
+                                                                alt="" /></a>
                                                     </li>
                                                     <li><a href="#">{{ item.product.name.substring(0, 20) }}...</a></li>
                                                     <li>Qty: {{ item.qty }}</li>
@@ -321,7 +323,9 @@ export default {
             }
         },
         calculateTotal() {
-            this.cartTotal = this.cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            this.cartTotal = this.cartItems.reduce((acc, item) => {
+                return acc + (parseFloat(item.price) * parseInt(item.qty));
+            }, 0);
         },
         removeCartItem(id) {
             axios.delete('/api/cart/' + id)

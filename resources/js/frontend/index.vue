@@ -231,7 +231,7 @@
                                         <div class="sale-badge-box">
                                             <span class="sale-badge-text">
                                                 <p>{{ calculateDiscount(personalized.price, personalized.discount_price)
-                                                    }}%</p>
+                                                }}%</p>
                                                 OFF
                                             </span>
                                         </div>
@@ -386,18 +386,6 @@ export default {
         this.getProductData();
         this.getSidebarData();
         this.getAIRecommendations();
-
-        setTimeout(() => {
-            if (typeof window.$ !== "undefined") {
-                window.$(".main_slider").owlCarousel({
-                    items: 1,
-                    loop: true,
-                    autoplay: true,
-                    dots: true,
-                    nav: false
-                });
-            }
-        }, 500);
     },
 };
 </script>

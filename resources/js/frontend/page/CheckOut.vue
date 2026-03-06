@@ -305,7 +305,7 @@
                                                 
                                                 <td class="text-start">
                                                     <img
-                                                        :src="'/' + item.product.image"
+                                                        :src="'/' + (item.color ? item.color : item.product.image)"
                                                         alt=""
                                                         style="width: 30px; height: 30px; object-fit: cover; border-radius: 8px;"
                                                     />
