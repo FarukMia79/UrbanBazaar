@@ -48,7 +48,7 @@
                             <td class="text-muted">{{ index + 1 }}</td>
                             <td class="text-muted">{{ banner.category ? banner.category.name : 'N/A' }}</td>
                             <td class="text-muted"><img :src="'/' + banner.image" alt="Banner-Image"
-                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                                    style="width: 150px; height: 50px; object-fit: cover; border-radius: 8px;">
                             </td>
                             <td>
                                 <span class="badge-active" v-if="banner.status == 1">Active</span>
@@ -58,8 +58,9 @@
                                 <div class="d-flex justify-content-center gap-1">
                                     <button class="btn btn-gray-icon btn-sm me-2"><i
                                             class="fa-solid fa-thumbs-down"></i></button>
-                                    <button class="btn btn-purple-icon btn-sm me-2"><i
-                                            class="fa-solid fa-edit"></i></button>
+                                    <router-link :to="{ name: 'EditBanner', params: { id: banner.id } }"
+                                        class="btn btn-purple-icon btn-sm me-2"><i
+                                            class="fa-solid fa-edit"></i></router-link>
                                     <button @click="deleteBanner(banner.id)" class="btn btn-coral-icon btn-sm"><i
                                             class="fa-solid fa-trash"></i></button>
                                 </div>

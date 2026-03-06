@@ -93,10 +93,15 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function showBannerCat($id)
     {
         $bannerCategory = BannerCategory::findOrFail($id);
-        return response()->json($bannerCategory);
+        return response()->json(['bannerCategory' => $bannerCategory]);
+    }
+    public function show($id)
+    {
+        $banner = Banner::with('category')->findOrFail($id);
+        return response()->json(['banner' => $banner]);
     }
 
     /**
@@ -110,9 +115,39 @@ class BannerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'category_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp',
+        ]);
+
+        $banner = Banner::findOrFail($id);
+        $banner->category_id = $request->category_id;
+        $banner->status = (int) $request->status;
+
+        if ($request->hasFile('image')) {
+
+            if ($banner->image && file_exists($banner->image)) {
+                unlink(public_path($banner->image));
+            }
+
+            $file = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $uploadPath = public_path('uploads/banner/');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+            $image->cover(1060, 395);
+            $image->save($uploadPath . $imageName);
+            $banner->image = 'uploads/banner/' . $imageName;
+        }
+        $banner->save();
+        return response()->json(['message' => 'Banner updated successfully!']);
     }
 
     /**

@@ -38,6 +38,7 @@ import CreateBannerCategory from '../backEnd/setting/Banner/CreateBannerCategory
 import EditBannerCategory from '../backEnd/setting/Banner/EditBannerCategory.vue';
 import BannerIndex from '../backEnd/setting/Banner/BannerIndex.vue';
 import CreateBanner from '../backEnd/setting/Banner/CreateBanner.vue';
+import EditBanner from '../backEnd/setting/Banner/EditBanner.vue';
 
 export default [
     {
@@ -82,6 +83,7 @@ export default [
             { path: 'banner/category-edit/:id', name: 'EditBannerCategory', component: EditBannerCategory},
             { path: 'banner/manage', name: 'BannerIndex', component: BannerIndex },
             { path: 'banner/create', name: 'CreateBanner', component: CreateBanner },
+            { path: 'banner/update/:id', name: 'EditBanner', component: EditBanner },
         ],
     },
 

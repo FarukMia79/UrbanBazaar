@@ -40,6 +40,7 @@ Route::get('/color/{id}', [ColorController::class, 'show']);
 
 Route::get('/banner', [BannerController::class, 'index']);
 Route::get('/banner/{id}', [BannerController::class, 'show']);
+Route::get('/banner/showBannerCat/{id}', [BannerController::class, 'showBannerCat']);
 
 
 Route::get('/product', [ProductController::class, 'index']);

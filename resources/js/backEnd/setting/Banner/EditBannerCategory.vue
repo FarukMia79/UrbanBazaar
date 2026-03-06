@@ -55,10 +55,10 @@ export default {
     },
     methods: {
         getBannercategory() {
-            axios.get(`/api/banner/${this.id}`)
+            axios.get(`/api/banner/showBannerCat/${this.id}`)
                 .then((res) => {
-                    this.form.name = res.data.name;
-                    this.form.status = res.data.status == 1;
+                    this.form.name = res.data.bannerCategory.name;
+                    this.form.status = res.data.bannerCategory.status == 1;
                 })
         },
         updateBranner() {
