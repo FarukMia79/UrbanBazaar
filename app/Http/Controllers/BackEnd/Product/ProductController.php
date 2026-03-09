@@ -139,7 +139,7 @@ class ProductController extends Controller
             ->select('product_id', DB::raw('SUM(weight) as total_weight'))
             ->groupBy('product_id')
             ->orderBy('total_weight', 'desc')
-            ->limit(10)
+            ->limit(40)
             ->pluck('product_id');
 
         $recommendations = Product::whereIn('id', $recommendedProductIds)->where('status', 1)->get();

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\driver;
+use App\Models\BackEnd\Product;
+use App\Models\BackEnd\UserInteraction;
 
 class SubCategoryController extends Controller
 {
@@ -81,6 +83,25 @@ class SubCategoryController extends Controller
     public function show($id)
     {
         $subcategory = SubCategory::findOrFail($id);
+
+        $userId = auth('sanctum')->id();
+
+        $productQuery = Product::where('subcategory_id', $id)->where('status', 1);
+
+        if ($userId) {
+            $interactedIds = UserInteraction::where('user_id', $userId)
+                ->orderBy('weight', 'desc')
+                ->pluck('product_id')
+                ->toArray();
+
+            if (!empty($interactedIds)) {
+                $idsOrder = implode(',', $interactedIds);
+                $productQuery->orderByRaw("FIELD(id, $idsOrder) DESC");
+            }
+        }
+
+        $subcategory->products = $productQuery->latest()->get();
+
         return response()->json($subcategory);
     }
 

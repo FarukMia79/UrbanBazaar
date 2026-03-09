@@ -8,6 +8,9 @@ use App\Models\BackEnd\Category;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Models\BackEnd\UserInteraction;
+use App\Models\BackEnd\Product;
+
 
 
 class CategoryController extends Controller
@@ -76,7 +79,27 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        return Category::with('subcategories')->findOrFail($id);
+        $category = Category::with('subcategories')->findOrFail($id);
+
+        $userId = auth('sanctum')->id();
+
+        $productQuery = Product::where('category_id', $id)->where('status', 1);
+
+        if ($userId) {
+            $interactedIds = UserInteraction::where('user_id', $userId)
+                ->orderBy('weight', 'desc')
+                ->pluck('product_id')
+                ->toArray();
+
+            if (!empty($interactedIds)) {
+                $idsOrder = implode(',', $interactedIds);
+                $productQuery->orderByRaw("FIELD(id, $idsOrder) DESC");
+            }
+        }
+
+        $category->products = $productQuery->latest()->get();
+
+        return response()->json($category);
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\BackEnd\Product;
 use App\Models\BackEnd\UserInteraction;
+use Illuminate\Support\Facades\Http;
 
 
 
@@ -16,6 +17,41 @@ class HomeController extends Controller
     {
         $userId = auth('sanctum')->id();
 
+        // ১. যদি ইউজার লগইন না থাকে, তবে লেটেস্ট প্রোডাক্ট দেখাবে
+        if (!$userId) {
+            return response()->json(Product::where('status', 1)->latest()->limit(10)->get());
+        }
+
+        try {
+            /** 
+             * ২. পাইথন এআই সার্ভিস কল করা (FastAPI)
+             * আমরা পাইথন সার্ভিসটি পোর্ট ৮০৮০ বা ৮০০১ এ রান করব 
+             */
+            $response = Http::timeout(2)->get("http://127.0.0.1:8001/recommend/{$userId}");
+
+            if ($response->successful()) {
+                $recommendedProductIds = $response->json()['recommendations'];
+
+                if (!empty($recommendedProductIds)) {
+                    // পাইথন থেকে পাওয়া আইডি অনুযায়ী প্রোডাক্ট আনা
+                    $recommendations = Product::whereIn('id', $recommendedProductIds)
+                        ->where('status', 1)
+                        ->get()
+                        ->sortBy(function ($product) use ($recommendedProductIds) {
+                            return array_search($product->id, $recommendedProductIds);
+                        })->values();
+
+                    return response()->json($recommendations);
+                }
+            }
+        } catch (\Exception $e) {
+            // পাইথন সার্ভার বন্ধ থাকলে বা এরর হলে নিচে লারাভেল ব্যাকআপ লজিক কাজ করবে
+        }
+
+        /** 
+         * ৩. ব্যাকআপ লজিক (আপনার আগের লারাভেল কোড)
+         * পাইথন সার্ভিস কাজ না করলে এটি ইউজারের সিমিলার ইউজারদের ডাটা দেখাবে
+         */
         $userProductIds = UserInteraction::where('user_id', $userId)
             ->pluck('product_id')
             ->toArray();
@@ -25,7 +61,7 @@ class HomeController extends Controller
             ->pluck('user_id')
             ->unique();
 
-        $recommendedProductIds = UserInteraction::whereIn('user_id', $similarUserIds)
+        $backupProductIds = UserInteraction::whereIn('user_id', $similarUserIds)
             ->whereNotIn('product_id', $userProductIds)
             ->select('product_id', DB::raw('SUM(weight) as total_score'))
             ->groupBy('product_id')
@@ -33,10 +69,10 @@ class HomeController extends Controller
             ->limit(10)
             ->pluck('product_id');
 
-        if ($recommendedProductIds->isEmpty()) {
+        if ($backupProductIds->isEmpty()) {
             $recommendations = Product::where('status', 1)->orderBy('id', 'desc')->limit(10)->get();
         } else {
-            $recommendations = Product::whereIn('id', $recommendedProductIds)->where('status', 1)->get();
+            $recommendations = Product::whereIn('id', $backupProductIds)->where('status', 1)->get();
         }
 
         return response()->json($recommendations);

@@ -155,7 +155,7 @@
                                                             v-if="category.subcategories && category.subcategories.length > 0">
                                                             <li v-for="sub in category.subcategories" :key="sub.id">
                                                                 <router-link v-if="sub.id"
-                                                                    :to="{ name: 'CategoryPage', params: { id: sub.id } }">
+                                                                    :to="{ name: 'SubCategoryPage', params: { id: sub.id } }">
                                                                     {{ sub.name }}
                                                                     <i class="fa-solid fa-chevron-right"></i>
                                                                 </router-link>

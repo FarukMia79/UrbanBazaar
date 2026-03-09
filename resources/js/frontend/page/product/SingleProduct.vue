@@ -610,6 +610,7 @@ export default {
     },
     mounted() {
         this.getProductData();
+        window.scrollTo(0, 0);
     },
     watch: {
         "$route.params.id": function (newId) {
@@ -706,18 +707,15 @@ export default {
     transition: 0.3s ease-in-out;
 }
 
-/* মাউস নিলে বর্ডার কালার চেঞ্জ হবে */
 .variant-img-label:hover .variant-img {
     border-color: #3f0051;
 }
 
-/* সিলেক্ট হওয়া ইমেজের বর্ডার */
 .selector-item_radio:checked+.variant-img-label .variant-img {
     border-color: #3f0051;
     background-color: #f3e5f5;
 }
 
-/* চেক আইকন স্টাইল */
 .selected-check {
     position: absolute;
     top: -5px;
