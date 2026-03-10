@@ -17,6 +17,7 @@ use App\Http\Controllers\BackEnd\Order\OrderItemController;
 use App\Http\Controllers\FrontEnd\HomeController;
 use App\Http\Controllers\FrontEnd\ReviewController;
 use App\Http\Controllers\FrontEnd\BannerController;
+use App\Http\Controllers\BackEnd\User\UserController;
 use GuzzleHttp\Middleware;
 
 Route::get('/category', [CategoryController::class, 'index']);
@@ -61,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::resource('/user/admin', UserController::class);
     Route::post('/user/logout', [UserAuthController::class, 'logout']);
     Route::resource('/cart', CartController::class);
     Route::resource('/order', OrderController::class);
