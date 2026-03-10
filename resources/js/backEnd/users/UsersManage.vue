@@ -118,7 +118,7 @@ export default {
         getUserData() {
             axios.get('/api/user/admin')
                 .then((res) => {
-                    this.users = res.data;
+                    this.users = res.data.user;
                 }).catch((error) => {
                     console.error("API Error:", error);
                 });

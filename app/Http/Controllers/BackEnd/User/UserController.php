@@ -14,7 +14,8 @@ class UserController extends Controller
     public function index()
     {
         $user = User::where('role', 'admin')->get();
-        return response()->json($user);
+        $customer = User::where('role', 'user')->get();
+        return response()->json(['user' => $user, 'customer' => $customer], 200);
     }
 
     /**
