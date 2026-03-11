@@ -124,7 +124,7 @@ export default {
         getGeneraleSetting() {
             axios.get('/api/general/setting')
                 .then((res) => {
-                    this.generalSettings = res.data;
+                    this.generalSettings = res.data.generalSetting;
                     console.log(res.data);
                 })
         }

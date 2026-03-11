@@ -6,9 +6,9 @@
                     <div class="row">
                         <div class="col-sm-4 mb-3 mb-sm-0">
                             <div class="footer-about">
-                                <a href="index.html">
-                                    <img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`" alt="" />
-                                </a>
+                                <router-link :to="{ name: 'index' }">
+                                    <img v-if="logo.white_logo" :src="'/' + logo.white_logo" alt="" />
+                                </router-link>
                                 <p>Hatimara , Kashimpur , Gazipur</p>
                                 <a href="tel:+8801790647979" class="footer-hotlint btn-call">
                                     <i class="fas fa-phone-alt"></i>
@@ -131,12 +131,28 @@
 
 <script>
 export default {
+    data() {
+        return {
+            logo: {
+                white: null
+            }
+        }
+    },
+    created() {
+        this.getLogo();
+    },
     methods: {
         scrollToTop() {
             window.scrollTo({
                 top: 0,
-                behavior: "smooth", // এটি দিলে পেজটি স্মুথভাবে উপরে যাবে
+                behavior: "smooth",
             });
+        },
+        getLogo() {
+            axios.get('/api/general/setting')
+                .then((res) => {
+                    this.logo = res.data.logo;
+                });
         },
     },
 };

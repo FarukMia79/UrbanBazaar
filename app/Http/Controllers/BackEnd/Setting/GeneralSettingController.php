@@ -15,8 +15,9 @@ class GeneralSettingController extends Controller
      */
     public function index()
     {
-        $generalSetting = GeneralSetting::get();
-        return response()->json($generalSetting);
+        $generalSetting = GeneralSetting::latest()->get();
+        $logo = GeneralSetting::first();
+        return response()->json(['generalSetting' => $generalSetting, 'logo' => $logo]);
     }
 
     /**

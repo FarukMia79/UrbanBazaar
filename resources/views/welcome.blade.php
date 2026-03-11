@@ -2,9 +2,18 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    @php
+        $general_settings = \App\Models\BackEnd\GeneralSetting::first();
+    @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $general_settings->site_name ?? 'Urbanbazaar' }}</title>
+
+    @if($general_settings && $general_settings->favicon)
+        <link rel="icon" type="image/x-icon" href="{{ asset($general_settings->favicon) }}">
+    @else
+        <link rel="icon" type="image/x-icon" href="{{ asset('frontEnd/img/favicon.png') }}">
+    @endif
 
     <!-- 1. GOOGLE FONTS ADDED HERE (For Roboto, Jost, Lato) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -2,7 +2,7 @@
     <div class="mobile-menu" :class="{ 'menu-active': isMenuOpen }">
         <div class="mobile-menu-logo">
             <div class="logo-image">
-                <img :src="`/uploads/category/1761399037-woman-bag.webp`" alt="" class="side_cat_img" />
+                <img v-if="logo.white_logo" :src="'/' + logo.white_logo" alt="Logo" class="side_cat_img" />
             </div>
             <div class="mobile-menu-close" @click="isMenuOpen = false">
                 <i class="fa fa-times"></i>
@@ -41,7 +41,7 @@
                     </a>
                 </div>
                 <div class="menu-logo">
-                    <router-link :to="{ name: 'index' }"><img :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`"
+                    <router-link :to="{ name: 'index' }"><img v-if="logo.white_logo" :src="'/' + logo.white_logo"
                             alt="" /></router-link>
                 </div>
                 <router-link :to="{ name: 'CheckOut' }">
@@ -73,9 +73,9 @@
                         <div class="col-sm-12">
                             <div class="logo-header">
                                 <div class="main-logo">
-                                    <router-link :to="{ name: 'index' }"><img
-                                            :src="`/uploads/settings/1761407468-jnsshopbd-(1).webp`"
-                                            alt="" /></router-link>
+                                    <router-link :to="{ name: 'index' }">
+                                        <img v-if="logo.white_logo" :src="'/' + logo.white_logo" alt="Logo" />
+                                    </router-link>
                                 </div>
                                 <div class="main-search">
                                     <form action="#">
@@ -149,7 +149,7 @@
                                                         <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
-                                                        }}<i v-if="category.subcategories && category.subcategories.length > 0"
+                                                            }}<i v-if="category.subcategories && category.subcategories.length > 0"
                                                                 class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu"
                                                             v-if="category.subcategories && category.subcategories.length > 0">
@@ -291,6 +291,10 @@ export default {
             isMenuOpen: false,
             openCategory: null,
             isLoggedIn: !!AppStorage.getToken(),
+            logo: {
+                white_logo: null,
+                dark_logo: null
+            }
         };
     },
     computed: {
@@ -304,6 +308,7 @@ export default {
     created() {
         this.getTopCategoryData();
         this.getCartData();
+        this.getLogo();
 
         // গ্লোবাল ইভেন্ট লিসেনার: অন্য পেজ থেকে কার্ট আপডেট হলে এটি অটো কল হবে
         window.addEventListener('cart-updated', () => {
@@ -311,6 +316,12 @@ export default {
         });
     },
     methods: {
+        getLogo() {
+            axios.get('/api/general/setting')
+                .then((res) => {
+                    this.logo = res.data.logo;
+                });
+        },
         getCartData() {
             if (this.isLoggedIn) {
                 axios.get('/api/cart')
