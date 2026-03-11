@@ -84,7 +84,7 @@
                                         <i class="fa-solid fa-eye"></i>
                                     </button>
                                     <button class="btn btn-pink-icon btn-sm me-2">
-                                        <i class="fa-solid fa-right-to-bracket"></i>
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
                             </td>

@@ -19,15 +19,9 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
-                        <input
-                            type="text"
-                            class="search-input rounded-0 border-end-0"
-                            placeholder="Search"
-                            style="width: 200px"
-                        />
-                        <button
-                            class="btn btn-search btn-sm rounded-0 text-white px-3"
-                        >
+                        <input type="text" class="search-input rounded-0 border-end-0" placeholder="Search"
+                            style="width: 200px" />
+                        <button class="btn btn-search btn-sm rounded-0 text-white px-3">
                             Search
                         </button>
                     </div>
@@ -40,109 +34,75 @@
                         <tr class="table-light text-muted">
                             <th width="80">
                                 SL
-                                <i
-                                    class="fa-solid fa-sort ms-1 small opacity-50"
-                                ></i>
+                                <i class="fa-solid fa-sort ms-1 small opacity-50"></i>
                             </th>
                             <th>
                                 Name
-                                <i
-                                    class="fa-solid fa-sort ms-1 small opacity-50"
-                                ></i>
+                                <i class="fa-solid fa-sort ms-1 small opacity-50"></i>
                             </th>
                             <th>
                                 White Logo
-                                <i
-                                    class="fa-solid fa-sort ms-1 small opacity-50"
-                                ></i>
+                                <i class="fa-solid fa-sort ms-1 small opacity-50"></i>
                             </th>
                             <th>
                                 Dark Logo
-                                <i
-                                    class="fa-solid fa-sort ms-1 small opacity-50"
-                                ></i>
+                                <i class="fa-solid fa-sort ms-1 small opacity-50"></i>
                             </th>
                             <th>
                                 Favicon
-                                <i
-                                    class="fa-solid fa-sort ms-1 small opacity-50"
-                                ></i>
+                                <i class="fa-solid fa-sort ms-1 small opacity-50"></i>
                             </th>
                             <th width="120">
                                 Status
-                                <i
-                                    class="fa-solid fa-sort ms-1 small opacity-50"
-                                ></i>
+                                <i class="fa-solid fa-sort ms-1 small opacity-50"></i>
                             </th>
                             <th width="120" class="text-center">
                                 Action
-                                <i
-                                    class="fa-solid fa-sort ms-1 small opacity-50"
-                                ></i>
+                                <i class="fa-solid fa-sort ms-1 small opacity-50"></i>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-muted">1</td>
-                            <td class="text-muted fw-bold">PHPX.SHOP</td>
+                        <tr v-for="(gs, index) in generalSettings" :key="gs.id">
+                            <td class="text-muted">{{ index + 1 }}</td>
+                            <td class="text-muted fw-bold">{{ gs.site_name }}</td>
                             <td>
-                                <img
-                                    src="https://via.placeholder.com/80x30"
-                                    alt="White Logo"
-                                    class="img-fluid logo-img"
-                                />
+                                <img :src="'/' + gs.white_logo" class="img-fluid logo-img" />
                             </td>
                             <td>
-                                <img
-                                    src="https://via.placeholder.com/80x30"
-                                    alt="Dark Logo"
-                                    class="img-fluid logo-img"
-                                />
+                                <img :src="'/' + gs.dark_logo" class="img-fluid logo-img" />
                             </td>
                             <td>
-                                <img
-                                    src="https://via.placeholder.com/30"
-                                    alt="Favicon"
-                                    class="img-fluid favicon-img"
-                                />
+                                <img :src="'/' + gs.favicon" />
                             </td>
-                            <td><span class="badge-active">Active</span></td>
+                            <td>
+                                <span v-if="gs.status == 1" class="badge-active">Active</span>
+                                <span v-else class="badge bg-danger text-white">Inactive</span>
+                            </td>
                             <td class="text-center">
-                                <button
-                                    class="btn btn-purple-icon btn-sm px-3"
-                                >
+                                <router-link :to="{ name: 'EditGeneralSetting', params: { id: gs.id } }"
+                                    class="btn btn-purple-icon btn-sm px-3">
                                     <i class="fa-solid fa-edit"></i>
-                                </button>
+                                </router-link>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div
-                class="d-flex justify-content-between align-items-center mt-1 flex-wrap gap-2 text-muted small"
-            >
+            <div class="d-flex justify-content-between align-items-center mt-1 flex-wrap gap-2 text-muted small">
                 <div>Showing 1 to 6 of 6 entries</div>
                 <nav>
                     <ul class="pagination pagination-sm mb-0">
                         <li class="page-item disabled">
-                            <a class="page-link border-0 text-muted" href="#"
-                                ><i class="fa-solid fa-chevron-left"></i
-                            ></a>
+                            <a class="page-link border-0 text-muted" href="#"><i
+                                    class="fa-solid fa-chevron-left"></i></a>
                         </li>
                         <li class="page-item">
-                            <a
-                                class="page-link border-0 rounded-circle active-page text-white ms-2"
-                                href="#"
-                                >1</a
-                            >
+                            <a class="page-link border-0 rounded-circle active-page text-white ms-2" href="#">1</a>
                         </li>
                         <li class="page-item">
-                            <a
-                                class="page-link border-0 text-muted ms-2"
-                                href="#"
-                                ><i class="fa-solid fa-chevron-right"></i
-                            ></a>
+                            <a class="page-link border-0 text-muted ms-2" href="#"><i
+                                    class="fa-solid fa-chevron-right"></i></a>
                         </li>
                     </ul>
                 </nav>
@@ -151,7 +111,25 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            generalSettings: [],
+        }
+    },
+    mounted() {
+        this.getGeneraleSetting()
+    },
+    methods: {
+        getGeneraleSetting() {
+            axios.get('/api/general/setting')
+                .then((res) => {
+                    this.generalSettings = res.data;
+                    console.log(res.data);
+                })
+        }
+    }
+};
 </script>
 <style scoped>
 .shadow-custom {
@@ -162,26 +140,31 @@ export default {};
     background-color: #f06292;
     border: none;
 }
+
 .btn-teal-solid {
     background-color: #00bfa5;
     color: white;
     border: none;
 }
+
 .btn-red-solid {
     background-color: #ef5350;
     color: white;
     border: none;
 }
+
 .btn-purple-solid {
     background-color: #6a1b9a;
     color: white;
     border: none;
 }
+
 .btn-orange-solid {
     background-color: #ffca28;
     color: white;
     border: none;
 }
+
 .btn-search {
     background-color: #00cae3;
     border: none;
@@ -192,26 +175,31 @@ export default {};
     background-color: #d81b60 !important;
     color: #fff !important;
 }
+
 .btn-teal-solid:hover,
 .btn-teal-solid:active {
     background-color: #00897b !important;
     color: #fff !important;
 }
+
 .btn-red-solid:hover,
 .btn-red-solid:active {
     background-color: #d32f2f !important;
     color: #fff !important;
 }
+
 .btn-purple-solid:hover,
 .btn-purple-solid:active {
     background-color: #4a148c !important;
     color: white !important;
 }
+
 .btn-orange-solid:hover,
 .btn-orange-solid:active {
     background-color: #f57c00 !important;
     color: white !important;
 }
+
 .btn-search:hover,
 .btn-search:active {
     background-color: #00acc1 !important;
@@ -243,18 +231,23 @@ export default {};
     justify-content: center;
 }
 
-.btn-purple-icon { 
-    background-color: #6f42c1; 
-    color: white; 
-    border: none; 
+.btn-purple-icon {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
 }
-.btn-purple-icon:hover { background-color: #5e35b1 !important; color: #fff !important; }
+
+.btn-purple-icon:hover {
+    background-color: #5e35b1 !important;
+    color: #fff !important;
+}
 
 .logo-img {
     max-height: 35px;
     width: auto;
     object-fit: contain;
 }
+
 .favicon-img {
     height: 30px;
     width: 30px;
@@ -278,6 +271,7 @@ export default {};
     background-color: #f8faff !important;
     border-bottom: 1px solid #eee;
 }
+
 .settings-table tbody td {
     padding: 12px 10px;
     font-size: 14px;

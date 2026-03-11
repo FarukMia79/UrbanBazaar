@@ -18,6 +18,7 @@ use App\Http\Controllers\FrontEnd\HomeController;
 use App\Http\Controllers\FrontEnd\ReviewController;
 use App\Http\Controllers\FrontEnd\BannerController;
 use App\Http\Controllers\BackEnd\User\UserController;
+use App\Http\Controllers\BackEnd\Setting\GeneralSettingController;
 use GuzzleHttp\Middleware;
 
 Route::get('/category', [CategoryController::class, 'index']);
@@ -43,6 +44,9 @@ Route::get('/banner', [BannerController::class, 'index']);
 Route::get('/banner/{id}', [BannerController::class, 'show']);
 Route::get('/banner/showBannerCat/{id}', [BannerController::class, 'showBannerCat']);
 
+
+Route::get('/general/setting', [GeneralSettingController::class, 'index']);
+Route::get('/general/setting/{id}', [GeneralSettingController::class, 'show']);
 
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
@@ -93,5 +97,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/banner-update/{id}', [BannerController::class, 'bannerUpdate']);
         Route::delete('/banner/bannerCatDelete/{id}', [BannerController::class, 'bannerCatDelete']);
         Route::resource('/banner', BannerController::class)->except(['index', 'show']);
+
+        Route::resource('/general/setting', GeneralSettingController::class)->except(['index', 'show']);
     });
 });
