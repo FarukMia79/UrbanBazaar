@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\BackEnd\Brand\BrandController;
 use App\Http\Controllers\BackEnd\Category\CategoryController;
 use App\Http\Controllers\BackEnd\Category\SubCategoryController;
+use App\Http\Controllers\BackEnd\Dashboard\DashboardController;
 use App\Http\Controllers\BackEnd\Product\ColorController;
 use App\Http\Controllers\BackEnd\Product\SizeController;
 use App\Http\Controllers\BackEnd\Product\ProductController;
@@ -103,5 +104,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::resource('/banner', BannerController::class)->except(['index', 'show']);
 
         Route::resource('/general/setting', GeneralSettingController::class)->except(['index', 'show']);
+
+        Route::resource('/dashboard', DashboardController::class);
     });
 });

@@ -41,61 +41,34 @@
                 <table class="table table-hover table-bordered align-middle coupon-table">
                     <thead class="table-light">
                         <tr>
+                            <th width="150">Actions</th>
                             <th width="150">Code</th>
                             <th width="150">Amount</th>
                             <th width="150">Type</th>
                             <th width="200">Expired Date</th>
                             <th width="200">Min Purchase</th>
                             <th width="150">Max Value</th>
-                            <th width="150">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Row 1 -->
                         <tr>
+                            <td>
+                                <div class="d-flex gap-2 fs-5">
+                                    <router-link :to="{ name: ''}" class="text-muted cursor-pointer me-2 action-edit">
+                                        <i class="fa-regular fa-edit"></i>
+                                    </router-link>
+                                    <a class="text-muted cursor-pointer action-trash">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
                             <td class="text-secondary">asdSF</td>
                             <td class="text-secondary">10.00</td>
                             <td class="text-secondary">Percent</td>
                             <td class="text-secondary">2025-11-27</td>
                             <td class="text-secondary">10.00</td>
                             <td class="text-secondary">40.00</td>
-                            <td>
-                                <div class="d-flex gap-1">
-                                    <button
-                                        class="btn btn-edit btn-xs text-white"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        class="btn btn-delete btn-xs text-white"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <!-- Row 2 -->
-                        <tr>
-                            <td class="text-secondary">S20</td>
-                            <td class="text-secondary">200.00</td>
-                            <td class="text-secondary">Fixed</td>
-                            <td class="text-secondary">2025-12-20</td>
-                            <td class="text-secondary">2.00</td>
-                            <td class="text-secondary">30.00</td>
-                            <td>
-                                <div class="d-flex gap-1">
-                                    <button
-                                        class="btn btn-edit btn-xs text-white"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        class="btn btn-delete btn-xs text-white"
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,26 +116,31 @@ export default {};
     background-color: #f06292;
     border: none;
 }
+
 .btn-teal-solid {
     background-color: #00bfa5;
     color: white;
     border: none;
 }
+
 .btn-red-solid {
     background-color: #ef5350;
     color: white;
     border: none;
 }
+
 .btn-purple-solid {
     background-color: #6a1b9a;
     color: white;
     border: none;
 }
+
 .btn-orange-solid {
     background-color: #ffca28;
     color: white;
     border: none;
 }
+
 .btn-search {
     background-color: #00cae3;
     border: none;
@@ -173,26 +151,31 @@ export default {};
     background-color: #d81b60 !important;
     color: #fff !important;
 }
+
 .btn-teal-solid:hover,
 .btn-teal-solid:active {
     background-color: #00897b !important;
     color: #fff !important;
 }
+
 .btn-red-solid:hover,
 .btn-red-solid:active {
     background-color: #d32f2f !important;
     color: #fff !important;
 }
+
 .btn-purple-solid:hover,
 .btn-purple-solid:active {
     background-color: #4a148c !important;
     color: white !important;
 }
+
 .btn-orange-solid:hover,
 .btn-orange-solid:active {
     background-color: #f57c00 !important;
     color: white !important;
 }
+
 .btn-search:hover,
 .btn-search:active {
     background-color: #00acc1 !important;
@@ -216,24 +199,14 @@ export default {};
 }
 
 
-.btn-edit {
-    background-color: #eba038;
-    border: none;
-    font-size: 12px;
+.action-trash:hover {
+    color: #ef5350 !important;
+    cursor: pointer;
 }
 
-.btn-edit:hover {
-    background-color: #eeb25e;
-}
-
-.btn-delete {
-    background-color: #f06292;
-    border: none;
-    font-size: 12px;
-}
-
-.btn-delete:hover {
-    background-color: #ec306f;
+.action-edit:hover {
+    color: #00bfa5 !important;
+    cursor: pointer;
 }
 
 .coupon-table thead th {
@@ -255,6 +228,7 @@ export default {};
 .coupon-table td {
     border-right: 1px solid #f0f0f0;
 }
+
 .coupon-table td:last-child {
     border-right: none;
 }
@@ -267,5 +241,4 @@ export default {};
     align-items: center;
     justify-content: center;
 }
-
 </style>

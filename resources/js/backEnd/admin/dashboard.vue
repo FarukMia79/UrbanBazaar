@@ -23,7 +23,7 @@
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </div>
                             <div class="ms-auto text-end">
-                                <h2 class="mb-0 fw-bold">16</h2>
+                                <h2 class="mb-0 fw-bold">{{ stats.total_order }}</h2>
                                 <small class="text-muted">Total Order</small>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                                 <i class="fa-solid fa-bag-shopping"></i>
                             </div>
                             <div class="ms-auto text-end">
-                                <h2 class="mb-0 fw-bold">0</h2>
+                                <h2 class="mb-0 fw-bold">{{ stats.todays_order }}</h2>
                                 <small class="text-muted">Today's Order</small>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                                 <i class="fa-solid fa-database"></i>
                             </div>
                             <div class="ms-auto text-end">
-                                <h2 class="mb-0 fw-bold">35</h2>
+                                <h2 class="mb-0 fw-bold">{{ stats.total_products }}</h2>
                                 <small class="text-muted">Products</small>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 <i class="fa-solid fa-user"></i>
                             </div>
                             <div class="ms-auto text-end">
-                                <h2 class="mb-0 fw-bold">20</h2>
+                                <h2 class="mb-0 fw-bold">{{ stats.total_customers }}</h2>
                                 <small class="text-muted">Customer</small>
                             </div>
                         </div>
@@ -102,30 +102,36 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
+                                        <tr v-for="(order, index) in latestOrders" :key="order.id">
+                                            <td>{{ index + 1 }}</td>
                                             <td>
-                                                <img
-                                                    src="https://via.placeholder.com/40"
-                                                    class="rounded-circle"
-                                                    alt="p"
+                                                <img 
+                                                    :src="order.order_items[0].color && order.order_items[0].color.includes('/') 
+                                                        ? '/' + order.order_items[0].color 
+                                                        : '/' + order.order_items[0].product.image" 
+                                                    class="rounded-circle border shadow-sm" 
+                                                    style="width: 40px; height: 40px; object-fit: cover;"
+                                                    alt="Product"
                                                 />
                                             </td>
                                             <td>
                                                 <span
                                                     class="badge bg-secondary px-2"
-                                                    >33127</span
+                                                    >{{ order.invoice_no }}</span
                                                 >
                                             </td>
                                             <td class="text-success fw-bold">
-                                                ৳700.00
+                                                ৳{{ order.total }}
                                             </td>
-                                            <td>shaki rahman</td>
+                                            <td>{{ order.user ? order.user.name : order.name }}</td>
                                             <td>
-                                                <i class="badge btn-pending"
-                                                    >Pending</i
-                                                >
-                                            </td>
+                                                <span class="badge" :class="{
+                                                    'btn-pending': order.status === 'pending',
+                                                    'btn-green': order.status === 'completed',
+                                                    'btn-danger': order.status === 'cancelled'
+                                                }">
+                                                    {{ order.status }}
+                                                </span></td>
                                         </tr>
                                         <!-- Repeat Rows... -->
                                     </tbody>
@@ -187,17 +193,50 @@
     </main>
 </template>
 <script>
-export default {};
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            stats: {
+                total_order: 0,
+                todays_order: 0,
+                total_products: 0,
+                total_customers: 0
+            },
+            latestOrders: [],
+            latestCustomers: []
+        }
+    },
+    mounted() {
+        this.getDashboardStats();
+    },
+    methods: {
+        getDashboardStats() {
+            axios.get('/api/dashboard')
+                .then((res) => {
+                    this.stats = res.data.stats;
+                    this.latestOrders = res.data.latest_orders;
+                    this.latestCustomers = res.data.latest_customers;
+                })
+                .catch((error) => {
+                    console.error("Error fetching stats:", error);
+                });
+        }
+    }
+};
 </script>
 <style lang="css" scoped>
 /* Custom Dashboard Theme */
 .bg-light {
     background-color: #f4f7f6 !important;
 }
+
 .btn-indigo {
     background-color: #4b1091;
     border: none;
 }
+
 .btn-indigo:hover {
     background-color: #380d6d;
 }
@@ -217,12 +256,15 @@ export default {};
 .bg-primary-soft {
     background-color: #e7f1ff;
 }
+
 .bg-success-soft {
     background-color: #e8fadf;
 }
+
 .bg-info-soft {
     background-color: #e1f5f9;
 }
+
 .bg-warning-soft {
     background-color: #fff8e1;
 }
@@ -232,12 +274,14 @@ export default {};
     font-size: 14px;
     border-color: #eee !important;
 }
+
 .custom-table thead th {
     background-color: #f8f9fa;
     font-weight: 500;
     color: #666;
     border-color: #eee !important;
 }
+
 .custom-table tbody td {
     border-color: #eee !important;
     padding: 12px 8px;
@@ -247,10 +291,28 @@ export default {};
 .card {
     border-radius: 12px;
 }
+
 .badge {
     font-weight: 500;
     font-size: 11px;
     text-transform: lowercase;
     border-radius: 4px;
+}
+
+.btn-pending {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+}
+
+.btn-danger {
+    background-color: #ef5350;
+    color: white;
+    border: none;
+}
+
+.btn-green {
+    background-color: #00c853;
+    border: none;
 }
 </style>
