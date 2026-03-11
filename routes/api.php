@@ -50,6 +50,10 @@ Route::get('/general/setting/{id}', [GeneralSettingController::class, 'show']);
 
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::post('/product/bulk-update', [ProductController::class, 'bulkUpdatePrice']);
+
+
+
 Route::get('/get-subcategories/{category_id}', [SubCategoryController::class, 'getSubByCategory']);
 Route::get('/personalized-recommendations', [HomeController::class, 'getPersonalizedRecommendations']);
 

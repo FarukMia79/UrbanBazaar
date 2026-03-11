@@ -135,34 +135,34 @@
 </template>
 <script>
 export default {
-    data(){
+    data() {
         return {
             products: [],
             searchTerm: '',
         }
     },
-    created(){
+    created() {
         this.getProductData();
     },
     computed: {
-        filterSearch(){
-            return this.products.filter(product=>{
+        filterSearch() {
+            return this.products.filter(product => {
                 return product.name.toLowerCase().match(this.searchTerm.toLowerCase());
             });
         }
     },
     methods: {
-        getProductData(){
+        getProductData() {
             axios.get('/api/product')
-            .then((res)=>{
-                this.products = res.data;
-                console.log(res.data);
-            }).catch((error)=>{
-                console.log(error);
-            })
+                .then((res) => {
+                    this.products = res.data;
+                    console.log(res.data);
+                }).catch((error) => {
+                    console.log(error);
+                })
         },
 
-        deleteProductData(ProductId){
+        deleteProductData(ProductId) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -171,18 +171,18 @@ export default {
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes, delete it!"
-            }).then((result)=>{
-                if(result.isConfirmed){
+            }).then((result) => {
+                if (result.isConfirmed) {
                     axios.delete('/api/product/' + ProductId)
-                    .then((res)=>{
-                        this.products = this.products.filter(product=>{
-                            return product.id != ProductId;
+                        .then((res) => {
+                            this.products = this.products.filter(product => {
+                                return product.id != ProductId;
+                            });
+                            Notification.success('Product deleted successfully!');
+                        }).catch((error) => {
+                            this.$router.push({ name: 'ProductManage' });
+                            Notification.error();
                         });
-                        Notification.success('Product deleted successfully!');
-                    }).catch((error)=>{
-                        this.$router.push({ name: 'ProductManage'});
-                        Notification.error();
-                    });
                 }
             });
         }
@@ -200,7 +200,7 @@ export default {
     cursor: pointer;
 }
 
-.action-edit:hover{
+.action-edit:hover {
     color: #00bfa5 !important;
     cursor: pointer;
 }
@@ -210,20 +210,76 @@ export default {
 }
 
 
-.btn-pink { background-color: #f06292; border: none; }
-.btn-teal-solid { background-color: #00bfa5; color: white; border: none; }
-.btn-red-solid { background-color: #ef5350; color: white; border: none; }
-.btn-purple-solid { background-color: #6a1b9a; color: white; border: none; }
-.btn-orange-solid { background-color: #ffca28; color: white; border: none; }
-.btn-search { background-color: #00cae3; border: none; }
+.btn-pink {
+    background-color: #f06292;
+    border: none;
+}
+
+.btn-teal-solid {
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+}
+
+.btn-red-solid {
+    background-color: #ef5350;
+    color: white;
+    border: none;
+}
+
+.btn-purple-solid {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+}
+
+.btn-orange-solid {
+    background-color: #ffca28;
+    color: white;
+    border: none;
+}
+
+.btn-search {
+    background-color: #00cae3;
+    border: none;
+}
 
 
-.btn-pink:hover, .btn-pink:active { background-color: #d81b60 !important; color: #fff !important; }
-.btn-teal-solid:hover, .btn-teal-solid:active { background-color: #00897b !important; color: #fff !important; }
-.btn-red-solid:hover, .btn-red-solid:active { background-color: #d32f2f !important; color: #fff !important; }
-.btn-purple-solid:hover, .btn-purple-solid:active { background-color: #4a148c !important; color: white !important; }
-.btn-orange-solid:hover, .btn-orange-solid:active { background-color: #f57c00  !important; color: white !important; }
-.btn-search:hover, .btn-search:active { background-color: #00acc1 !important; color: white !important; }
+.btn-pink:hover,
+.btn-pink:active {
+    background-color: #d81b60 !important;
+    color: #fff !important;
+}
+
+.btn-teal-solid:hover,
+.btn-teal-solid:active {
+    background-color: #00897b !important;
+    color: #fff !important;
+}
+
+.btn-red-solid:hover,
+.btn-red-solid:active {
+    background-color: #d32f2f !important;
+    color: #fff !important;
+}
+
+.btn-purple-solid:hover,
+.btn-purple-solid:active {
+    background-color: #4a148c !important;
+    color: white !important;
+}
+
+.btn-orange-solid:hover,
+.btn-orange-solid:active {
+    background-color: #f57c00 !important;
+    color: white !important;
+}
+
+.btn-search:hover,
+.btn-search:active {
+    background-color: #00acc1 !important;
+    color: white !important;
+}
 
 
 
@@ -241,7 +297,10 @@ export default {
     border-radius: 4px;
 }
 
-.product-table { border-collapse: separate; border-spacing: 0 5px; }
+.product-table {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
 
 .active-page {
     background-color: #5e72e4 !important;
@@ -254,9 +313,9 @@ export default {
 
 .search-input:focus {
     border-color: #00cae3 !important;
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
-    outline: none !important; 
-    background-color: #fff; 
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important;
+    outline: none !important;
+    background-color: #fff;
 }
 
 .search-input {
@@ -265,5 +324,4 @@ export default {
     padding: 6px 12px;
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-
 </style>

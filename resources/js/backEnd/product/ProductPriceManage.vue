@@ -23,6 +23,7 @@
                 <div class="col-md-6 d-flex justify-content-end">
                     <div class="ms-auto d-flex">
                         <input
+                            v-model="searchTerm"
                             type="text"
                             class="search-input rounded-0 border-end-0"
                             placeholder="Search"
@@ -43,74 +44,46 @@
                         <tr>
                             <th width="60">SL</th>
                             <th>Name</th>
-                            <th width="180">Old Price</th>
-                            <th width="180">New Price</th>
+                            <th width="180">Price</th>
+                            <th width="180">Offer Price</th>
                             <th width="180">Stock</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Row 1 -->
-                        <tr>
-                            <td>1</td>
+                        <!-- All Product -->
+                        <tr v-for="(product, index) in filterSearch" :key="product.id">
+                            <td>{{ index + 1 }}</td>
                             <td class="text-secondary">
-                                প্রিমিয়াম ভেলভেট কুশন কভার | PLW-620
+                                {{ product.name }}
                             </td>
                             <td>
                                 <input
                                     type="text"
                                     class="form-control price-input"
-                                    value="3000"
+                                    v-model="product.price"
                                 />
                             </td>
                             <td>
                                 <input
                                     type="text"
                                     class="form-control price-input"
-                                    value="250"
+                                    v-model="product.discount_price"
                                 />
                             </td>
                             <td>
                                 <input
                                     type="text"
                                     class="form-control price-input"
-                                    value="100"
+                                    v-model="product.stock_quantity"
                                 />
                             </td>
                         </tr>
-                        <!-- Row 2 -->
-                        <tr>
-                            <td>2</td>
-                            <td class="text-secondary">
-                                প্রিমিয়াম ভেলভেট কুশন কভার | PLW-512
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    class="form-control price-input"
-                                    value="30006"
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    class="form-control price-input"
-                                    value="250"
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    class="form-control price-input"
-                                    value="100"
-                                />
-                            </td>
-                        </tr>
-                        <!-- আপনার বাকি ডেটাগুলো এভাবে লুপে আসবে... -->
+                        
                     </tbody>
                 </table>
             </div>
             <div class="d-flex justify-content-end mt-2 mb-4">
-                <button class="btn btn-teal px-4 text-white">
+                <button @click="updateAllPrices" class="btn btn-teal px-4 text-white">
                     Update Price
                 </button>
             </div>
@@ -146,7 +119,44 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            allProduct: [],
+            searchTerm: ''
+        }
+    },
+    computed: {
+        filterSearch() {
+            return this.allProduct.filter(product => {
+                return product.name.toLowerCase().match(this.searchTerm.toLowerCase());
+            });
+        },
+    },
+    created() {
+        this.getProduct();
+    },
+    methods: {
+
+        getProduct() {
+            axios.get('/api/product')
+                .then((res) => {
+                    this.allProduct = res.data;
+                });
+        },
+
+        updateAllPrices() {
+            axios.post('/api/product/bulk-update', { products: this.allProduct })
+                .then((res) => {
+                    Notification.success("Successfully updated!");
+                })
+                .catch((error) => {
+                    console.error("Update Error:", error);
+                    Notification.error("Something went wrong!");
+                });
+        }
+    }
+};
 </script>
 <style lang="css" scoped>
 .shadow-custom {
@@ -154,20 +164,76 @@ export default {};
 }
 
 
-.btn-pink { background-color: #f06292; border: none; }
-.btn-teal-solid { background-color: #00bfa5; color: white; border: none; }
-.btn-red-solid { background-color: #ef5350; color: white; border: none; }
-.btn-purple-solid { background-color: #6a1b9a; color: white; border: none; }
-.btn-orange-solid { background-color: #ffca28; color: white; border: none; }
-.btn-search { background-color: #00cae3; border: none; }
+.btn-pink {
+    background-color: #f06292;
+    border: none;
+}
+
+.btn-teal-solid {
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+}
+
+.btn-red-solid {
+    background-color: #ef5350;
+    color: white;
+    border: none;
+}
+
+.btn-purple-solid {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+}
+
+.btn-orange-solid {
+    background-color: #ffca28;
+    color: white;
+    border: none;
+}
+
+.btn-search {
+    background-color: #00cae3;
+    border: none;
+}
 
 
-.btn-pink:hover, .btn-pink:active { background-color: #d81b60 !important; color: #fff !important; }
-.btn-teal-solid:hover, .btn-teal-solid:active { background-color: #00897b !important; color: #fff !important; }
-.btn-red-solid:hover, .btn-red-solid:active { background-color: #d32f2f !important; color: #fff !important; }
-.btn-purple-solid:hover, .btn-purple-solid:active { background-color: #4a148c !important; color: white !important; }
-.btn-orange-solid:hover, .btn-orange-solid:active { background-color: #f57c00  !important; color: white !important; }
-.btn-search:hover, .btn-search:active { background-color: #00acc1 !important; color: white !important; }
+.btn-pink:hover,
+.btn-pink:active {
+    background-color: #d81b60 !important;
+    color: #fff !important;
+}
+
+.btn-teal-solid:hover,
+.btn-teal-solid:active {
+    background-color: #00897b !important;
+    color: #fff !important;
+}
+
+.btn-red-solid:hover,
+.btn-red-solid:active {
+    background-color: #d32f2f !important;
+    color: #fff !important;
+}
+
+.btn-purple-solid:hover,
+.btn-purple-solid:active {
+    background-color: #4a148c !important;
+    color: white !important;
+}
+
+.btn-orange-solid:hover,
+.btn-orange-solid:active {
+    background-color: #f57c00 !important;
+    color: white !important;
+}
+
+.btn-search:hover,
+.btn-search:active {
+    background-color: #00acc1 !important;
+    color: white !important;
+}
 
 
 
@@ -185,7 +251,10 @@ export default {};
     border-radius: 4px;
 }
 
-.product-table { border-collapse: separate; border-spacing: 0 5px; }
+.product-table {
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
 
 .active-page {
     background-color: #5e72e4 !important;
@@ -196,11 +265,26 @@ export default {};
     justify-content: center;
 }
 
-.btn-pink { background-color: #f06292; border: none; }
-.btn-pink:hover { background-color: #d81b60; color: #fff; }
+.btn-pink {
+    background-color: #f06292;
+    border: none;
+}
 
-.btn-teal { background-color: #1abc9c; border: none; border-radius: 4px; }
-.btn-teal:hover { background-color: #16a085; color: #fff; }
+.btn-pink:hover {
+    background-color: #d81b60;
+    color: #fff;
+}
+
+.btn-teal {
+    background-color: #1abc9c;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-teal:hover {
+    background-color: #16a085;
+    color: #fff;
+}
 
 
 .price-table thead th {
@@ -218,9 +302,9 @@ export default {};
 
 .price-input:focus {
     border-color: #1abc9c !important;
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
-    outline: none !important; 
-    background-color: #fff; 
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important;
+    outline: none !important;
+    background-color: #fff;
 }
 
 .price-input {
@@ -232,9 +316,9 @@ export default {};
 
 .search-input:focus {
     border-color: #00cae3 !important;
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important; 
-    outline: none !important; 
-    background-color: #fff; 
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.1) !important;
+    outline: none !important;
+    background-color: #fff;
 }
 
 .search-input {
@@ -243,6 +327,4 @@ export default {};
     padding: 6px 12px;
     transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
-
-
 </style>

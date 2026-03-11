@@ -162,6 +162,19 @@ class ProductController extends Controller
         ]);
     }
 
+    public function bulkUpdatePrice(Request $request)
+    {
+        foreach ($request->products as $item) {
+            Product::where('id', $item['id'])->update([
+                'price'           => $item['price'],
+                'discount_price'  => $item['discount_price'],
+                'stock_quantity'  => $item['stock_quantity'],
+            ]);
+        }
+
+        return response()->json(['message' => 'All prices updated successfully!']);
+    }
+
     public function destroy($id)
     {
         $product = Product::with('multi_images')->findOrFail($id);

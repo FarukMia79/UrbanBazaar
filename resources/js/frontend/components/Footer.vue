@@ -7,7 +7,7 @@
                         <div class="col-sm-4 mb-3 mb-sm-0">
                             <div class="footer-about">
                                 <router-link :to="{ name: 'index' }">
-                                    <img v-if="logo.white_logo" :src="'/' + logo.white_logo" alt="" />
+                                    <img v-if="logo.dark_logo" :src="'/' + logo.dark_logo" alt="" />
                                 </router-link>
                                 <p>Hatimara , Kashimpur , Gazipur</p>
                                 <a href="tel:+8801790647979" class="footer-hotlint btn-call">
@@ -134,7 +134,7 @@ export default {
     data() {
         return {
             logo: {
-                white: null
+                dark_logo: null
             }
         }
     },
