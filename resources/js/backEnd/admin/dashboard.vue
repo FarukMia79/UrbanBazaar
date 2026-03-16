@@ -169,16 +169,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>shaki rahman</td>
-                                            <td>01855580555</td>
-                                            <td>11-01-2026</td>
+                                        <tr v-for="(customer, index) in latestCustomers" :key="customer.id">
+                                            <td>{{ index + 1 }}</td>
+                                            <td>{{ customer.name }}</td>
+                                            <td>{{ customer.email }}</td>
+                                            <td>{{ new Date(customer.created_at).toLocaleDateString() }}</td>
                                             <td>
-                                                <span
-                                                    class="badge bg-warning text-dark px-2"
-                                                    >active</span
-                                                >
+                                                <span v-if="customer.status == 1" class="badge bg-warning text-dark px-2" >active</span>
+                                                <span v-else class="badge bg-warning text-dark px-2" >Inactive</span>
                                             </td>
                                         </tr>
                                         <!-- Repeat Rows... -->
@@ -193,7 +191,6 @@
     </main>
 </template>
 <script>
-import axios from 'axios';
 
 export default {
     data() {
@@ -314,5 +311,11 @@ export default {
 .btn-green {
     background-color: #00c853;
     border: none;
+}
+
+.card-header h5 {
+    color: #333 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 </style>

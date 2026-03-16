@@ -23,7 +23,7 @@ class DashboardController extends Controller
                 'total_customers' => User::where('role', 'user')->count(),
             ],
             'latest_orders' => Order::with(['user', 'orderItems.product'])->latest()->limit(7)->get(),
-            'latest_customers' => User::where('role', 'customer')->latest()->limit(7)->get()
+            'latest_customers' => User::where('role', 'user')->latest()->limit(7)->get()
         ]);
     }
 

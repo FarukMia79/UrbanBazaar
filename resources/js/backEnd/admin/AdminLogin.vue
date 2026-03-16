@@ -41,10 +41,7 @@
     </div>
 </template>
 <script>
-// ১. প্রয়োজনীয় ফাইলগুলো এখানে ইম্পোর্ট করতে হবে (পাথ ঠিক আছে কি না চেক করে নিন)
 import AppStorage from '../../Helpers/AppStorage';
-import Notification from '../../Helpers/Notification';
-import axios from 'axios';
 
 export default {
     data() {
