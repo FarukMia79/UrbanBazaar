@@ -34,7 +34,6 @@ class Product extends Model
         'hot_deals'
     ];
 
-
     protected function casts(): array
     {
         return [

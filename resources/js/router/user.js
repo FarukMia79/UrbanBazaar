@@ -13,6 +13,7 @@ import OrderTrack from '../frontend/page/OrderTrack.vue';
 import CategoryPage from '../frontend/page/CategoryPage.vue';
 import SubCategoryPage from '../frontend/page/SubCategoryPage.vue';
 import ReturnPolicy from '../frontend/page/ReturnPolicy.vue';
+import AISearchResult from '../frontend/page/AISearchResult.vue';
 
 export default [
     {
@@ -30,6 +31,7 @@ export default [
             { path: 'register', name: 'UserSingup', component: UserSingup },
             { path: 'forgot-password', name: 'ForgotPassword', component: ForgotPassword },
             { path: 'reset-password', name: 'SetForgotPassword', component: SetForgotPassword },
+            { path: '/ai-search', name: 'AISearch', component: AISearchResult }
         ],
     },
 

@@ -54,7 +54,7 @@ export default [
             { path: 'order/cancelled', name: 'CancelledOrder', component: CancelledOrder},
             { path: 'products/manage', name: 'ProductManage', component: ProductManage},
             { path: 'products/create', name: 'ProductCreate', component: ProductCreate},
-            { path: 'products/edit', name: 'ProductEdit', component: ProductEdit},
+            { path: 'products/edit/:id', name: 'ProductEdit', component: ProductEdit},
             { path: 'products/price-edit', name: 'ProductPriceManage', component: ProductPriceManage},
             { path: 'categories/manage', name: 'CategoryIndex', component: CategoryIndex},
             { path: 'categories/create', name: 'CategoryCreate', component: CategoryCreate},

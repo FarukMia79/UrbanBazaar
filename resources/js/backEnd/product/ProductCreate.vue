@@ -87,15 +87,24 @@
                     </div>
 
                     <!-- SKU & Video -->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted">Product Code (SKU)</label>
                         <input type="text" class="form-control" v-model="form.product_code" />
                     </div>
-                    <div class="col-md-4">
+                    <!-- Tags Field -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted">Product Tags (Comma separated) *</label>
+                        <input type="text" class="form-control" v-model="form.tags"
+                            placeholder="e.g. t-shirt, cotton, red, summer" />
+                        <small class="text-muted">কমা দিয়ে আলাদা করে লিখুন (যেমন: ব্যাগ, লেডিস ব্যাগ,
+                            হ্যান্ডব্যাগ)</small>
+                    </div>
+
+                    <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted">Unit</label>
                         <input type="text" class="form-control" v-model="form.unit" />
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label class="form-label fw-semibold text-muted">Video URL</label>
                         <input type="text" class="form-control" v-model="form.video_url" />
                     </div>
@@ -159,9 +168,10 @@ export default {
                 multi_images: [],
                 product_code: '',
                 unit: '',
+                tags: '',
                 video_url: '',
                 size_ids: [],
-                description: '', 
+                description: '',
                 status: true,
                 hot_deals: false,
                 selected_variant_indices: [],

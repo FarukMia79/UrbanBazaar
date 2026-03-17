@@ -57,12 +57,16 @@
         </div>
 
         <div class="mobile-search">
-            <form action="https://ecom.shariatpur.shop/search">
-                <input type="text" placeholder="Search Product ... " value="" class="msearch_keyword msearch_click"
-                    name="keyword" />
-                <button><i class="fa fa-search"></i></button>
+            <form @submit.prevent="handleAISearch" class="position-relative">
+                <input type="text" v-model="searchQuery" placeholder="AI Search (e.g. Find me a bag....)"
+                    class="msearch_keyword search_click" name="keyword" />
+
+                <span @click="startVoiceSearch" class="ai-voice-btn" :class="{ 'is-listening': isListening }">
+                    <i class="fa fa-microphone"></i>
+                </span>
+
+                <button type="submit"><i class="fa fa-search"></i></button>
             </form>
-            <div class="search_result"></div>
         </div>
 
         <div class="main-header">
@@ -78,10 +82,17 @@
                                     </router-link>
                                 </div>
                                 <div class="main-search">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search Product..."
+                                    <form @submit.prevent="handleAISearch" class="position-relative">
+                                        <input type="text" v-model="searchQuery"
+                                            placeholder="AI Search (e.g. Find me a bag....)"
                                             class="search_keyword search_click" name="keyword" />
-                                        <button>
+
+                                        <span @click="startVoiceSearch" class="ai-voice-btn"
+                                            :class="{ 'is-listening': isListening }">
+                                            <i class="fa fa-microphone"></i>
+                                        </span>
+
+                                        <button type="submit">
                                             <i class="fa fa-search text-white"></i>
                                         </button>
                                     </form>
@@ -149,7 +160,7 @@
                                                         <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
-                                                            }}<i v-if="category.subcategories && category.subcategories.length > 0"
+                                                        }}<i v-if="category.subcategories && category.subcategories.length > 0"
                                                                 class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu"
                                                             v-if="category.subcategories && category.subcategories.length > 0">
@@ -294,7 +305,9 @@ export default {
             logo: {
                 white_logo: null,
                 dark_logo: null
-            }
+            },
+            searchQuery: '',
+            isListening: false,
         };
     },
     computed: {
@@ -310,7 +323,6 @@ export default {
         this.getCartData();
         this.getLogo();
 
-        // গ্লোবাল ইভেন্ট লিসেনার: অন্য পেজ থেকে কার্ট আপডেট হলে এটি অটো কল হবে
         window.addEventListener('cart-updated', () => {
             this.getCartData();
         });
@@ -343,7 +355,6 @@ export default {
                 .then(() => {
                     this.getCartData();
                     Notification.success("Item removed from cart");
-                    // গ্লোবাল কাউন্ট আপডেট সিগন্যাল
                     window.dispatchEvent(new CustomEvent('cart-updated'));
                 });
         },
@@ -379,6 +390,34 @@ export default {
                 this.openCategory = categoryID;
             }
         },
+
+        startVoiceSearch() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("আপনার ব্রাউজারে ভয়েস সার্চ সাপোর্ট করে না। অনুগ্রহ করে Chrome ব্যবহার করুন।");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            this.isListening = true;
+
+            recognition.onresult = (event) => {
+                this.searchQuery = event.results[0][0].transcript;
+                this.isListening = false;
+                this.handleAISearch();
+            };
+
+            recognition.onerror = () => { this.isListening = false; };
+            recognition.onend = () => { this.isListening = false; };
+
+            recognition.start();
+        },
+
+        handleAISearch() {
+            if (this.searchQuery.trim() === '') return;
+            this.$router.push({ name: 'AISearch', query: { q: this.searchQuery } });
+        }
     },
     watch: {
         '$route'() {
@@ -391,32 +430,26 @@ export default {
 </script>
 
 <style scoped>
-/* মেইন কন্টেইনার */
 .login_logout-nv {
     display: flex;
     align-items: center;
     gap: 15px;
-    /* Account এবং Logout এর মাঝখানের দূরত্ব */
 }
 
-/* প্রতিটি আইটেম (Account/Logout) */
 .nav-user-item {
     display: flex;
     flex-direction: row;
-    /* আইকন বামে আর লেখা ডানে রাখার জন্য */
     align-items: center;
     color: #ffffff !important;
     text-decoration: none;
     cursor: pointer;
     gap: 6px;
-    /* আইকন এবং লেখার মাঝখানের দূরত্ব */
     transition: 0.3s;
 }
 
 
 .nav-user-item:hover {
     color: #ffca28 !important;
-    /* হোভার করলে সোনালী রঙ (ঐচ্ছিক) */
 }
 
 .mobile-menu {
@@ -448,5 +481,109 @@ export default {
 
 .heder__category a {
     text-decoration: none;
+}
+
+/* --- Global Search Form Styles (Desktop & Mobile) --- */
+.main-search form,
+.mobile-search form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search_keyword,
+.msearch_keyword {
+    width: 100%;
+    height: 40px;
+    padding-left: 15px;
+    padding-right: 85px !important;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    font-size: 14px;
+}
+
+.ai-voice-btn {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #750377;
+    font-size: 18px;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* সার্চ বাটন স্টাইল */
+.main-search button,
+.mobile-search button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 42px;
+    background: #750377;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+/* --- Mobile Specific Adjustments --- */
+@media (max-width: 767px) {
+    .mobile-search {
+        padding: 10px 15px;
+        background: #fff;
+    }
+
+    .mobile-search form {
+        padding: 0;
+    }
+
+    .msearch_keyword {
+        height: 45px;
+        border: 1px solid #750377;
+        border-radius: 8px;
+    }
+
+    .mobile-search .ai-voice-btn {
+        right: 70px;
+    }
+
+    .mobile-search button {
+        width: 45px;
+        border-radius: 0 8px 8px 0;
+    }
+}
+
+.ai-voice-btn.is-listening {
+    color: #ff0000 !important;
+    animation: voice-pulse 1.5s infinite;
+}
+
+@keyframes voice-pulse {
+    0% {
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-50%) scale(1.3);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
 }
 </style>

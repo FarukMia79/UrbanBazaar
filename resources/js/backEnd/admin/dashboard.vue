@@ -175,8 +175,8 @@
                                             <td>{{ customer.email }}</td>
                                             <td>{{ new Date(customer.created_at).toLocaleDateString() }}</td>
                                             <td>
-                                                <span v-if="customer.status == 1" class="badge bg-warning text-dark px-2" >active</span>
-                                                <span v-else class="badge bg-warning text-dark px-2" >Inactive</span>
+                                                <span v-if="customer.status == 1" class="badge text-capitalize btn-green text-white px-2" >active</span>
+                                                <span v-else class="badge text-capitalize btn-danger text-white px-2" >Inactive</span>
                                             </td>
                                         </tr>
                                         <!-- Repeat Rows... -->
