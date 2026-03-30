@@ -4,10 +4,22 @@ import mysql.connector
 from sentence_transformers import SentenceTransformer, util
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
+from fastapi.middleware.cors import CORSMiddleware # এটি নতুন যোগ করা হয়েছে
 
 app = FastAPI()
 
-# ১. এআই মডেল লোড (সার্চের জন্য)
+# --- ১. CORS কনফিগারেশন শুরু (খুবই গুরুত্বপূর্ণ) ---
+# এটি আপনার লারাভেল/ভিউ অ্যাপকে পাইথনের সাথে কথা বলার অনুমতি দিবে
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # সব ধরণের অরিজিন এলাউ করা হলো
+    allow_credentials=True,
+    allow_methods=["*"], # GET, POST, OPTIONS সব এলাউ করা হলো
+    allow_headers=["*"],
+)
+# --- CORS কনফিগারেশন শেষ ---
+
+# ২. এআই মডেল লোড (সার্চের জন্য)
 print("Loading AI Model for Search...")
 model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 print("AI Model is Ready!")
@@ -21,7 +33,7 @@ def get_db_connection():
         database="urbanbazaar"
     )
 
-# ২. পিওর এআই সার্চ এপিআই (Multilingual Semantic Search)
+# ৩. পিওর এআই সার্চ এপিআই (Multilingual Semantic Search)
 @app.get("/ai-search")
 def ai_search(q: str):
     try:
@@ -44,7 +56,6 @@ def ai_search(q: str):
         cosine_scores = util.cos_sim(query_embedding, product_embeddings)[0]
         df['score'] = cosine_scores.tolist()
 
-        # থ্রেশহোল্ড ০.২৫ (বড় বাক্যের জন্য এটি কাজ করবে)
         results = df[df['score'] > 0.25].sort_values(by='score', ascending=False).head(12)
         return {"product_ids": results['id'].tolist()}
 
@@ -53,36 +64,29 @@ def ai_search(q: str):
         return {"error": str(e), "product_ids": []}
 
 
-# ৩. ইউজার ভিত্তিক রিকমেন্ডেশন (Collaborative Filtering - Updated)
+# ৪. ইউজার ভিত্তিক রিকমেন্ডেশন (Collaborative Filtering)
 @app.get("/recommend/{user_id}")
 def recommend(user_id: int):
     try:
         conn = get_db_connection()
-        # ইউজার ইন্টারঅ্যাকশন ডাটা নেওয়া
         df = pd.read_sql("SELECT user_id, product_id, weight FROM user_interactions", conn)
         conn.close()
         
         if df.empty: 
             return {"recommendations": []}
         
-        # ইউজার-আইটেম ম্যাট্রিক্স তৈরি (Pivot Table)
         matrix = df.pivot_table(index='user_id', columns='product_id', values='weight').fillna(0)
         
         if user_id not in matrix.index:
-            # যদি এই ইউজারের ডাটা না থাকে, তবে জনপ্রিয় কিছু প্রোডাক্ট পাঠানো যেতে পারে
             return {"recommendations": []}
 
-        # এআই অ্যালগরিদম: কসাইন সিমিলারিটি ক্যালকুলেশন
         user_sim = cosine_similarity(matrix)
         user_sim_df = pd.DataFrame(user_sim, index=matrix.index, columns=matrix.index)
 
-        # ১. বর্তমান ইউজারের সাথে সবচেয়ে মিল থাকা ৪-৫ জন ইউজার খুঁজে বের করা
         similar_users = user_sim_df[user_id].sort_values(ascending=False).iloc[1:6].index.tolist()
         
-        # ২. ওই সিমিলার ইউজারদের পছন্দের প্রোডাক্ট আইডি বের করা
         recommendations = df[df['user_id'].isin(similar_users)]['product_id'].unique().tolist()
         
-        # ৩. ইউজার অলরেডি যা দেখেছে বা কিনেছে তা বাদ দেওয়া (স্মার্ট ফিল্টারিং)
         user_seen = df[df['user_id'] == user_id]['product_id'].tolist()
         final_recom = [p for p in recommendations if p not in user_seen]
         

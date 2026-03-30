@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BackEnd\Order;
 use App\Models\BackEnd\Product;
+use App\Models\BackEnd\UserInteraction;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -15,14 +17,28 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // ১. চার্টের জন্য ডাটা (ভিউ, কার্ট এবং পারচেজ এর সংখ্যা)
+        $interactionStats = UserInteraction::select('interaction_type', DB::raw('count(*) as total'))
+            ->groupBy('interaction_type')
+            ->get();
+
+        // ২. সাম্প্রতিক এআই ইন্টারঅ্যাকশন লগ (ইউজার এবং প্রোডাক্টের তথ্যসহ)
+        $aiLogs = UserInteraction::with(['user', 'product'])
+            ->latest()
+            ->limit(6)
+            ->get();
+
         return response()->json([
             'stats' => [
                 'total_order'     => Order::count(),
                 'todays_order'    => Order::whereDate('created_at', now())->count(),
                 'total_products'  => Product::count(),
                 'total_customers' => User::where('role', 'user')->count(),
+                'ai_data_points'  => UserInteraction::count(), // ৫ নম্বর কার্ডের জন্য
             ],
-            'latest_orders' => Order::with(['user', 'orderItems.product'])->latest()->limit(7)->get(),
+            'chart_data'       => $interactionStats, // চার্টের জন্য
+            'ai_logs'          => $aiLogs,           // লাইভ লগ টেবিলের জন্য
+            'latest_orders'    => Order::with(['user', 'orderItems.product'])->latest()->limit(7)->get(),
             'latest_customers' => User::where('role', 'user')->latest()->limit(7)->get()
         ]);
     }
