@@ -108,7 +108,14 @@ export default {
 
                     axios.defaults.headers.common['Authorization'] = `bearer ${token}`;
 
-                    this.$router.push({ name: 'UserDashboard' });
+                    if (user.is_survey_completed == 0) {
+                        this.$router.push({ name: 'index' });
+                        Notification.success("Login successful! Personalize your shopping experience.");
+                    }
+                    else {
+                        this.$router.push({ name: 'UserDashboard' });
+                        Notification.success("Welcome! You have successfully logged in.");
+                    }
                 }).catch((error) => {
                     this.errors = error.response.data.errors;
                 })

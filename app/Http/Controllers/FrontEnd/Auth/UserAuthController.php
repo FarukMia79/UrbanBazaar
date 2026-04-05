@@ -41,7 +41,7 @@ class UserAuthController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'role' => $user->role,
-                'is_survey_completed' => (int) $user->is_survey_completed, // এটি নিশ্চিত করুন
+                'is_survey_completed' => (int) $user->is_survey_completed, 
             ],
         ], 201);
     }
