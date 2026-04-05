@@ -197,7 +197,6 @@ export default {
         getDashboardStats() {
             axios.get('/api/dashboard')
                 .then((res) => {
-                    console.log("Full Dashboard Data:", res.data); // এটি যোগ করুন চেক করার জন্য
                     this.stats = res.data.stats;
                     this.latestOrders = res.data.latest_orders;
                     this.aiLogs = res.data.ai_logs;
@@ -208,14 +207,13 @@ export default {
                 });
         },
         checkAIServer() {
-            // পাইথন সার্ভার চেক করা
             axios.get('http://127.0.0.1:8001/ai-search?q=test')
                 .then(() => { this.aiServerStatus = true; })
                 .catch(() => { this.aiServerStatus = false; });
         },
         renderChart(data) {
             const ctx = document.getElementById('aiChart');
-            if (this.chart) this.chart.destroy(); // আগের চার্ট রিসেট
+            if (this.chart) this.chart.destroy();
 
             this.chart = new Chart(ctx, {
                 type: 'doughnut',

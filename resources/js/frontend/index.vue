@@ -281,12 +281,48 @@
                 </div>
             </div>
         </section>
+
+        <!-- AI Onboarding Survey Modal -->
+        <div v-if="showSurveyModal" class="survey-overlay">
+            <div class="survey-modal card border-0 shadow-lg p-4 animate__animated animate__fadeInUp">
+                <div class="text-center">
+                    <div class="modal-logo-container mb-4">
+                        <img v-if="logo.white_logo" :src="'/' + logo.white_logo" alt="Site Logo" class="modal-logo" />
+                        <h2 v-else class="fw-bold text-dark">UrbanBazaar</h2>
+                    </div>
+
+                    <h5 class="fw-bold text-dark text-uppercase mb-3" style="letter-spacing: 1px; font-size: 1rem;">
+                        আমাদেরকে আপনার পছন্দ সম্পর্কে বলুন</h5>
+
+                    <p class="text-muted text-center small px-3 mb-2" style="line-height: 1.6; font-size: 14px;">
+                        আপনার কেনাকাটা আরও সহজ করতে ক্যাটাগরিগুলো থেকে আপনার পছন্দের অন্তত ৩টি ক্যাটাগরি সিলেক্ট করুন।
+                    </p>
+                </div>
+
+                <div class="survey-grid my-3 custom-scrollbar">
+                    <div v-for="cat in categories" :key="cat.id" class="survey-item"
+                        :class="{ 'active': selectedCategories.includes(cat.id) }"
+                        @click="toggleCategorySelection(cat.id)">
+                        <img :src="'/' + cat.image" class="cat-img-survey">
+                        <span class="cat-text-survey">{{ cat.name }}</span>
+                        <i v-if="selectedCategories.includes(cat.id)" class="fa-solid fa-circle-check check-mark"></i>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <button @click="submitSurvey" :disabled="selectedCategories.length < 1"
+                        class="btn btn-indigo w-100 rounded-pill py-2 text-white fw-bold shadow-sm">
+                        {{ selectedCategories.length < 1 ? 'ক্যাটাগরি নির্বাচন করুন' : 'Save & Continue' }} </button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+import AppStorage from "../Helpers/AppStorage";
+import Notification from "../Helpers/Notification";
 export default {
     name: "HomeContent",
     data() {
@@ -295,35 +331,90 @@ export default {
             categories: [],
             products: [],
             personalizedProducts: [],
+
+            logo: { white_logo: null },
+            showSurveyModal: false,
+            selectedCategories: [],
         }
     },
     methods: {
+        getLogo() {
+            axios.get('/api/general/setting').then(res => {
+                this.logo = res.data.logo || { white_logo: res.data.white_logo };
+            });
+        },
+        // চেক করা সার্ভে পপআপ দেখানো লাগবে কি না
+        checkSurveyStatus() {
+            const user = AppStorage.getUser();
+            const token = AppStorage.getToken();
+
+            // যদি ইউজার লগইন থাকে এবং তার সার্ভে এখনো কমপ্লিট না হয়
+            if (token && user && user.is_survey_completed === 0) {
+                this.showSurveyModal = true;
+            }
+        },
+
+        // সার্ভেতে ক্যাটাগরি সিলেক্ট/ডিসিলেক্ট
+        toggleCategorySelection(id) {
+            if (this.selectedCategories.includes(id)) {
+                this.selectedCategories = this.selectedCategories.filter(i => i !== id);
+            } else {
+                this.selectedCategories.push(id);
+            }
+        },
+
+        // সার্ভে ডাটা সাবমিট
+        submitSurvey() {
+            const token = AppStorage.getToken();
+
+            axios.post('/api/user/save-survey',
+                { category_ids: this.selectedCategories },
+                { headers: { 'Authorization': `Bearer ${token}` } }
+            )
+                .then(res => {
+                    this.showSurveyModal = false;
+
+                    // LocalStorage আপডেট করা যাতে আর পপআপ না আসে
+                    let user = AppStorage.getUser();
+                    user.is_survey_completed = 1;
+                    AppStorage.storeUser(user);
+
+                    Notification.success("AI Profile Created! Shop is now personalized.");
+
+                    // সার্ভে শেষ হওয়ার পর রিকমেন্ডেশন ইঞ্জিন রিফ্রেশ করা
+                    this.getAIRecommendations();
+                })
+                .catch(err => {
+                    console.error("Survey Error:", err);
+                    Notification.error("Failed to save preferences.");
+                });
+        },
+
+        // ব্যানার ডাটা লোড করা
         getBanner() {
             axios.get('/api/banner')
                 .then((res) => {
                     this.banners = res.data.banners;
-
                     this.$nextTick(() => {
                         if (typeof window.$ !== "undefined") {
-                            window.$(".main_slider").owlCarousel('destroy'); // আগেরটা থাকলে রিসেট
+                            window.$(".main_slider").owlCarousel('destroy');
                             window.$(".main_slider").owlCarousel({
-                                items: 1,
-                                loop: true,
-                                autoplay: true,
-                                dots: true,
-                                nav: false,
-                                smartSpeed: 1000,
+                                items: 1, loop: true, autoplay: true, dots: true, nav: false, smartSpeed: 1000,
                             });
                         }
                     });
                 })
         },
+
+        // এআই রিকমেন্ডেশন লোড
         getAIRecommendations() {
             axios.get('/api/personalized-recommendations')
                 .then(res => {
                     this.personalizedProducts = res.data;
                 }).catch(err => console.error("AI Data Fetch Error:", err));
         },
+
+        // ট ডিল প্রোডাক্ট লোড
         getProductData() {
             axios.get('/api/product')
                 .then((res) => {
@@ -331,30 +422,29 @@ export default {
                         return product.hot_deals != null && product.hot_deals != 0;
                     });
 
-
                     this.$nextTick(() => {
                         if (typeof window.$ !== "undefined") {
                             window.$(".product_slider").owlCarousel('destroy');
                             window.$(".product_slider").owlCarousel({
                                 loop: this.products.length > 4,
-                                margin: 15,
-                                nav: true,
-                                dots: false,
-                                autoplay: true,
+                                margin: 15, nav: true, dots: false, autoplay: true,
                                 responsive: { 0: { items: 2 }, 600: { items: 3 }, 1000: { items: 5 } }
                             });
                         }
                     });
-
                 }).catch((error) => {
                     console.error("API Error:", error);
                 });
         },
+
+
         calculateDiscount(price, discountPrice) {
             if (!price || !discountPrice) return 0;
             let diff = price - discountPrice;
             return Math.round((diff / price) * 100);
         },
+
+
         getSidebarData() {
             axios.get('/api/category')
                 .then((res) => {
@@ -363,19 +453,11 @@ export default {
                     setTimeout(() => {
                         if (typeof window.$ !== "undefined") {
                             window.$(".category-slider").owlCarousel({
-                                loop: true,
-                                margin: 10,
-                                nav: true,
-                                dots: true,
-                                responsive: {
-                                    0: { items: 2 },
-                                    600: { items: 4 },
-                                    1000: { items: 8 },
-                                },
+                                loop: true, margin: 10, nav: true, dots: true,
+                                responsive: { 0: { items: 2 }, 600: { items: 4 }, 1000: { items: 8 } },
                             });
                         }
                     }, 100);
-
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -386,6 +468,8 @@ export default {
         this.getProductData();
         this.getSidebarData();
         this.getAIRecommendations();
+        this.getLogo();
+        this.checkSurveyStatus();
     },
 };
 </script>
@@ -434,5 +518,93 @@ export default {
 
 .wist_item {
     margin-bottom: 20px;
+}
+
+
+.survey-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+}
+
+.modal-logo {
+    max-height: 35px;
+    width: auto;
+    object-fit: contain;
+}
+
+.survey-modal {
+    width: 95%;
+    max-width: 460px;
+    border-radius: 25px;
+    background: #ffffff;
+    padding: 30px !important;
+}
+
+h5 {
+    color: #333 !important;
+}
+
+.ai-bot-icon {
+    font-size: 50px;
+}
+
+.survey-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.survey-item {
+    border: 2px solid #f0f0f0;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.survey-item.active {
+    border-color: #4b1091;
+    background: #f3e5f5;
+}
+
+.cat-img-survey {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.cat-text-survey {
+    font-size: 11px;
+    display: block;
+    font-weight: 600;
+    color: #333;
+}
+
+.check-mark {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #4b1091;
+    font-size: 14px;
+}
+
+.btn-indigo {
+    background-color: #4b1091;
 }
 </style>

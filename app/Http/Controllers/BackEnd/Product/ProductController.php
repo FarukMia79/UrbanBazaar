@@ -292,7 +292,7 @@ class ProductController extends Controller
         return response()->json(['message' => 'All prices updated successfully!']);
     }
 
-    // ২ নম্বর ফিক্স: aiSearch মেথডটি উন্নত করা হয়েছে
+    
     public function aiSearch(Request $request)
     {
         $query = $request->q;
@@ -324,6 +324,8 @@ class ProductController extends Controller
             return response()->json(['error' => 'AI Service is down'], 500);
         }
     }
+
+    
 
     public function destroy($id)
     {

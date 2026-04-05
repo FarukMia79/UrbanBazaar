@@ -17,12 +17,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // ১. চার্টের জন্য ডাটা (ভিউ, কার্ট এবং পারচেজ এর সংখ্যা)
+        // চার্টের জন্য ডাটা (ভিউ, কার্ট এবং পারচেজ এর সংখ্যা)
         $interactionStats = UserInteraction::select('interaction_type', DB::raw('count(*) as total'))
             ->groupBy('interaction_type')
             ->get();
 
-        // ২. সাম্প্রতিক এআই ইন্টারঅ্যাকশন লগ (ইউজার এবং প্রোডাক্টের তথ্যসহ)
+        // এআই ইন্টারঅ্যাকশন লগ (ইউজার এবং প্রোডাক্টের তথ্যসহ)
         $aiLogs = UserInteraction::with(['user', 'product'])
             ->latest()
             ->limit(6)
@@ -34,10 +34,10 @@ class DashboardController extends Controller
                 'todays_order'    => Order::whereDate('created_at', now())->count(),
                 'total_products'  => Product::count(),
                 'total_customers' => User::where('role', 'user')->count(),
-                'ai_data_points'  => UserInteraction::count(), // ৫ নম্বর কার্ডের জন্য
+                'ai_data_points'  => UserInteraction::count(),
             ],
-            'chart_data'       => $interactionStats, // চার্টের জন্য
-            'ai_logs'          => $aiLogs,           // লাইভ লগ টেবিলের জন্য
+            'chart_data'       => $interactionStats,
+            'ai_logs'          => $aiLogs,
             'latest_orders'    => Order::with(['user', 'orderItems.product'])->latest()->limit(7)->get(),
             'latest_customers' => User::where('role', 'user')->latest()->limit(7)->get()
         ]);

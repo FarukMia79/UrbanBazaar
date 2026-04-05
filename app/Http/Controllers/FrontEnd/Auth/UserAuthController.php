@@ -29,14 +29,20 @@ class UserAuthController extends Controller
         if ($user->role !== 'user') {
             return response()->json([
                 'message' => ['Access denied! You are not an user.'],
-            ]);
+            ], 403);
         }
 
         $token = $user->createToken('user_auth_token')->plainTextToken;
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'user' => $user,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+                'is_survey_completed' => (int) $user->is_survey_completed, // এটি নিশ্চিত করুন
+            ],
         ], 201);
     }
     public function register(Request $request)

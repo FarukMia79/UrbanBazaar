@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('role')->default('user');
+            $table->boolean('is_survey_completed')->default(0);
             $table->integer('age')->nullable();
             $table->string('gender')->nullable();
             $table->string('location')->nullable();

@@ -20,6 +20,7 @@ use App\Http\Controllers\FrontEnd\ReviewController;
 use App\Http\Controllers\FrontEnd\BannerController;
 use App\Http\Controllers\BackEnd\User\UserController;
 use App\Http\Controllers\BackEnd\Setting\GeneralSettingController;
+use App\Http\Controllers\FrontEnd\UserSurveyController;
 use GuzzleHttp\Middleware;
 
 Route::get('/category', [CategoryController::class, 'index']);
@@ -79,6 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/order', OrderController::class);
     Route::get('/user/orders', [OrderController::class, 'userOrders']);
     Route::post('/review/store', [ReviewController::class, 'store']);
+    Route::post('/user/save-survey', [UserSurveyController::class, 'store']);
 
 
     Route::middleware('is_admin')->group(function () {
