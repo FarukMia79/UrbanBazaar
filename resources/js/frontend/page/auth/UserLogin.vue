@@ -42,7 +42,7 @@
                                         <input type="password" id="password" class="form-control" name="password"
                                             required v-model="FormData.password" />
                                         <small class="text-danger" v-if="FormData.password">{{ errors.password[0]
-                                        }}</small>
+                                            }}</small>
                                     </div>
                                 </div>
 
@@ -117,7 +117,10 @@ export default {
                         Notification.success("Welcome! You have successfully logged in.");
                     }
                 }).catch((error) => {
-                    this.errors = error.response.data.errors;
+                    if (error.response && error.response.data.errors) {
+                        this.errors = error.response.data.errors;
+                    }
+                    Notification.error("Incorrect email or password!");
                 })
         }
     },
