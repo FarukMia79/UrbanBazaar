@@ -8,7 +8,7 @@
                             <div
                                 class="category-breadcrumb d-flex align-items-center"
                             >
-                                <a href="../index.html">Home</a>
+                                <router-link :to="{name: 'index'}">Home</router-link>
                                 <span>/</span>
                                 <strong>{{ subcategory.name }}</strong>
                             </div>

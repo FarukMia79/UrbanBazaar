@@ -8,7 +8,7 @@
                             <div
                                 class="category-breadcrumb d-flex align-items-center"
                             >
-                                <a href="../index.html">Home</a>
+                                <router-link :to="{name: 'index'}">Home</router-link>
                                 <span>/</span>
                                 <strong>{{ category.name }}</strong>
                             </div>
@@ -17,19 +17,18 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="showing-data">
-                                        <span>Showing 1-6 of 6 Results</span>
+                                        <span>Showing {{ sortedProducts.length }} Results</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="filter_sort">
-                                        <div class="filter_btn">
+                                    <div class="filter_sort d-flex align-items-center justify-content-between gap-2">
+                                        <div class="filter_btn shadow-sm d-md-none" @click="toggleSidebar">
                                             <i class="fa fa-list-ul"></i>
                                         </div>
-                                        <div class="page-sort">
+                                        <div class="page-sort flex-grow-1">
                                             <form action="#" class="sort-form">
                                                 <select
-                                                    name="sort"
-                                                    class="form-control form-select sort"
+                                                    name="sort" class="form-control form-select sort" v-model="sortBy"
                                                 >
                                                     <option value="1">
                                                         Product: Latest
@@ -70,9 +69,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-3 filter_sidebar">
-                        <div class="filter_close">
-                            <i class="fa fa-long-arrow-left"></i> Filter
+                    <div class="col-sm-3 filter_sidebar" :class="{ 'active': isSidebarOpen }">
+                        <div class="filter_close" @click="toggleSidebar">
+                            <i class="fa fa-long-arrow-left"></i> Close Filter
                         </div>
                         <form action="#" class="attribute-submit">
                             <div class="sidebar_item wraper__item">
@@ -254,11 +253,7 @@
                     <div class="col-sm-9">
                         <div class="category-product main_product_inner">
                             <div
-                                v-for="product in category.products"
-                                :key="product.id"
-                                class="product_item wist_item wow zoomIn"
-                                data-wow-duration="1.5s"
-                                data-wow-delay="0.0s"
+                                v-for="product in sortedProducts" :key="product.id" class="product_item wist_item wow zoomIn"
                             >
                                 <div class="product_item_inner">
                                     <div class="sale-badge">
@@ -361,15 +356,50 @@
     <!-- content end -->
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
-            category: {},
+            category: {
+                products: []
+            },
             id: this.$route.params.id,
+            sortBy: '1',
+            isSidebarOpen: false,
         };
     },
-    created() {
+    mounted() {
         this.getCategoryData();
+    },
+    computed: {
+        sortedProducts() {
+            if (!this.category.products) return [];
+
+            let products = [...this.category.products];
+
+            const getEffectivePrice = (p) => {
+                if (p.discount_price && parseFloat(p.discount_price) > 0) {
+                    return parseFloat(p.discount_price);
+                }
+                return parseFloat(p.price);
+            };
+
+            if (this.sortBy === '1') { // Latest
+                return products.sort((a, b) => b.id - a.id);
+            } else if (this.sortBy === '2') { // Oldest
+                return products.sort((a, b) => a.id - b.id);
+            } else if (this.sortBy === '3') { // Price: High To Low
+                return products.sort((a, b) => getEffectivePrice(b) - getEffectivePrice(a));
+            } else if (this.sortBy === '4') { // Price: Low To High
+                return products.sort((a, b) => getEffectivePrice(a) - getEffectivePrice(b));
+            } else if (this.sortBy === '5') { // Name: A-Z
+                return products.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (this.sortBy === '6') { // Name: Z-A
+                return products.sort((a, b) => b.name.localeCompare(a.name));
+            }
+            return products;
+        }
     },
     methods: {
         calculateDiscount(price, discountPrice) {
@@ -385,8 +415,10 @@ export default {
                 })
                 .catch((error) => {
                     console.error(error);
-                    Notification.error("Failed to load categories!");
                 });
+        },
+        toggleSidebar() {
+            this.isSidebarOpen = !this.isSidebarOpen;
         },
     },
     watch: {
@@ -397,4 +429,73 @@ export default {
     },
 };
 </script>
-<style lang="css"></style>
+<style scoped>
+.filter_close {
+    background-color: #3f0051 !important;
+}
+
+.filter_btn {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .filter_btn {
+        display: flex;
+        background-color: #750377;
+        color: white;
+        width: 45px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+}
+
+.filter_sort {
+    display: flex;
+    align-items: center;
+}
+
+.filter_btn {
+    background-color: #750377;
+    color: white;
+    width: 45px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter_btn:hover {
+    background-color: #3f0051;
+}
+
+@media (max-width: 767px) {
+    .filter_sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100%;
+        background: white;
+        z-index: 9999;
+        transition: 0.4s;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    .filter_sidebar.active {
+        left: 0;
+    }
+
+    .sorting-section .row>div {
+        margin-bottom: 10px;
+    }
+}
+</style>
