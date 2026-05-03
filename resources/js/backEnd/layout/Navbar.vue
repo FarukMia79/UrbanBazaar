@@ -1,7 +1,7 @@
 <template lang="">
     <nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color: #760478 !important;">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Urbanbazaar</a>
+        <router-link :to="{ name: 'dashboard' }" class="navbar-brand ps-3">Urbanbazaar</router-link>
         <!-- Sidebar Toggle-->
         <button
             class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -85,7 +85,7 @@ export default {
 };
 </script>
 <style lang="css">
-    .cursor-pointer {
+.cursor-pointer {
     cursor: pointer !important;
 }
 </style>

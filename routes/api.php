@@ -81,6 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/orders', [OrderController::class, 'userOrders']);
     Route::post('/review/store', [ReviewController::class, 'store']);
     Route::post('/user/save-survey', [UserSurveyController::class, 'store']);
+    Route::post('/order/track', [OrderController::class, 'trackOrder']);
 
 
     Route::middleware('is_admin')->group(function () {

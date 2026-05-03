@@ -1,30 +1,30 @@
+#python -m uvicorn main:app --reload --port 8001
 from fastapi import FastAPI
 import pandas as pd
 import mysql.connector
 from sentence_transformers import SentenceTransformer, util
 from sklearn.metrics.pairwise import cosine_similarity
 import torch
-from fastapi.middleware.cors import CORSMiddleware # এটি নতুন যোগ করা হয়েছে
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# --- ১. CORS কনফিগারেশন শুরু (খুবই গুরুত্বপূর্ণ) ---
-# এটি আপনার লারাভেল/ভিউ অ্যাপকে পাইথনের সাথে কথা বলার অনুমতি দিবে
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # সব ধরণের অরিজিন এলাউ করা হলো
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"], # GET, POST, OPTIONS সব এলাউ করা হলো
+    allow_methods=["*"],
     allow_headers=["*"],
 )
-# --- CORS কনফিগারেশন শেষ ---
 
-# ২. এআই মডেল লোড (সার্চের জন্য)
+
+
 print("Loading AI Model for Search...")
 model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 print("AI Model is Ready!")
 
-# ডাটাবেস কানেকশন ফাংশন
+
 def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
@@ -33,7 +33,7 @@ def get_db_connection():
         database="urbanbazaar"
     )
 
-# ৩. পিওর এআই সার্চ এপিআই (Multilingual Semantic Search)
+# এআই সার্চ এপিআই
 @app.get("/ai-search")
 def ai_search(q: str):
     try:
@@ -64,7 +64,7 @@ def ai_search(q: str):
         return {"error": str(e), "product_ids": []}
 
 
-# ৪. ইউজার ভিত্তিক রিকমেন্ডেশন (Collaborative Filtering)
+# ইউজার ভিত্তিক রিকমেন্ডেশন (Collaborative Filtering)
 @app.get("/recommend/{user_id}")
 def recommend(user_id: int):
     try:

@@ -33,6 +33,24 @@ class OrderController extends Controller
         return response()->json($orders);
     }
 
+    public function trackOrder(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required',
+            'invoice_id' => 'required'
+        ]);
+
+        $order = Order::where('phone', $request->phone)
+            ->where('invoice_no', $request->invoice_id)
+            ->first();
+
+        if ($order) {
+            return response()->json($order);
+        }
+
+        return response()->json(['message' => 'Order not found'], 404);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
