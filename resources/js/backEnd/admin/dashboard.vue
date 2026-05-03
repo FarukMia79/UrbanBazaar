@@ -221,7 +221,7 @@ export default {
                     labels: data.map(item => item.interaction_type),
                     datasets: [{
                         data: data.map(item => item.total),
-                        backgroundColor: ['#4b1091', '#00cae3', '#28a745'],
+                        backgroundColor: ['#4b1091', '#00cae3', '#28a745', '#ffc107', '#0d6efd'],
                         borderWidth: 0
                     }]
                 },
