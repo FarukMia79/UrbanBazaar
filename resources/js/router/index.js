@@ -13,12 +13,21 @@ const router = createRouter({
 // Navigation Guard add
 router.beforeEach((to, from, next) => {
     const token = AppStorage.getToken();
+    const user = AppStorage.getUser(); 
 
-    if (to.matched.some((record) => record.meta.requiresAdmin) && !token) {
-        next({ name: "AdminLogin" });
+    if (to.matched.some((record) => record.meta.requiresAdmin)) {
+        if (!token || (user && user.role !== 'admin')) {
+            next({ name: "index" }); 
+        } else {
+            next(); 
+        }
     } 
-    else if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
-        next({ name: "UserLogin" });
+    else if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (!token) {
+            next({ name: "UserLogin" });
+        } else {
+            next();
+        }
     } 
     else if ((to.name === "AdminLogin" || to.name === "UserLogin") && token) {
         next({ name: "index" });

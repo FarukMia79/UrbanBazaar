@@ -182,7 +182,9 @@
                                         Order Now
                                     </a>
 
-                                    <a href="javascript:void(0)" class="btn btn-sm add-to-cart-btn" data-id="62" style="
+                                    <a v-if="(!product.color_ids || product.color_ids.length == 0) && (!product.size_ids || product.size_ids.length == 0)"
+                                        @click.prevent="addToCart(product.id)" class="btn btn-sm add-to-cart-btn"
+                                        data-id="62" style="
                                             width: 40px;
                                             padding: 4px;
                                             background-color: transparent;
@@ -196,7 +198,8 @@
                         </div>
                     </div>
                     <div class="col-sm-12">
-                        <a href="hot-deals.html" class="view_more_btn" style="float: left">View More</a>
+                        <router-link :to="{ name: 'HotDeal' }" class="view_more_btn" style="float: left">View
+                            More</router-link>
                     </div>
                 </div>
             </div>
@@ -219,13 +222,11 @@
                     </div>
                 </div>
 
-                <!-- গ্রিড লেআউট: মোবাইলে ২টা, ট্যাবে ৩টা এবং ডেসক্রিপটপে ৫টা করে দেখাবে -->
                 <div class="row g-3">
                     <div v-for="personalized in personalizedProducts" :key="personalized.id"
                         class="col-6 col-sm-4 col-md-3 col-lg-custom">
                         <div class="product_item wist_item wow zoomIn" data-wow-duration="1.0s">
                             <div class="product_item_inner">
-                                <!-- ডিসকাউন্ট ব্যাজ -->
                                 <div class="sale-badge" v-if="personalized.discount_price">
                                     <div class="sale-badge-inner">
                                         <div class="sale-badge-box">
@@ -266,7 +267,9 @@
                                     style="background-color: #3f0051; color: #ffffff; border: none;">
                                     Order Now
                                 </router-link>
-                                <a href="javascript:void(0)" class="btn btn-sm add-to-cart-btn" data-id="62" style="
+                                <a v-if="(!personalized.color_ids || personalized.color_ids.length == 0) && (!personalized.size_ids || personalized.size_ids.length == 0)"
+                                    @click.prevent="addToCart(personalized.id)" class="btn btn-sm add-to-cart-btn"
+                                    data-id="62" style="
                                             width: 40px;
                                             padding: 4px;
                                             background-color: transparent;
@@ -414,7 +417,7 @@ export default {
                 }).catch(err => console.error("AI Data Fetch Error:", err));
         },
 
-        // ট ডিল প্রোডাক্ট লোড
+        //হট ডিল প্রোডাক্ট লোড
         getProductData() {
             axios.get('/api/product')
                 .then((res) => {
@@ -434,6 +437,39 @@ export default {
                     });
                 }).catch((error) => {
                     console.error("API Error:", error);
+                });
+        },
+
+        addToCart(id) {
+            const token = AppStorage.getToken();
+
+            if (!token) {
+                Notification.error("Please login first to add items to cart!");
+                this.$router.push({ name: "UserLogin" });
+                return;
+            }
+
+            axios.post("/api/cart",
+                { product_id: id },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                }
+            )
+                .then((res) => {
+                    Notification.success("Added to cart successfully!");
+                    window.dispatchEvent(new CustomEvent('cart-updated'));
+
+                    this.getAIRecommendations();
+                })
+                .catch((err) => {
+                    if (err.response && err.response.status === 401) {
+                        AppStorage.clear();
+                        this.$router.push({ name: "UserLogin" });
+                    }
+                    console.error("Cart error:", err);
                 });
         },
 

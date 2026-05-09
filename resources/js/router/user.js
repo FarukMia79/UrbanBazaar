@@ -6,6 +6,7 @@ import ForgotPassword from '../frontend/page/auth/ForgotPassword.vue';
 import SetForgotPassword from '../frontend/page/auth/SetForgotPassword.vue';
 import SingleProduct from '../frontend/page/product/SingleProduct.vue';
 import HotDeal from '../frontend/page/HotDeal/HotDeal.vue';
+import Offers from '../frontend/page/HotDeal/Offers.vue';
 import CheckOut from '../frontend/page/CheckOut.vue';
 import UserDashboard from '../frontend/page/UserDashboard.vue';
 import Contact from '../frontend/page/Contact.vue';
@@ -22,6 +23,7 @@ export default [
         children: [
             { path: '', name: 'index', component: index },
             { path: 'hot-deal', name: 'HotDeal', component: HotDeal},
+            { path: 'offers', name: 'Offers', component: Offers},
             { path: 'contact', name: 'Contact', component: Contact},
             { path: 'single-product/:id', name: 'SingleProduct', component: SingleProduct},
             { path: 'category/:id', name: 'CategoryPage', component: CategoryPage},

@@ -66,7 +66,7 @@
                                                         class="details-price">
                                                         <del>৳{{
                                                             product.price
-                                                        }}</del>
+                                                            }}</del>
                                                         ৳{{
                                                             product.discount_price
                                                         }}
@@ -409,11 +409,18 @@
                             <div class="product_item wist_item wow zoomIn" data-wow-duration="1.5s"
                                 data-wow-delay="0.0s" v-for="rel in recommendations" :key="rel.id">
                                 <div class="product_item_inner">
-                                    <div class="sale-badge">
+                                    <div class="sale-badge" v-if="rel.discount_price && product.discount_price > 0">
                                         <div class="sale-badge-inner">
                                             <div class="sale-badge-box">
                                                 <span class="sale-badge-text">
-                                                    <p>20%</p>
+                                                    <p>
+                                                        {{
+                                                            calculateDiscount(
+                                                                rel.price,
+                                                                rel.discount_price,
+                                                            )
+                                                        }}%
+                                                    </p>
                                                     OFF
                                                 </span>
                                             </div>

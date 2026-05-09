@@ -6,113 +6,67 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BackEnd\Cart;
+use App\Models\BackEnd\Product; // এটি যোগ করা হয়েছে
 use App\Models\BackEnd\UserInteraction;
 use Illuminate\Support\Facades\DB;
 
-
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $userId = auth('sanctum')->id();
-
-        // এখানে অবশ্যই with('product') থাকতে হবে
-        $cartItems = Cart::with('product')
-            ->where('user_id', $userId)
-            ->latest()
-            ->get();
-
+        $cartItems = Cart::with('product')->where('user_id', $userId)->latest()->get();
         return response()->json($cartItems);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        if (!Auth::check()) {
+        $userId = auth('sanctum')->id();
+        if (!$userId) {
             return response()->json(['message' => 'Please login first'], 401);
         }
 
-        $user_id = Auth::id();
+        $productId = $request->product_id;
 
+        $product = Product::find($productId);
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
 
-        Cart::updateOrCreate(
-            [
-                'user_id' => $user_id,
-                'product_id' => $request->product_id,
-                'color' => $request->color,
-                'size' => $request->size,
-            ],
-            [
-                'qty' => DB::raw('qty + ' . $request->qty),
-                'price' => $request->price
-            ]
-        );
+        $cart = Cart::where('user_id', $userId)
+            ->where('product_id', $productId)
+            ->where('color', $request->color)
+            ->where('size', $request->size)
+            ->first();
 
+        if ($cart) {
+            $cart->increment('qty', $request->qty ?? 1);
+        } else {
+            Cart::create([
+                'user_id'    => $userId,
+                'product_id' => $productId,
+                'qty'        => $request->qty ?? 1,
+                'price'      => $product->discount_price ?? $product->price,
+                'color'      => $request->color,
+                'size'       => $request->size,
+            ]);
+        }
 
         UserInteraction::updateOrCreate(
-            [
-                'user_id' => auth()->id(),
-                'product_id' => $request->product_id,
-                'interaction_type' => 'cart' 
-            ],
-            [
-                'weight' => 3, 
-                'updated_at' => now()
-            ]
+            ['user_id' => $userId, 'product_id' => $productId, 'interaction_type' => 'cart'],
+            ['weight' => 3, 'updated_at' => now()]
         );
 
         return response()->json(['message' => 'Added to cart successfully'], 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $cartItem = Cart::find($id);
-
         if ($cartItem) {
             $cartItem->delete();
             return response()->json(['message' => 'Item removed from cart'], 200);
         }
-
         return response()->json(['message' => 'Item not found'], 404);
     }
 }

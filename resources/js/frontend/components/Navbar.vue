@@ -160,7 +160,7 @@
                                                         <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
-                                                        }}<i v-if="category.subcategories && category.subcategories.length > 0"
+                                                            }}<i v-if="category.subcategories && category.subcategories.length > 0"
                                                                 class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu"
                                                             v-if="category.subcategories && category.subcategories.length > 0">
@@ -186,7 +186,7 @@
                                     </div>
                                     <div>
                                         <li>
-                                            <router-link :to="{ name: 'HotDeal' }"
+                                            <router-link :to="{ name: 'Offers' }"
                                                 class="nav-user-item">Offers</router-link>
                                         </li>
                                     </div>

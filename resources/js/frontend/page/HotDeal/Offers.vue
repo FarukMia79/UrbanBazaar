@@ -64,7 +64,7 @@
                             <div v-for="product in sortedProducts" :key="product.id"
                                 class="product_item wist_item wow zoomIn">
                                 <div class="product_item_inner">
-                                    <div class="sale-badge" v-if="product.discount_price">
+                                    <div class="sale-badge">
                                         <div class="sale-badge-inner">
                                             <div class="sale-badge-box">
                                                 <span class="sale-badge-text">
@@ -189,7 +189,7 @@ export default {
         getOfferProducts() {
             axios.get('/api/product')
                 .then((res) => {
-                    this.products = res.data.filter(p => p.hot_deals == 1 || p.hot_deals == true);
+                    this.products = res.data.filter(p => p.discount_price != null && p.discount_price > 0);
                 })
                 .catch((error) => {
                     console.error("Error fetching offers:", error);

@@ -125,7 +125,7 @@
                                             </span>
                                         </td>
                                         <td class="small">{{ log.product ? log.product.name.substring(0, 30) : 'N/A'
-                                        }}...</td>
+                                            }}...</td>
                                         <td class="fw-bold">+{{ log.weight }}</td>
                                         <td class="text-muted small">{{ new Date(log.updated_at).toLocaleTimeString() }}
                                         </td>
@@ -163,7 +163,7 @@
                                             </span>
                                         </td>
                                         <td class="small text-muted">{{ new Date(order.created_at).toLocaleDateString()
-                                        }}</td>
+                                            }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -176,6 +176,7 @@
 </template>
 
 <script>
+import AppStorage from '../../Helpers/AppStorage';
 import axios from 'axios';
 import Chart from 'chart.js/auto';
 
