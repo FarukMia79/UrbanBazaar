@@ -13,6 +13,9 @@ import AppStorage from './Helpers/AppStorage';
 // globally set token using Interceptors
 axios.interceptors.request.use(function (config) {
   const token = AppStorage.getToken();
+  
+  config.headers['Accept'] = 'application/json'; 
+  
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

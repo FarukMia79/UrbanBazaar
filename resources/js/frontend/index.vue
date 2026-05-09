@@ -442,26 +442,16 @@ export default {
 
         addToCart(id) {
             const token = AppStorage.getToken();
-
             if (!token) {
-                Notification.error("Please login first to add items to cart!");
+                Notification.error("Please login first!");
                 this.$router.push({ name: "UserLogin" });
                 return;
             }
 
-            axios.post("/api/cart",
-                { product_id: id },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json'
-                    }
-                }
-            )
+            axios.post("/api/cart", { product_id: id })
                 .then((res) => {
                     Notification.success("Added to cart successfully!");
                     window.dispatchEvent(new CustomEvent('cart-updated'));
-
                     this.getAIRecommendations();
                 })
                 .catch((err) => {
