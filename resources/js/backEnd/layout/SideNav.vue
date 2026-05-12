@@ -179,14 +179,30 @@
                 </div>
             </div>
             <div class="sb-sidenav-footer">
-                <div class="small">Logged in as:</div>
-                Urbanbazaar
+                <div class="small">Logged in as: {{ user.name }}</div>
+                www.urbanbazaar.com
             </div>
         </nav>
     </div>
 </template>
 <script>
-export default {};
+import AppStorage from '../../Helpers/AppStorage';
+export default {
+    data() {
+        return {
+            user: {},
+        }
+    },
+    mounted() {
+        const userData = AppStorage.getUser();
+        if (userData) {
+            this.user = userData;
+        } else {
+            AppStorage.clear();
+            this.$router.push({ name: 'AdminLogin' });
+        }
+    }
+};
 </script>
 <style lang="css" scoped>
 .NavHover:hover {

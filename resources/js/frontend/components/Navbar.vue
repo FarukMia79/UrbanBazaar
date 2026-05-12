@@ -58,7 +58,7 @@
 
         <div class="mobile-search">
             <form @submit.prevent="handleAISearch" class="position-relative">
-                <input type="text" v-model="searchQuery" placeholder="AI Search (e.g. Find me a bag....)"
+                <input type="text" v-model="searchQuery" placeholder="Search (e.g. Find me a bag....)"
                     class="msearch_keyword search_click" name="keyword" />
 
                 <span @click="startVoiceSearch" class="ai-voice-btn" :class="{ 'is-listening': isListening }">
@@ -84,7 +84,7 @@
                                 <div class="main-search">
                                     <form @submit.prevent="handleAISearch" class="position-relative">
                                         <input type="text" v-model="searchQuery"
-                                            placeholder="AI Search (e.g. Find me a bag....)"
+                                            placeholder="Search (e.g. Find me a bag....)"
                                             class="search_keyword search_click" name="keyword" />
 
                                         <span @click="startVoiceSearch" class="ai-voice-btn"
@@ -160,7 +160,7 @@
                                                         <router-link v-if="category.id" :to="{
                                                             name: 'CategoryPage', params: { id: category.id }
                                                         }"><img :src="'/' + category.image" alt="" />{{ category.name
-                                                            }}<i v-if="category.subcategories && category.subcategories.length > 0"
+                                                        }}<i v-if="category.subcategories && category.subcategories.length > 0"
                                                                 class="fa-solid fa-chevron-right"></i></router-link>
                                                         <ul class="sidebar-submenu"
                                                             v-if="category.subcategories && category.subcategories.length > 0">
