@@ -47,15 +47,6 @@
                                     <li>
                                         <a href="page/privacy-policy.html">Privacy Policy</a>
                                     </li>
-                                    <li>
-                                        <a href="page/ad.html">ad</a>
-                                    </li>
-                                    <li>
-                                        <a href="page/return-policy-2.html">Return Policy 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="page/clothing.html">Clothing</a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -102,6 +93,8 @@
                                     Copyright © 2026 phpx.shop. All rights
                                     reserved. Design & Developed By
                                     <router-link class="developer-badge">Faruk</router-link>
+                                    <router-link class="developer-badge">Asif</router-link>
+                                    <router-link class="developer-badge">Jisan</router-link>
                                 </p>
                             </div>
                         </div>

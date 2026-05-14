@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <button class="btn w-100 shadow-sm" style="
+                                    <button class="btn btn-login w-100 shadow-sm" style="
                                             background-color: #750377;
                                             color: white;
                                         ">

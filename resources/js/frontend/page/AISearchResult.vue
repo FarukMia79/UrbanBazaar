@@ -5,9 +5,9 @@
                 <div class="sec_title mb-4">
                     <h3 class="fw-bold">
                         <i class="fa fa-robot text-primary me-2"></i>
-                        AI Search Results for: <span class="text-indigo">"{{ searchQuery }}"</span>
+                        Search Results for: <span class="text-indigo">"{{ searchQuery }}"</span>
                     </h3>
-                    <p class="text-muted small">Our AI engine found these products based on your request.</p>
+                    <p class="text-muted small">Our search engine found these products based on your request.</p>
                 </div>
 
                 <!-- Loading State -->
@@ -39,7 +39,7 @@
                                     <span class="text-success fw-bold">৳{{ product.discount_price ?
                                         product.discount_price : product.price }}</span>
                                     <del v-if="product.discount_price" class="text-muted ms-2 small">৳{{ product.price
-                                        }}</del>
+                                    }}</del>
                                 </p>
                             </div>
                             <!-- AI Confidence Badge -->
