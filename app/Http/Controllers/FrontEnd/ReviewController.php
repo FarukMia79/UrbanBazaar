@@ -15,7 +15,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Review::with('product')->latest()->get();
+        return response()->json($reviews);
     }
 
     /**
@@ -93,11 +94,24 @@ class ReviewController extends Controller
         //
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $review = Review::findOrFail($id);
+        $review->status = $request->status;
+        $review->save();
+
+        return response()->json([
+            'message' => 'Review status updated to ' . $request->status
+        ], 200);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $review = Review::findOrFail($id);
+        $review->delete();
+        return response()->json(['message' => 'Deleted successfully']);
     }
 }

@@ -82,8 +82,6 @@
                         data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <router-link class="nav-link NavHover" :to="{ name: '' }"><i
-                                    class="fa-solid fa-file-medical me-1"></i>Pending Reviews</router-link>
-                            <router-link class="nav-link NavHover" :to="{ name: '' }"><i
                                     class="fa-solid fa-file-medical me-1"></i>Create Reviews</router-link>
                             <router-link class="nav-link NavHover" :to="{ name: 'AllReviews' }"><i
                                     class="fa-solid fa-file-medical me-1"></i>All Reviews</router-link>

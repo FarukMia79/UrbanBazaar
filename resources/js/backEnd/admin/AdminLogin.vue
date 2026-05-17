@@ -3,7 +3,7 @@
         <div class="card login-card border-0 shadow-lg">
             <div class="card-body p-5">
                 <h3 class="text-center fw-bold mb-4 text-dark">
-                    Login to Your Account
+                    Login to Admin Account
                 </h3>
 
                 <form @submit.prevent="StoreData">

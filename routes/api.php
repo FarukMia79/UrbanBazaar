@@ -98,9 +98,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::resource('/product', ProductController::class)->except(['index', 'show']);
 
-
         Route::resource('/orderitem', OrderItemController::class);
         Route::post('/order/update-status/{id}', [OrderController::class, 'updateStatus']);
+
+        Route::get('/review', [ReviewController::class, 'index']);
+        Route::post('/review/update-status/{id}', [ReviewController::class, 'updateStatus']);
 
 
         Route::post('/banner/banner-store', [BannerController::class, 'bannerStore']);
